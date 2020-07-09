@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     application.cpp \
     connection.cpp \
+    dialogs/structuredialog.cpp \
     main.cpp \
     mainwindow.cpp \
     models/maintablemodel.cpp
@@ -25,16 +26,26 @@ SOURCES += \
 HEADERS += \
     application.h \
     connection.h \
+    dialogs/structuredialog.h \
     mainwindow.h \
     models/maintablemodel.h
 
 FORMS += \
+    dialogs/structuredialog.ui \
     mainwindow.ui
 
 TRANSLATIONS += \
-    TPointer_ru_RU.ts
+    translations/tpointer_en.ts \
+    translations/tpointer_ru.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    translations/tpointer_en.ts \
+    translations/tpointer_ru.ts
+
+RESOURCES += \
+    resources.qrc

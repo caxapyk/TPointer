@@ -24,11 +24,11 @@ private:
     MainTableModel *m_mainTableModel;
     const unsigned int m_descColumn = 10;
 
-    void RestoreState();
-    void SaveState();
-    void LoadData();
+    void restoreAppState();
+    void loadData();
 
 private slots:
+    void openStructureDialog();
     void selectRow(const QModelIndex&);
 
 protected: // overrides

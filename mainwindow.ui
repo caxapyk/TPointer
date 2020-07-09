@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Топографический указатель</string>
+   <string>Archival topographic pointer</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/icon.png</normaloff>:/icons/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -77,6 +81,12 @@
           <verstretch>1</verstretch>
          </sizepolicy>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>70</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::WinPanel</enum>
         </property>
@@ -100,11 +110,11 @@
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>Файл</string>
+     <string>File</string>
     </property>
     <widget class="QMenu" name="menu_3">
      <property name="title">
-      <string>Экспорт</string>
+      <string>Export</string>
      </property>
      <addaction name="action_csv"/>
      <addaction name="separator"/>
@@ -118,20 +128,21 @@
    </widget>
    <widget class="QMenu" name="menu_5">
     <property name="title">
-     <string>Справка</string>
+     <string>Help</string>
     </property>
     <addaction name="action_about"/>
    </widget>
    <widget class="QMenu" name="menu_6">
     <property name="title">
-     <string>Правка</string>
+     <string>Edit</string>
     </property>
     <addaction name="action_search"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
-     <string>Сервис</string>
+     <string>Service</string>
     </property>
+    <addaction name="action_storageStruct"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_6"/>
@@ -141,41 +152,48 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_newRow">
    <property name="text">
-    <string>Новая запись</string>
+    <string>New</string>
    </property>
   </action>
   <action name="action_csv">
    <property name="text">
-    <string>Электронные таблицы (.csv)</string>
+    <string>Spreadsheet (.csv)</string>
    </property>
   </action>
   <action name="action_exit">
    <property name="text">
-    <string>Выход</string>
+    <string>Exit</string>
    </property>
   </action>
   <action name="action_about">
    <property name="text">
-    <string>О программе</string>
+    <string>About</string>
    </property>
   </action>
   <action name="action_f15">
    <property name="text">
-    <string>Форма Ф15 (.xlsx)</string>
+    <string>Form F15 (.xlsx)</string>
    </property>
   </action>
   <action name="action_f16">
    <property name="text">
-    <string>Форма Ф16 (.xlsx)</string>
+    <string>Form F16 (.xlsx)</string>
    </property>
   </action>
   <action name="action_search">
    <property name="text">
-    <string>Поиск</string>
+    <string>Search</string>
+   </property>
+  </action>
+  <action name="action_storageStruct">
+   <property name="text">
+    <string>Storage structure</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_exit</sender>
