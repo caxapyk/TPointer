@@ -59,13 +59,16 @@ void StructureDialog::selectCorpus(const QModelIndex &index)
 
 void StructureDialog::addCorpus()
 {
-    m_corpus_model->insertRows(m_corpus_model->rowCount(), 1);
+    if (m_corpus_model->insertRows(m_corpus_model->rowCount(), 1)) {
+        QModelIndex index = m_corpus_model->index(m_corpus_model->rowCount() - 1, 1);
+        ui->lV_corpuses->setCurrentIndex(index);
 
-    QModelIndex index = m_corpus_model->index(m_corpus_model->rowCount() - 1, 1);
-    ui->lV_corpuses->setCurrentIndex(index);
-
-    m_corpus_model->setData(index, tr("New corpus"));
-    m_corpus_model->submit();
+        m_corpus_model->setData(index, tr("New corpus"));
+        m_corpus_model->submit();
+    } else {
+        m_corpus_model->select();
+        QMessageBox::warning(this, tr("Corpuses"), tr("Could not create corpus"), QMessageBox::Ok);
+    }
 }
 
 void StructureDialog::removeCorpus()
@@ -76,6 +79,7 @@ void StructureDialog::removeCorpus()
         if (m_corpus_model->removeRows(index.row(), 1)) {
             m_corpus_model->select();
         } else {
+            m_corpus_model->select();
             QMessageBox::warning(this, tr("Corpuses"), tr("Could not remove corpus"), QMessageBox::Ok);
         }
     }
@@ -88,7 +92,7 @@ void StructureDialog::loadStorages(QVariant id)
     m_storage_model = new QSqlTableModel;
     m_storage_model->setTable("storage");
     m_storage_model->setFilter("corpus_id=" + id.toString());
-    m_storage_model->setEditStrategy(QSqlTableModel::OnRowChange);
+    m_storage_model->setEditStrategy(QSqlTableModel::OnFieldChange);
 
     m_storage_model->select();
 
