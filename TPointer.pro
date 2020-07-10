@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     application.cpp \
     connection.cpp \
+    dialogs/commalistdelegate.cpp \
     dialogs/structuredialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 HEADERS += \
     application.h \
     connection.h \
+    dialogs/commalistdelegate.h \
     dialogs/structuredialog.h \
     mainwindow.h \
     models/maintablemodel.h
