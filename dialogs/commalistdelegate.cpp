@@ -12,7 +12,7 @@ CommaListDelegate::CommaListDelegate(QObject *parent) : QItemDelegate(parent)
 
 }
 
-QWidget *CommaListDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *CommaListDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &, const QModelIndex &) const
 {
     QLineEdit *editor = new QLineEdit(parent);
 

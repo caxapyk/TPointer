@@ -1,7 +1,10 @@
 #include "structuredialog.h"
 #include "ui_structuredialog.h"
 #include "commalistdelegate.h"
+#include "models/corpusmodel.h"
+#include "models/storagemodel.h"
 
+#include <QAbstractItemModel>
 #include <QDebug>
 #include <QMessageBox>
 #include <QModelIndex>
@@ -14,35 +17,42 @@
 #include <QTableView>
 #include <QVariant>
 
+#include <QAbstractItemView>
+#include <QPushButton>
+#include <QListView>
+
 StructureDialog::StructureDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StructureDialog)
 {
     ui->setupUi(this);
+
+    m_storage_controls = new QButtonGroup();
+
+    /* Initialize models */
+    m_corpus_model = new CorpusModel(this);
+    m_storage_model = new StorageModel(this);
+
     loadCorpuses();
 
-    connect(ui->lV_corpuses, SIGNAL(clicked(const QModelIndex &)),
-            this, SLOT(selectCorpus(const QModelIndex&)));
+    connect(ui->pB_corpusAdd, &QPushButton::released, [=] {
+        createItem(ui->lV_corpuses);
+    });
+    connect(ui->pB_corpusRemove, &QPushButton::released, [=] {
+        removeItem(ui->lV_corpuses);
+    });
+    connect(ui->pB_storageAdd, &QPushButton::released, [=] {
+        createItem(ui->tV_storages);
+    });
+    connect(ui->pB_storageRemove, &QPushButton::released, [=] {
+        removeItem(ui->tV_storages);
+    });
 
-    connect(ui->pB_corpusAdd, SIGNAL(clicked()),
-            this, SLOT(addCorpus()));
-    connect(ui->pB_corpusRemove, SIGNAL(clicked()),
-            this, SLOT(removeCorpus()));
-
-    connect(ui->tV_storages, SIGNAL(clicked(const QModelIndex &)),
-            this, SLOT(setStorageControlsState(const QModelIndex&)));
-
-    connect(ui->pB_storageAdd, SIGNAL(clicked()),
-            this, SLOT(addStorage()));
-
-    connect(ui->pB_storageUp, SIGNAL(clicked()),
-            this, SLOT(saveStorage()));
+    connect(ui->lV_corpuses, &QListView::clicked, this, &StructureDialog::selectCorpus);
+    connect(ui->tV_storages, &QListView::clicked, this, &StructureDialog::setControlsState);
 }
 
 void StructureDialog::loadCorpuses() {
-    m_corpus_model = new QSqlTableModel;
-    m_corpus_model->setTable("corpus");
-    m_corpus_model->setEditStrategy(QSqlTableModel::OnFieldChange);
     m_corpus_model->select();
 
     ui->lV_corpuses->setModel(m_corpus_model);
@@ -57,43 +67,9 @@ void StructureDialog::selectCorpus(const QModelIndex &index)
     }
 }
 
-void StructureDialog::addCorpus()
-{
-    if (m_corpus_model->insertRows(m_corpus_model->rowCount(), 1)) {
-        QModelIndex index = m_corpus_model->index(m_corpus_model->rowCount() - 1, 1);
-        ui->lV_corpuses->setCurrentIndex(index);
-
-        m_corpus_model->setData(index, tr("New corpus"));
-        m_corpus_model->submit();
-    } else {
-        m_corpus_model->select();
-        QMessageBox::warning(this, tr("Corpuses"), tr("Could not create corpus"), QMessageBox::Ok);
-    }
-}
-
-void StructureDialog::removeCorpus()
-{
-    QModelIndex index =  ui->lV_corpuses->currentIndex();
-
-    if (index.isValid()) {
-        if (m_corpus_model->removeRows(index.row(), 1)) {
-            m_corpus_model->select();
-        } else {
-            m_corpus_model->select();
-            QMessageBox::warning(this, tr("Corpuses"), tr("Could not remove corpus"), QMessageBox::Ok);
-        }
-    }
-}
-
 void StructureDialog::loadStorages(QVariant id)
 {
-    m_parent = id; //set current parent id
-
-    m_storage_model = new QSqlTableModel;
-    m_storage_model->setTable("storage");
-    m_storage_model->setFilter("corpus_id=" + id.toString());
-    m_storage_model->setEditStrategy(QSqlTableModel::OnFieldChange);
-
+    m_storage_model->setParentId(1, id);
     m_storage_model->select();
 
     m_storage_model->setHeaderData(2, Qt::Horizontal, tr("Name"));
@@ -109,7 +85,6 @@ void StructureDialog::loadStorages(QVariant id)
     ui->tV_storages->setColumnWidth(3, 90);
     ui->tV_storages->setColumnWidth(4, 90);
 
-    m_storage_controls = new QButtonGroup();
     m_storage_controls->addButton(ui->pB_storageAdd);
     m_storage_controls->setId(ui->pB_storageAdd, 0);
     m_storage_controls->addButton(ui->pB_storageRemove);
@@ -121,46 +96,40 @@ void StructureDialog::loadStorages(QVariant id)
 
     m_storage_controls->button(0)->setEnabled(true);
 
-    setStorageControlsState(ui->tV_storages->currentIndex());
+    setControlsState(ui->tV_storages->currentIndex());
 
-    //test it многократное присваивание!
-    connect(m_storage_model, SIGNAL(primeInsert(int, QSqlRecord&)),
-            this, SLOT(initDefaultStorageRow(int, QSqlRecord&)));
 }
 
-void StructureDialog::addStorage()
+void StructureDialog::createItem(QWidget *widget)
 {
-    m_storage_model->insertRows(m_storage_model->rowCount(), 1);
-    m_storage_model->submit();
-    qDebug() << m_storage_model->lastError().text();
+    QAbstractItemView *view = qobject_cast<QAbstractItemView*> (widget);
+    BaseModel *model = qobject_cast<BaseModel*> (view->model());
 
-    //QModelIndex index = m_storage_model->index(m_corpus_model->rowCount() - 1, 1);
-    //ui->tV_storages->setCurrentIndex(index);
-}
-
-void StructureDialog::saveStorage()
-{
-    //qDebug() << m_storage_model->lastError().text();
-}
-
-void StructureDialog::setStorageControlsState(const QModelIndex &index)
-{
-    m_storage_model->submitAll();
-    for (int i = 1; i < 4; ++i) {
-        m_storage_controls->button(i)->setEnabled(index.isValid());
+    if (model->insert()) {
+        QModelIndex index = model->index(model->rowCount() - 1, 1);
+        view->setCurrentIndex(index);
+    } else {
+        QMessageBox::warning(this, tr("Storage structure"), tr("Could not create item"), QMessageBox::Ok);
     }
 }
 
-void StructureDialog::initDefaultStorageRow(int, QSqlRecord &record)
+void StructureDialog::removeItem(QWidget *widget)
 {
-    //qDebug() << m_parent;
-    //record.remove(0); //remove id
-    record.setValue(1, m_parent);
-    record.setGenerated(1, true);
-    //record.setValue(2, QVariant(tr("New storage")));
-    //record.setGenerated(2, true);
+    QAbstractItemView *view = qobject_cast<QAbstractItemView*> (widget);
+    BaseModel *model = qobject_cast<BaseModel*> (view->model());
 
-    m_storage_model->submit();
+    QModelIndexList indexes = view->selectionModel()->selectedIndexes();
+    if (!model->remove(indexes)) {
+        QMessageBox::warning(this, tr("Storage structure"), tr("Could not remove item"), QMessageBox::Ok);
+    }
+}
+
+// сделать общие контролы
+void StructureDialog::setControlsState(const QModelIndex &index)
+{
+    for (int i = 1; i < 4; ++i) {
+        m_storage_controls->button(i)->setEnabled(index.isValid());
+    }
 }
 
 StructureDialog::~StructureDialog()

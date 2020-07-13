@@ -51,7 +51,11 @@
          <number>1</number>
         </property>
         <item>
-         <widget class="QListView" name="lV_corpuses"/>
+         <widget class="QListView" name="lV_corpuses">
+          <property name="selectionMode">
+           <enum>QAbstractItemView::ContiguousSelection</enum>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QFormLayout" name="formLayout">

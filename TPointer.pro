@@ -22,7 +22,10 @@ SOURCES += \
     dialogs/structuredialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    models/maintablemodel.cpp
+    models/basemodel.cpp \
+    models/corpusmodel.cpp \
+    models/maintablemodel.cpp \
+    models/storagemodel.cpp
 
 HEADERS += \
     application.h \
@@ -30,7 +33,10 @@ HEADERS += \
     dialogs/commalistdelegate.h \
     dialogs/structuredialog.h \
     mainwindow.h \
-    models/maintablemodel.h
+    models/basemodel.h \
+    models/corpusmodel.h \
+    models/maintablemodel.h \
+    models/storagemodel.h
 
 FORMS += \
     dialogs/structuredialog.ui \
