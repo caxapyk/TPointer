@@ -23,6 +23,29 @@
         <source>Password to database user</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source> v %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Application icons by </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright &amp;copy; 2020 Alexander Sakharuk</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CorpusModel</name>
+    <message>
+        <source>New corpus</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -80,6 +103,72 @@
     </message>
     <message>
         <source>Ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage structure</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StorageModel</name>
+    <message>
+        <source>New storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StructureDialog</name>
+    <message>
+        <source>Structure of storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Corpuses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archival Storages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rooms count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage structure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not create item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

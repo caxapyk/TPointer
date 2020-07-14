@@ -4,22 +4,14 @@
 #include "models/corpusmodel.h"
 #include "models/storagemodel.h"
 
-#include <QAbstractItemModel>
 #include <QDebug>
-#include <QMessageBox>
-#include <QModelIndex>
-#include <QModelIndexList>
-#include <QSqlError>
-#include <QSqlRelationalDelegate>
-#include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QSqlRelation>
-#include <QTableView>
-#include <QVariant>
-
 #include <QAbstractItemView>
-#include <QPushButton>
 #include <QListView>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QModelIndexList>
+#include <QSqlRelationalDelegate>
+#include <QVariant>
 
 StructureDialog::StructureDialog(QWidget *parent) :
     QDialog(parent),
@@ -48,7 +40,11 @@ StructureDialog::StructureDialog(QWidget *parent) :
         removeItem(ui->tV_storages);
     });
 
+    connect(ui->pB_storageUp, &QPushButton::released, this, &StructureDialog::moveUp);
+    connect(ui->pB_storageDown, &QPushButton::released, this, &StructureDialog::moveDown);
+
     connect(ui->lV_corpuses, &QListView::clicked, this, &StructureDialog::selectCorpus);
+    connect(ui->lV_corpuses, &QListView::clicked, this, &StructureDialog::setControlsState);
     connect(ui->tV_storages, &QListView::clicked, this, &StructureDialog::setControlsState);
 }
 
@@ -57,6 +53,11 @@ void StructureDialog::loadCorpuses() {
 
     ui->lV_corpuses->setModel(m_corpus_model);
     ui->lV_corpuses->setModelColumn(1);
+
+    /* Load the first entry */
+    QModelIndex index = m_corpus_model->index(0, 0);
+    loadStorages(index.data());
+
 }
 
 void StructureDialog::selectCorpus(const QModelIndex &index)
@@ -72,18 +73,19 @@ void StructureDialog::loadStorages(QVariant id)
     m_storage_model->setParentId(1, id);
     m_storage_model->select();
 
-    m_storage_model->setHeaderData(2, Qt::Horizontal, tr("Name"));
-    m_storage_model->setHeaderData(3, Qt::Horizontal, tr("Rooms count"));
-    m_storage_model->setHeaderData(4, Qt::Horizontal, tr("Floors"));
+    m_storage_model->setHeaderData(3, Qt::Horizontal, tr("Name"));
+    m_storage_model->setHeaderData(4, Qt::Horizontal, tr("Rooms count"));
+    m_storage_model->setHeaderData(5, Qt::Horizontal, tr("Floors"));
 
     ui->tV_storages->setModel(m_storage_model);
-    ui->tV_storages->setItemDelegateForColumn(4, new CommaListDelegate());
+    ui->tV_storages->setItemDelegateForColumn(5, new CommaListDelegate());
 
     ui->tV_storages->hideColumn(0);
     ui->tV_storages->hideColumn(1);
-    ui->tV_storages->setColumnWidth(2, 200);
-    ui->tV_storages->setColumnWidth(3, 90);
+    ui->tV_storages->hideColumn(2);
+    ui->tV_storages->setColumnWidth(3, 200);
     ui->tV_storages->setColumnWidth(4, 90);
+    ui->tV_storages->setColumnWidth(5, 90);
 
     m_storage_controls->addButton(ui->pB_storageAdd);
     m_storage_controls->setId(ui->pB_storageAdd, 0);
@@ -93,11 +95,6 @@ void StructureDialog::loadStorages(QVariant id)
     m_storage_controls->setId(ui->pB_storageUp, 2);
     m_storage_controls->addButton(ui->pB_storageDown);
     m_storage_controls->setId(ui->pB_storageDown, 3);
-
-    m_storage_controls->button(0)->setEnabled(true);
-
-    setControlsState(ui->tV_storages->currentIndex());
-
 }
 
 void StructureDialog::createItem(QWidget *widget)
@@ -113,6 +110,26 @@ void StructureDialog::createItem(QWidget *widget)
     }
 }
 
+void StructureDialog::moveUp()
+{
+    QModelIndex index = ui->tV_storages->currentIndex();
+    QModelIndex up_index = m_storage_model->moveUp(index.row(), 2);
+
+    if (up_index.isValid()) {
+        ui->tV_storages->setCurrentIndex(up_index);
+    }
+}
+
+void StructureDialog::moveDown()
+{
+    QModelIndex index = ui->tV_storages->currentIndex();
+    QModelIndex down_index = m_storage_model->moveDown(index.row(), 2);
+
+    if (down_index.isValid()) {
+        ui->tV_storages->setCurrentIndex(down_index);
+    }
+}
+
 void StructureDialog::removeItem(QWidget *widget)
 {
     QAbstractItemView *view = qobject_cast<QAbstractItemView*> (widget);
@@ -124,11 +141,11 @@ void StructureDialog::removeItem(QWidget *widget)
     }
 }
 
-// сделать общие контролы
-void StructureDialog::setControlsState(const QModelIndex &index)
+void StructureDialog::setControlsState(const QModelIndex&)
 {
+    bool isValid = ui->tV_storages->currentIndex().isValid();
     for (int i = 1; i < 4; ++i) {
-        m_storage_controls->button(i)->setEnabled(index.isValid());
+        m_storage_controls->button(i)->setEnabled(isValid);
     }
 }
 

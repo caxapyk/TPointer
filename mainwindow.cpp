@@ -2,11 +2,18 @@
 #include "ui_mainwindow.h"
 #include "application.h"
 #include "dialogs/structuredialog.h"
+#include "models/hierarchymodel.h"
 
+#include <QAction>
+#include <QItemSelectionModel>
 #include <QObject>
 #include <QCoreApplication>
 #include <QSettings>
 #include <QString>
+
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,16 +21,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+
+
+    HierarchyModel *model = new HierarchyModel();
+    model->setupModelData();
+    qDebug() << model->rowCount();
+    ui->tV_hierarchy->setModel(model);
+
     restoreAppState();
     loadData();
 
     ui->statusbar->showMessage(tr("Ready"), 2000);
 
-    connect(ui->action_storageStruct, SIGNAL(triggered()),
-            this, SLOT(openStructureDialog()));
+    connect(ui->action_storageStruct, &QAction::triggered, this, &MainWindow::openStructureDialog);
+    connect(ui->action_about, &QAction::triggered, application, &Application::about);
 
-    connect(ui->action_about, SIGNAL(triggered()),
-            application, SLOT(about()));
+    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected);
 }
 
 MainWindow::~MainWindow()
@@ -38,6 +51,8 @@ void MainWindow::restoreAppState()
 
     restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
     restoreState(settings->value("MainWindow/windowState").toByteArray());
+
+    ui->tV_MainTable->horizontalHeader()->restoreState(settings->value("DataTable/tableState").toByteArray());
 }
 
 void MainWindow::loadData() {
@@ -45,8 +60,6 @@ void MainWindow::loadData() {
     m_mainTableModel->select();
 
     ui->tV_MainTable->setModel(m_mainTableModel);
-    connect(ui->tV_MainTable, SIGNAL(clicked(const QModelIndex&)),
-            this, SLOT(selectRow(const QModelIndex&)));
 }
 
 /*
@@ -60,15 +73,20 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings->setValue("geometry", saveGeometry());
     settings->setValue("windowState", saveState());
     settings->endGroup();
+
+    settings->beginGroup("DataTable");
+    settings->setValue("tableState", ui->tV_MainTable->horizontalHeader()->saveState());
+    settings->endGroup();
+
     QMainWindow::closeEvent(event);
 }
 
 /*
  * SLOT selectRow(const QModelIndex &index)
  */
-void MainWindow::selectRow(const QModelIndex &index)
+void MainWindow::rowSelected(const QModelIndex &current, const QModelIndex&)
 {
-    QString t = index.sibling(index.row(), m_descColumn).data().toString();
+    QString t = current.sibling(current.row(), m_descColumn).data().toString();
     ui->pTE_Desc-> setPlainText(t);
 }
 
@@ -78,7 +96,6 @@ void MainWindow::selectRow(const QModelIndex &index)
 void MainWindow::openStructureDialog()
 {
     StructureDialog dialog;
-    dialog.setWindowTitle(tr("Storage structure"));
     dialog.exec();
 }
 

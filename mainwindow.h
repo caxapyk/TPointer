@@ -29,7 +29,7 @@ private:
 
 private slots:
     void openStructureDialog();
-    void selectRow(const QModelIndex&);
+    void rowSelected(const QModelIndex &current, const QModelIndex&);
 
 protected: // overrides
     void closeEvent( QCloseEvent* e );

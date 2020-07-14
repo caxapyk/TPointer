@@ -5,6 +5,7 @@
 
 #include <QButtonGroup>
 #include <QDialog>
+#include <QModelIndex>
 #include <QWidget>
 
 namespace Ui {
@@ -24,16 +25,17 @@ private:
     void loadStorages(QVariant id);
 
     Ui::StructureDialog *ui;
-    BaseModel *m_corpus_model = nullptr;
-    BaseModel *m_storage_model = nullptr;
+    BaseModel *m_corpus_model;
+    BaseModel *m_storage_model;
     QButtonGroup *m_storage_controls;
-    QVariant m_parent;
 
 private slots:
-    void selectCorpus(const QModelIndex &index);
     void createItem(QWidget *widget);
+    void moveUp();
+    void moveDown();
+    void selectCorpus(const QModelIndex &index);
     void removeItem(QWidget *widget);
-    void setControlsState(const QModelIndex &index);
+    void setControlsState(const QModelIndex&);
 };
 
 #endif // STRUCTUREDIALOG_H

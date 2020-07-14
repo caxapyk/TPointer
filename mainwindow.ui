@@ -24,7 +24,7 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QTreeView" name="treeView"/>
+      <widget class="QTreeView" name="tV_hierarchy"/>
       <widget class="QTreeView" name="treeView_2"/>
      </widget>
     </item>
