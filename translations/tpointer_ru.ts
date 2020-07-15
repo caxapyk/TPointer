@@ -129,7 +129,6 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="190"/>
-        <location filename="../mainwindow.cpp" line="81"/>
         <source>Storage structure</source>
         <translation>Параметры хранилищ</translation>
     </message>
@@ -139,7 +138,17 @@
         <translation>Архивный топографический указатель</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="20"/>
+        <location filename="../mainwindow.cpp" line="27"/>
+        <source>Place path</source>
+        <translation>Расположение</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="28"/>
+        <source>floors</source>
+        <translation>Этажи</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="35"/>
         <source>Ready</source>
         <translation>Готово</translation>
     </message>
@@ -149,7 +158,7 @@
     <message>
         <location filename="../models/storagemodel.cpp" line="9"/>
         <source>New storage</source>
-        <translation>Новое хранилище</translation>
+        <translation type="unfinished">Новое архивохранилище</translation>
     </message>
 </context>
 <context>
@@ -166,28 +175,28 @@
     </message>
     <message>
         <location filename="../dialogs/structuredialog.ui" line="83"/>
-        <location filename="../dialogs/structuredialog.ui" line="147"/>
+        <location filename="../dialogs/structuredialog.ui" line="158"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="90"/>
-        <location filename="../dialogs/structuredialog.ui" line="157"/>
+        <location filename="../dialogs/structuredialog.ui" line="94"/>
+        <location filename="../dialogs/structuredialog.ui" line="172"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="114"/>
+        <location filename="../dialogs/structuredialog.ui" line="122"/>
         <source>Archival Storages</source>
         <translation>Архивохранилища</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="167"/>
+        <location filename="../dialogs/structuredialog.ui" line="186"/>
         <source>Up</source>
         <translation>Вверх</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="177"/>
+        <location filename="../dialogs/structuredialog.ui" line="200"/>
         <source>Down</source>
         <translation>Вниз</translation>
     </message>

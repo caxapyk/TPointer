@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "models/maintablemodel.h"
+#include "models/hierarchymodel.h"
 
 #include <QCloseEvent>
 #include <QMainWindow>
@@ -22,6 +23,8 @@ public:
 private:
     Ui::MainWindow *ui;
     MainTableModel *m_mainTableModel;
+    HierarchyModel *hierarchy_model;
+
     const unsigned int m_descColumn = 10;
 
     void restoreAppState();

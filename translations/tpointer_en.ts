@@ -109,6 +109,14 @@
         <source>Storage structure</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Place path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>floors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StorageModel</name>

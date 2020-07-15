@@ -1,16 +1,7 @@
 #include "hierarchymodel.h"
 
 #include <QDebug>
-
-struct NodeInfo
-{
-    QVariant name;
-    QString floors;
-    QVector<NodeInfo> children;
-    NodeInfo* parent;
-
-    bool mapped;
-};
+#include <QSqlQueryModel>
 
 HierarchyModel::HierarchyModel()
 {
@@ -19,67 +10,91 @@ HierarchyModel::HierarchyModel()
 
 HierarchyModel::~HierarchyModel()
 {
-
+    qDeleteAll(nodes);
+    // сделай рекурсивно!!
+    qDeleteAll(all_nodes);
 }
 
-void HierarchyModel::setupModelData() {
-    NodeInfo info1;
-    NodeInfo info2;
-    info2.name = "name2";
-    info2.floors = "3,4";
-    info2.parent = &info1;
-    info2.children = QVector<NodeInfo>();;
+void HierarchyModel::setupModelData()
+{
+    if (!nodes.isEmpty()) {
+        nodes.clear();
+    }
 
-    info1.name = "name1";
-    info1.floors = "1,2";
-    info1.parent = nullptr;
-    info1.children.append(info2);
+    QSqlQueryModel corpus_model;
+    QSqlQueryModel storage_model;
 
-    nodes.append(info1);
+    corpus_model.setQuery("SELECT * FROM corpus");
 
+    for (int i=0; i < corpus_model.rowCount(); ++i) {
+        HierarchyNode *corpus_node = new HierarchyNode();
+        QVariant id = corpus_model.data(corpus_model.index(i, 0));
+
+        corpus_node->id = id.toInt();
+        corpus_node->name = corpus_model.data(corpus_model.index(i, 1)).toString();
+
+        corpus_node->row = i;
+
+
+        storage_model.setQuery("SELECT * FROM storage WHERE corpus_id=" + id.toString());
+
+        for (int j=0; j < storage_model.rowCount(); ++j) {
+            HierarchyNode *storage_node = new HierarchyNode();
+            QVariant id = storage_model.data(storage_model.index(j, 0));
+
+            storage_node->id = id.toInt();
+            storage_node->name = storage_model.data(storage_model.index(j, 3)).toString();
+            storage_node->row = j;
+
+            corpus_node->children.append(storage_node);
+            storage_node->parent = corpus_node;
+
+            all_nodes.append(storage_node);
+        }
+
+        nodes.append(corpus_node);
+    }
 }
 
 QModelIndex HierarchyModel::index(int row, int column, const QModelIndex &parent) const
 {
-    /*if (!hasIndex(row, column, parent)) {
+    if (!hasIndex(row, column, parent)) {
         return QModelIndex();
     }
 
     if (!parent.isValid()) {
-        return createIndex(row, column, const_cast<NodeInfo*>(&nodes[row]));
+        return createIndex(row, column, const_cast<HierarchyNode*>(nodes[row]));
     }
 
-   NodeInfo* parentInfo = static_cast<NodeInfo*>(parent.internalPointer());
+    HierarchyNode *parentNode = static_cast<HierarchyNode*>(parent.internalPointer());
 
-    return createIndex(row, column, &parentInfo->children[row]);*/
-    return createIndex(row, column, nullptr);
+    return createIndex(row, column, parentNode->children[row]);
 }
 
-QModelIndex HierarchyModel::parent(const QModelIndex &child) const
+QModelIndex HierarchyModel::parent(const QModelIndex &index) const
 {
-    /*if (!child.isValid()) {
+    if (!index.isValid()) {
         return QModelIndex();
     }
 
-    NodeInfo* childInfo = static_cast<NodeInfo*>(child.internalPointer());
-    NodeInfo* parentInfo = childInfo->parent;
-    if (parentInfo != nullptr) {
-        return createIndex(0, IdColumn, parentInfo);
+    HierarchyNode *childNode = static_cast<HierarchyNode*>(index.internalPointer());
+    HierarchyNode *parentNode = childNode->parent;
+
+    if (parentNode != nullptr) {
+        return createIndex(parentNode->row, 0, parentNode);
     }
-    else {
-        return QModelIndex();
-    }*/
+
     return QModelIndex();
 }
 
 int HierarchyModel::rowCount(const QModelIndex &parent) const
 {
-    //if (!parent.isValid()) {
-    //    return nodes.size();
-    //}
-    //const NodeInfo* parentInfo = static_cast<const NodeInfo*>(parent.internalPointer());
-    //return parentInfo->children.size();
-    return parent.isValid() ? 0 : 1;
+    if (!parent.isValid()) {
+        return nodes.size();
+    }
+
+    const HierarchyNode* parentNode = static_cast<const HierarchyNode*>(parent.internalPointer());
+    return parentNode->children.size();
 }
 
 int HierarchyModel::columnCount(const QModelIndex &) const
@@ -89,37 +104,54 @@ int HierarchyModel::columnCount(const QModelIndex &) const
 
 QVariant HierarchyModel::data(const QModelIndex &index, int role) const
 {
-    /*if (!index.isValid()) {
+    if (role == Qt::DisplayRole) {
+        const HierarchyNode* currentNode = static_cast<HierarchyNode*>(index.internalPointer());
 
+        switch (index.column()) {
+        case NameColumn:
+            return currentNode->name;
+            break;
+        case FloorsColumn:
+            return currentNode->floors;
+            break;
+        }
+    }
+
+    return QVariant();
+}
+
+bool HierarchyModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+{
+    if ((section < 0)
+            || ((orientation == Qt::Horizontal) && (section >= columnCount()))
+            || ((orientation == Qt::Vertical) && (section >= rowCount()))) {
+            return false;
+    }
+
+    if (orientation == Qt::Horizontal) {
+        columnHeaders.append(value);
+        emit headerDataChanged(orientation, section, section);
+        return true;
+     }
+
+     return false;
+}
+
+QVariant HierarchyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if ((section < 0)
+            || ((orientation == Qt::Horizontal) && (section >= columnCount()))
+            || ((orientation == Qt::Vertical) && (section >= rowCount()))) {
+            qDebug() << "sdfdsfsdf";
         return QVariant();
     }
 
-    const NodeInfo* nodeInfo = static_cast<NodeInfo*>(index.internalPointer());
-    //const QFileInfo& fileInfo = nodeInfo->fileInfo;
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+        return columnHeaders.at(section);
+     }
 
-    qDebug() << "ya here::" << index.column();
-    return QVariant("ssdfdsf");
-    /*switch (index.column()) {
-    case IdColumn:
-        return "test";//nameData(fileInfo, role);
-    /*case ModificationDateColumn:
-        if (role == Qt::DisplayRole) {
-            return fileInfo.lastModified();
-        }
-        break;
-    case SizeColumn:
-        if (role == Qt::DisplayRole) {
-            return fileInfo.isDir()? QVariant(): fileInfo.size();
-        }
-        break;
-    default:
-    */
-    /*    break;
-    }*/
-    //return QVariant();
-    if (role == Qt::DisplayRole) {
-        return QVariant("test");
-    }
     return QVariant();
 }
+
+
 

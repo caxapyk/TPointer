@@ -5,6 +5,7 @@
 #include "models/hierarchymodel.h"
 
 #include <QAction>
+#include <QDialog>
 #include <QItemSelectionModel>
 #include <QObject>
 #include <QCoreApplication>
@@ -21,12 +22,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    hierarchy_model = new HierarchyModel();
 
+    hierarchy_model->setupModelData();
+    hierarchy_model->setHeaderData(0, Qt::Horizontal, tr("Place path"));
+    hierarchy_model->setHeaderData(1, Qt::Horizontal, tr("floors"));
 
-    HierarchyModel *model = new HierarchyModel();
-    model->setupModelData();
-    qDebug() << model->rowCount();
-    ui->tV_hierarchy->setModel(model);
+    ui->tV_hierarchy->setModel(hierarchy_model);
+    ui->tV_hierarchy->setColumnWidth(0, 200);
+    ui->tV_hierarchy->resizeColumnToContents(1);
 
     restoreAppState();
     loadData();
@@ -43,6 +47,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete m_mainTableModel;
+    delete hierarchy_model;
 }
 
 void MainWindow::restoreAppState()
@@ -96,6 +101,10 @@ void MainWindow::rowSelected(const QModelIndex &current, const QModelIndex&)
 void MainWindow::openStructureDialog()
 {
     StructureDialog dialog;
-    dialog.exec();
+    int res = dialog.exec();
+
+    if (res == QDialog::Accepted) {
+        hierarchy_model->setupModelData();
+    }
 }
 
