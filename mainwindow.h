@@ -3,8 +3,10 @@
 
 #include "models/maintablemodel.h"
 #include "models/hierarchymodel.h"
+#include "models/fundmodel.h"
 
 #include <QCloseEvent>
+#include <QLabel>
 #include <QMainWindow>
 #include <QModelIndex>
 
@@ -23,12 +25,16 @@ public:
 private:
     Ui::MainWindow *ui;
     MainTableModel *m_mainTableModel;
-    HierarchyModel *hierarchy_model;
+    HierarchyModel *m_hierarchy_model;
+    FundModel *m_fund_model;
+
+    QLabel *lb_server;
 
     const unsigned int m_descColumn = 10;
 
     void restoreAppState();
-    void loadData();
+    void setupStatusBar();
+    void loadData(const QModelIndex &index);
 
 private slots:
     void openStructureDialog();

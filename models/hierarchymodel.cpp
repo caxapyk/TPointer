@@ -1,6 +1,9 @@
 #include "hierarchymodel.h"
+#include "models/corpusmodel.h"
+#include "models/storagemodel.h"
 
 #include <QDebug>
+#include <QSqlQuery>
 #include <QSqlQueryModel>
 
 HierarchyModel::HierarchyModel()
@@ -10,50 +13,187 @@ HierarchyModel::HierarchyModel()
 
 HierarchyModel::~HierarchyModel()
 {
-    qDeleteAll(nodes);
-    // сделай рекурсивно!!
-    qDeleteAll(all_nodes);
+
 }
 
-void HierarchyModel::setupModelData()
+void HierarchyModel::select()
 {
-    if (!nodes.isEmpty()) {
-        nodes.clear();
-    }
+    setupModelData();
+}
 
-    QSqlQueryModel corpus_model;
-    QSqlQueryModel storage_model;
+void HierarchyModel::clear()
+{
+    //recursive remove nodes
+}
 
-    corpus_model.setQuery("SELECT * FROM corpus");
+void HierarchyModel::setupModelData(const QModelIndex &index)
+{
+    HierarchyNode *parentNode = (index.isValid()) ? static_cast<HierarchyNode*>(index.internalPointer()) : &root;
+    int level = (index.isValid()) ? parentNode->level + 1 : HierarchyModel::CorpusLevel;
 
-    for (int i=0; i < corpus_model.rowCount(); ++i) {
-        HierarchyNode *corpus_node = new HierarchyNode();
-        QVariant id = corpus_model.data(corpus_model.index(i, 0));
+    switch (level) {
+    case (HierarchyModel::CorpusLevel):
+    {
+        CorpusModel model;
+        model.select();
 
-        corpus_node->id = id.toInt();
-        corpus_node->name = corpus_model.data(corpus_model.index(i, 1)).toString();
+        for (int i=0; i < model.rowCount(); ++i) {
+            HierarchyNode *node = new HierarchyNode();
 
-        corpus_node->row = i;
+            node->id = model.data(model.index(i, 0));
+            node->name = model.data(model.index(i, 1));
 
+            node->level = level;
+            node->row = i;
 
-        storage_model.setQuery("SELECT * FROM storage WHERE corpus_id=" + id.toString());
+            node->mapped = false;
 
-        for (int j=0; j < storage_model.rowCount(); ++j) {
-            HierarchyNode *storage_node = new HierarchyNode();
-            QVariant id = storage_model.data(storage_model.index(j, 0));
-
-            storage_node->id = id.toInt();
-            storage_node->name = storage_model.data(storage_model.index(j, 3)).toString();
-            storage_node->row = j;
-
-            corpus_node->children.append(storage_node);
-            storage_node->parent = corpus_node;
-
-            all_nodes.append(storage_node);
+            root.children.append(node);
         }
-
-        nodes.append(corpus_node);
+        break;
     }
+    case (HierarchyModel::StorageLevel):
+    {
+        StorageModel model;
+        model.setParentId(1, parentNode->id);
+        model.select();
+
+        for (int i=0; i < model.rowCount(); ++i) {
+            HierarchyNode *node = new HierarchyNode();
+
+            node->id = model.data(model.index(i, 0));
+            node->name = model.data(model.index(i, 3));
+
+            node->level = level;
+            node->row = i;
+
+            node->parent = parentNode;
+
+            parentNode->mapped = true;
+            parentNode->children.append(node);
+        }
+        break;
+    }
+    case (HierarchyModel::CompartmentLevel):
+    {
+        QSqlQueryModel model;
+
+        QVariant storage_id = parentNode->parent->id;
+
+        //fix storage=1
+        model.setQuery("SELECT DISTINCT compartment FROM tpointer WHERE storage=1 ORDER BY compartment");
+
+        for (int i=0; i < model.rowCount(); ++i) {
+            HierarchyNode *node = new HierarchyNode();
+
+            node->name = model.data(model.index(i, 0)).toString();
+
+            node->level = level;
+            node->row = i;
+
+            node->parent = parentNode;
+
+            parentNode->mapped = true;
+            parentNode->children.append(node);
+        }
+        break;
+    }
+    case (HierarchyModel::ShelvingLevel):
+    {
+        QSqlQueryModel model;
+
+        QVariant storage_id = parentNode->parent->id;
+        QVariant compartment = parentNode->name;
+
+        //fix storage=1
+        model.setQuery("SELECT DISTINCT shelving FROM tpointer WHERE storage=1 AND compartment="
+                       + compartment.toString()
+                       + " ORDER BY shelving");
+
+        for (int i=0; i < model.rowCount(); ++i) {
+            HierarchyNode *node = new HierarchyNode();
+
+            node->name = model.data(model.index(i, 0)).toString();
+
+            node->level = level;
+            node->row = i;
+
+            node->parent = parentNode;
+
+            parentNode->mapped = true;
+            parentNode->children.append(node);
+        }
+        break;
+    }
+    }
+}
+
+bool HierarchyModel::hasChildren(const QModelIndex &parent) const
+{
+    if (!parent.isValid()) {
+            return !root.children.isEmpty();
+    }
+
+    HierarchyNode *parentNode = static_cast<HierarchyNode*>(parent.internalPointer());
+
+    QString query_str;
+
+    switch (parentNode->level) {
+    case (HierarchyModel::CorpusLevel):
+    {
+        query_str = "SELECT COUNT(id) FROM storage WHERE corpus_id=" + parentNode->id.toString();
+        break;
+    }
+    case (HierarchyModel::StorageLevel):
+    {
+        // fix storage=1
+        query_str = "SELECT COUNT(DISTINCT compartment) FROM tpointer WHERE storage=1";
+        break;
+    }
+    case (HierarchyModel::CompartmentLevel):
+    {
+        QVariant storage_id = parentNode->parent->parent->id;
+        QVariant compartment = parentNode->name;
+
+        // fix storage=1
+        query_str = "SELECT COUNT(DISTINCT shelving) FROM tpointer WHERE storage=1 AND compartment=" + compartment.toString();
+        break;
+    }
+    case (HierarchyModel::ShelvingLevel):
+    {
+        return false;
+        break;
+    }
+    }
+
+   QSqlQuery query(query_str);
+
+   query.exec();
+   query.first();
+
+   if (query.value(0).toInt() > 0) {
+       return true;
+   }
+
+   return false;
+}
+
+bool HierarchyModel::canFetchMore(const QModelIndex &parent) const
+{
+    if (!parent.isValid()) {
+        return false;
+    }
+
+    const HierarchyNode *parentNode = static_cast<const HierarchyNode*>(parent.internalPointer());
+
+    return !parentNode->mapped;
+}
+
+void HierarchyModel::fetchMore(const QModelIndex &parent)
+{
+    //const HierarchyNode *parentNode = static_cast<const HierarchyNode*>(parent.internalPointer());
+
+    setupModelData(parent);
 }
 
 QModelIndex HierarchyModel::index(int row, int column, const QModelIndex &parent) const
@@ -63,7 +203,7 @@ QModelIndex HierarchyModel::index(int row, int column, const QModelIndex &parent
     }
 
     if (!parent.isValid()) {
-        return createIndex(row, column, const_cast<HierarchyNode*>(nodes[row]));
+        return createIndex(row, column, const_cast<HierarchyNode*>(root.children[row]));
     }
 
     HierarchyNode *parentNode = static_cast<HierarchyNode*>(parent.internalPointer());
@@ -90,7 +230,7 @@ QModelIndex HierarchyModel::parent(const QModelIndex &index) const
 int HierarchyModel::rowCount(const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
-        return nodes.size();
+        return root.children.size();
     }
 
     const HierarchyNode* parentNode = static_cast<const HierarchyNode*>(parent.internalPointer());
@@ -109,11 +249,21 @@ QVariant HierarchyModel::data(const QModelIndex &index, int role) const
 
         switch (index.column()) {
         case NameColumn:
-            return currentNode->name;
+        {
+            if (currentNode->level == HierarchyModel::CompartmentLevel) {
+                return QVariant(tr("Compartment ") + currentNode->name.toString());
+            } else if (currentNode->level == HierarchyModel::ShelvingLevel) {
+                return QVariant(tr("Shelving ") + currentNode->name.toString());
+            } else {
+                return currentNode->name;
+            }
             break;
+        }
         case FloorsColumn:
-            return currentNode->floors;
+        {
+            return QVariant();
             break;
+        }
         }
     }
 

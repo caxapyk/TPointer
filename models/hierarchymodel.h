@@ -9,17 +9,16 @@
 
 struct HierarchyNode
 {
-    int id;
-    QString name;
-    QString floors;
+    QVariant id;
+    QVariant name;
     QVector<HierarchyNode*> children;
     HierarchyNode* parent;
+    int level;
     int row;
 
     bool mapped;
 };
-
-typedef QVector<HierarchyNode*> HierarchyNodeList;
+typedef HierarchyNode HierarchyRootNode;
 
 class HierarchyModel : public QAbstractItemModel
 {
@@ -29,26 +28,30 @@ public:
     HierarchyModel();
     ~HierarchyModel();
 
-    HierarchyNodeList nodes;
-    HierarchyNodeList all_nodes;
+    HierarchyRootNode root;
+    enum NodeLevels { CorpusLevel, StorageLevel, CompartmentLevel, ShelvingLevel };
 
-    void setupModelData();
-    int findRow(const HierarchyNode *HierarchyNode) const;
+    void setupModelData(const QModelIndex &index=QModelIndex());
 
-    QModelIndex index(int row, int column, const QModelIndex &parent) const;
-    QModelIndex parent(const QModelIndex &index) const;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    bool canFetchMore(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole);
+    QModelIndex index(int row, int column, const QModelIndex &parent) const;
+    void fetchMore(const QModelIndex &parent);
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    bool hasChildren(const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex &index) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole);
+
+    void select();
+    void clear();
 
 private:
     void recursiveDeleteNodes(HierarchyNode *node=nullptr);
     QVector<QVariant> columnHeaders;
 
     enum NodeColumns { NameColumn, FloorsColumn, ColumnCount };
-    enum NodeLevels { CorpusLevel, StorageLevel, CompartmentLevel, StellaryLevel };
 };
 
 #endif // HIERARCHYMODEL_H

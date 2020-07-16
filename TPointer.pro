@@ -24,6 +24,7 @@ SOURCES += \
     mainwindow.cpp \
     models/basemodel.cpp \
     models/corpusmodel.cpp \
+    models/fundmodel.cpp \
     models/hierarchymodel.cpp \
     models/maintablemodel.cpp \
     models/storagemodel.cpp
@@ -36,6 +37,7 @@ HEADERS += \
     mainwindow.h \
     models/basemodel.h \
     models/corpusmodel.h \
+    models/fundmodel.h \
     models/hierarchymodel.h \
     models/maintablemodel.h \
     models/storagemodel.h

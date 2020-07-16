@@ -34,6 +34,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
     parser.process(*application);
 
+    server_address = parser.value(hostnameOption);
+
     try {
         Connection conn;
         conn.connect(parser.value(hostnameOption),
