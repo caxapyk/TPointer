@@ -19,12 +19,14 @@ SOURCES += \
     application.cpp \
     connection.cpp \
     dialogs/commalistdelegate.cpp \
-    dialogs/structuredialog.cpp \
+    dialogs/paramdialog.cpp \
+    dialogs/searchdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     models/basemodel.cpp \
     models/corpusmodel.cpp \
     models/fundmodel.cpp \
+    models/fundproxymodel.cpp \
     models/hierarchymodel.cpp \
     models/maintablemodel.cpp \
     models/storagemodel.cpp
@@ -33,17 +35,20 @@ HEADERS += \
     application.h \
     connection.h \
     dialogs/commalistdelegate.h \
-    dialogs/structuredialog.h \
+    dialogs/paramdialog.h \
+    dialogs/searchdialog.h \
     mainwindow.h \
     models/basemodel.h \
     models/corpusmodel.h \
     models/fundmodel.h \
+    models/fundproxymodel.h \
     models/hierarchymodel.h \
     models/maintablemodel.h \
     models/storagemodel.h
 
 FORMS += \
-    dialogs/structuredialog.ui \
+    dialogs/paramdialog.ui \
+    dialogs/searchdialog.ui \
     mainwindow.ui
 
 TRANSLATIONS += \

@@ -162,72 +162,72 @@
     </message>
 </context>
 <context>
-    <name>StructureDialog</name>
+    <name>ParamDialog</name>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="29"/>
+        <location filename="../dialogs/ParamDialog.ui" line="29"/>
         <source>Structure of storage</source>
         <translation>Параметры хранилищ</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="56"/>
+        <location filename="../dialogs/ParamDialog.ui" line="56"/>
         <source>Corpuses</source>
         <translation>Корпуса</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="83"/>
-        <location filename="../dialogs/structuredialog.ui" line="158"/>
+        <location filename="../dialogs/ParamDialog.ui" line="83"/>
+        <location filename="../dialogs/ParamDialog.ui" line="158"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="94"/>
-        <location filename="../dialogs/structuredialog.ui" line="172"/>
+        <location filename="../dialogs/ParamDialog.ui" line="94"/>
+        <location filename="../dialogs/ParamDialog.ui" line="172"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="122"/>
+        <location filename="../dialogs/ParamDialog.ui" line="122"/>
         <source>Archival Storages</source>
         <translation>Архивохранилища</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="186"/>
+        <location filename="../dialogs/ParamDialog.ui" line="186"/>
         <source>Up</source>
         <translation>Вверх</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.ui" line="200"/>
+        <location filename="../dialogs/ParamDialog.ui" line="200"/>
         <source>Down</source>
         <translation>Вниз</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.cpp" line="76"/>
+        <location filename="../dialogs/ParamDialog.cpp" line="76"/>
         <source>Name</source>
         <translation>Наименование</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.cpp" line="77"/>
+        <location filename="../dialogs/ParamDialog.cpp" line="77"/>
         <source>Rooms count</source>
         <translation>Помещений</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.cpp" line="78"/>
+        <location filename="../dialogs/ParamDialog.cpp" line="78"/>
         <source>Floors</source>
         <translation>Этажи</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.cpp" line="109"/>
-        <location filename="../dialogs/structuredialog.cpp" line="140"/>
+        <location filename="../dialogs/ParamDialog.cpp" line="109"/>
+        <location filename="../dialogs/ParamDialog.cpp" line="140"/>
         <source>Storage structure</source>
         <translation>Параметры хранилищ</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.cpp" line="109"/>
+        <location filename="../dialogs/ParamDialog.cpp" line="109"/>
         <source>Could not create item</source>
         <translation>Невозможно добавить запись</translation>
     </message>
     <message>
-        <location filename="../dialogs/structuredialog.cpp" line="140"/>
+        <location filename="../dialogs/ParamDialog.cpp" line="140"/>
         <source>Could not remove item</source>
         <translation>Невозможно удалить запись</translation>
     </message>

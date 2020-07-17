@@ -1,5 +1,5 @@
-#include "structuredialog.h"
-#include "ui_structuredialog.h"
+#include "paramdialog.h"
+#include "ui_paramdialog.h"
 #include "commalistdelegate.h"
 #include "models/corpusmodel.h"
 #include "models/storagemodel.h"
@@ -13,9 +13,9 @@
 #include <QSqlRelationalDelegate>
 #include <QVariant>
 
-StructureDialog::StructureDialog(QWidget *parent) :
+ParamDialog::ParamDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::StructureDialog)
+    ui(new Ui::ParamDialog)
 {
     ui->setupUi(this);
 
@@ -40,15 +40,15 @@ StructureDialog::StructureDialog(QWidget *parent) :
         removeItem(ui->tV_storages);
     });
 
-    connect(ui->pB_storageUp, &QPushButton::released, this, &StructureDialog::moveUp);
-    connect(ui->pB_storageDown, &QPushButton::released, this, &StructureDialog::moveDown);
+    connect(ui->pB_storageUp, &QPushButton::released, this, &ParamDialog::moveUp);
+    connect(ui->pB_storageDown, &QPushButton::released, this, &ParamDialog::moveDown);
 
-    connect(ui->lV_corpuses, &QListView::clicked, this, &StructureDialog::selectCorpus);
-    connect(ui->lV_corpuses, &QListView::clicked, this, &StructureDialog::setControlsState);
-    connect(ui->tV_storages, &QListView::clicked, this, &StructureDialog::setControlsState);
+    connect(ui->lV_corpuses, &QListView::clicked, this, &ParamDialog::selectCorpus);
+    connect(ui->lV_corpuses, &QListView::clicked, this, &ParamDialog::setControlsState);
+    connect(ui->tV_storages, &QListView::clicked, this, &ParamDialog::setControlsState);
 }
 
-void StructureDialog::loadCorpuses() {
+void ParamDialog::loadCorpuses() {
     m_corpus_model->select();
 
     ui->lV_corpuses->setModel(m_corpus_model);
@@ -60,7 +60,7 @@ void StructureDialog::loadCorpuses() {
 
 }
 
-void StructureDialog::selectCorpus(const QModelIndex &index)
+void ParamDialog::selectCorpus(const QModelIndex &index)
 {
     if (index.isValid()){
         QVariant id = index.sibling(index.row(), 0).data();
@@ -68,7 +68,7 @@ void StructureDialog::selectCorpus(const QModelIndex &index)
     }
 }
 
-void StructureDialog::loadStorages(QVariant id)
+void ParamDialog::loadStorages(QVariant id)
 {
     m_storage_model->setParentId(1, id);
     m_storage_model->select();
@@ -97,7 +97,7 @@ void StructureDialog::loadStorages(QVariant id)
     m_storage_controls->setId(ui->pB_storageDown, 3);
 }
 
-void StructureDialog::createItem(QWidget *widget)
+void ParamDialog::createItem(QWidget *widget)
 {
     QAbstractItemView *view = qobject_cast<QAbstractItemView*> (widget);
     BaseModel *model = qobject_cast<BaseModel*> (view->model());
@@ -110,7 +110,7 @@ void StructureDialog::createItem(QWidget *widget)
     }
 }
 
-void StructureDialog::moveUp()
+void ParamDialog::moveUp()
 {
     QModelIndex index = ui->tV_storages->currentIndex();
     QModelIndex up_index = m_storage_model->moveUp(index.row(), 2);
@@ -120,7 +120,7 @@ void StructureDialog::moveUp()
     }
 }
 
-void StructureDialog::moveDown()
+void ParamDialog::moveDown()
 {
     QModelIndex index = ui->tV_storages->currentIndex();
     QModelIndex down_index = m_storage_model->moveDown(index.row(), 2);
@@ -130,7 +130,7 @@ void StructureDialog::moveDown()
     }
 }
 
-void StructureDialog::removeItem(QWidget *widget)
+void ParamDialog::removeItem(QWidget *widget)
 {
     QAbstractItemView *view = qobject_cast<QAbstractItemView*> (widget);
     BaseModel *model = qobject_cast<BaseModel*> (view->model());
@@ -141,7 +141,7 @@ void StructureDialog::removeItem(QWidget *widget)
     }
 }
 
-void StructureDialog::setControlsState(const QModelIndex&)
+void ParamDialog::setControlsState(const QModelIndex&)
 {
     bool isValid = ui->tV_storages->currentIndex().isValid();
     for (int i = 1; i < 4; ++i) {
@@ -149,7 +149,7 @@ void StructureDialog::setControlsState(const QModelIndex&)
     }
 }
 
-StructureDialog::~StructureDialog()
+ParamDialog::~ParamDialog()
 {
     delete ui;
     delete m_corpus_model;

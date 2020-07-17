@@ -1,5 +1,5 @@
-#ifndef STRUCTUREDIALOG_H
-#define STRUCTUREDIALOG_H
+#ifndef PARAMDIALOG_H
+#define PARAMDIALOG_H
 
 #include "models/basemodel.h"
 
@@ -9,22 +9,22 @@
 #include <QWidget>
 
 namespace Ui {
-class StructureDialog;
+class ParamDialog;
 }
 
-class StructureDialog : public QDialog
+class ParamDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit StructureDialog(QWidget *parent = nullptr);
-    ~StructureDialog();
+    explicit ParamDialog(QWidget *parent = nullptr);
+    ~ParamDialog();
 
 private:
     void loadCorpuses();
     void loadStorages(QVariant id);
 
-    Ui::StructureDialog *ui;
+    Ui::ParamDialog *ui;
     BaseModel *m_corpus_model;
     BaseModel *m_storage_model;
     QButtonGroup *m_storage_controls;
@@ -38,4 +38,4 @@ private slots:
     void setControlsState(const QModelIndex&);
 };
 
-#endif // STRUCTUREDIALOG_H
+#endif // SEARCHDIALOG_H

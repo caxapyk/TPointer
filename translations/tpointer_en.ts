@@ -126,7 +126,7 @@
     </message>
 </context>
 <context>
-    <name>StructureDialog</name>
+    <name>ParamDialog</name>
     <message>
         <source>Structure of storage</source>
         <translation type="unfinished"></translation>

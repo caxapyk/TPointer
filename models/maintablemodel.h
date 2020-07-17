@@ -10,6 +10,7 @@ class MainTableModel : public QSqlTableModel
 
 public:
     MainTableModel(QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
+    int count();
 };
 
 #endif // MAINTABLEMODEL_H

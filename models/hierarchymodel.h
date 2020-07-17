@@ -11,6 +11,7 @@ struct HierarchyNode
 {
     QVariant id;
     QVariant name;
+    QVariant floor;
     QVector<HierarchyNode*> children;
     HierarchyNode* parent;
     int level;
@@ -28,7 +29,7 @@ public:
     HierarchyModel();
     ~HierarchyModel();
 
-    HierarchyRootNode root;
+    HierarchyRootNode *root;
     enum NodeLevels { CorpusLevel, StorageLevel, CompartmentLevel, ShelvingLevel };
 
     void setupModelData(const QModelIndex &index=QModelIndex());
@@ -48,7 +49,7 @@ public:
     void clear();
 
 private:
-    void recursiveDeleteNodes(HierarchyNode *node=nullptr);
+    void recursivelyRemoveNodes(HierarchyNode *node=nullptr);
     QVector<QVariant> columnHeaders;
 
     enum NodeColumns { NameColumn, FloorsColumn, ColumnCount };
