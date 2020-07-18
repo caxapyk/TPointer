@@ -2,15 +2,15 @@
 #define MAINTABLEMODEL_H
 
 #include <QObject>
-#include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
 #include <QSqlDatabase>
 
-class MainTableModel : public QSqlTableModel
+class MainTableModel : public QSqlRelationalTableModel
 {
 
 public:
     MainTableModel(QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
-    int count();
+    int count() const;
 };
 
 #endif // MAINTABLEMODEL_H

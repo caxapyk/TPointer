@@ -18,7 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     application.cpp \
     connection.cpp \
-    dialogs/commalistdelegate.cpp \
+    dialogs/intdelegate.cpp \
+    dialogs/intlistdelegate.cpp \
     dialogs/paramdialog.cpp \
     dialogs/searchdialog.cpp \
     main.cpp \
@@ -36,7 +37,8 @@ SOURCES += \
 HEADERS += \
     application.h \
     connection.h \
-    dialogs/commalistdelegate.h \
+    dialogs/intdelegate.h \
+    dialogs/intlistdelegate.h \
     dialogs/paramdialog.h \
     dialogs/searchdialog.h \
     mainwindow.h \

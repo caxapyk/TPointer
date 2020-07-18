@@ -5,6 +5,7 @@ StorageModel::StorageModel(QObject *parent) : BaseModel(parent)
     setTable("storage");
     setItemName(tr("New storage"));
     setSort(2, Qt::AscendingOrder);
+    setPositionColumn(2);
 
     setEditStrategy(QSqlTableModel::OnFieldChange);
 }

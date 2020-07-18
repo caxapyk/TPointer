@@ -12,7 +12,7 @@ public:
     CorpusModel(QObject *parent = nullptr);
 
 public slots:
-    void setDefaultRecord(int, QSqlRecord&);
+    void setDefaultRecord(int, QSqlRecord&) override;
 };
 
 #endif // CORPUSMODEL_H

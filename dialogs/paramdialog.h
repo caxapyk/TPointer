@@ -3,10 +3,10 @@
 
 #include "models/basemodel.h"
 
+#include <QAbstractItemView>
 #include <QButtonGroup>
 #include <QDialog>
 #include <QModelIndex>
-#include <QWidget>
 
 #include "widgets/buttoncontrols.h"
 
@@ -38,12 +38,11 @@ private:
     ButtonControls *feature_controls;
 
 private slots:
-    void createItem(QWidget *widget);
-    void moveUp();
-    void moveDown();
+    void createItem(QAbstractItemView *view);
+    void moveUp(QAbstractItemView *view);
+    void moveDown(QAbstractItemView *view);
     void selectCorpus(const QModelIndex &index);
-    void removeItem(QWidget *widget);
-    void setControlsState(const QModelIndex &index);
+    void removeItem(QAbstractItemView *view);
 };
 
 #endif // SEARCHDIALOG_H

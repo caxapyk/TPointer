@@ -2,9 +2,10 @@
 
 FeatureModel::FeatureModel(QObject *parent) : BaseModel(parent)
 {
-    setTable("features");
+    setTable("feature");
     setItemName(tr("New feature"));
     setSort(1, Qt::AscendingOrder);
+    setPositionColumn(1);
 
     setEditStrategy(QSqlTableModel::OnFieldChange);
 }

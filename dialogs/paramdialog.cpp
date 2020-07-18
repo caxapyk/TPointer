@@ -1,6 +1,7 @@
 #include "paramdialog.h"
 #include "ui_paramdialog.h"
-#include "commalistdelegate.h"
+#include "intdelegate.h"
+#include "intlistdelegate.h"
 #include "models/corpusmodel.h"
 #include "models/storagemodel.h"
 #include "models/featuremodel.h"
@@ -43,9 +44,12 @@ ParamDialog::ParamDialog(QWidget *parent) :
     connect(storage_controls->buttonRemove(), &QPushButton::released, [=] {
         removeItem(ui->tV_storages);
     });
-
-    connect(storage_controls->buttonUp(), &QPushButton::released, this, &ParamDialog::moveUp);
-    connect(storage_controls->buttonDown(), &QPushButton::released, this, &ParamDialog::moveDown);
+    connect(storage_controls->buttonUp(), &QPushButton::released, this, [=] {
+        moveUp(ui->tV_storages);
+    });
+    connect(storage_controls->buttonDown(), &QPushButton::released, this, [=] {
+        moveDown(ui->tV_storages);
+    });
 
     connect(ui->tV_storages, &QListView::clicked, storage_controls, &ButtonControls::modelSelected);
 
@@ -57,9 +61,12 @@ ParamDialog::ParamDialog(QWidget *parent) :
     connect(feature_controls->buttonRemove(), &QPushButton::released, [=] {
         removeItem(ui->tV_features);
     });
-
-    connect(feature_controls->buttonUp(), &QPushButton::released, this, &ParamDialog::moveUp);
-    connect(feature_controls->buttonDown(), &QPushButton::released, this, &ParamDialog::moveDown);
+    connect(feature_controls->buttonUp(), &QPushButton::released, this, [=] {
+        moveUp(ui->tV_features);
+    });
+    connect(feature_controls->buttonDown(), &QPushButton::released, this, [=] {
+        moveDown(ui->tV_features);
+    });
 
     connect(ui->tV_features, &QListView::clicked, feature_controls, &ButtonControls::modelSelected);
 }
@@ -122,7 +129,8 @@ void ParamDialog::loadStorages(QVariant id)
     m_storage_model->setHeaderData(5, Qt::Horizontal, tr("Floors"));
 
     ui->tV_storages->setModel(m_storage_model);
-    ui->tV_storages->setItemDelegateForColumn(5, new CommaListDelegate());
+    ui->tV_storages->setItemDelegateForColumn(4, new IntDelegate());
+    ui->tV_storages->setItemDelegateForColumn(5, new IntListDelegate());
 
     ui->tV_storages->hideColumn(0);
     ui->tV_storages->hideColumn(1);
@@ -143,46 +151,54 @@ void ParamDialog::loadFeatures() {
     ui->tV_features->hideColumn(1);
 }
 
-void ParamDialog::createItem(QWidget *widget)
+void ParamDialog::createItem(QAbstractItemView *view)
 {
-    QAbstractItemView *view = qobject_cast<QAbstractItemView*> (widget);
-    BaseModel *model = qobject_cast<BaseModel*> (view->model());
+    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
+    BaseModel *model = qobject_cast<BaseModel*> (v->model());
 
-    if (model->insert()) {
+    if (model && model->insert()) {
         QModelIndex index = model->index(model->rowCount() - 1, 1);
-        view->setCurrentIndex(index);
+        v->setCurrentIndex(index);
     } else {
         QMessageBox::warning(this, tr("Storage structure"), tr("Could not create item"), QMessageBox::Ok);
     }
 }
 
-void ParamDialog::moveUp()
+void ParamDialog::removeItem(QAbstractItemView *view)
 {
-    QModelIndex index = ui->tV_storages->currentIndex();
-    QModelIndex up_index = m_storage_model->moveUp(index.row(), 2);
+    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
+    BaseModel *model = qobject_cast<BaseModel*> (v->model());
+
+    if(model) {
+        QModelIndexList indexes = v->selectionModel()->selectedIndexes();
+        if (!model->remove(indexes)) {
+            QMessageBox::warning(this, tr("Storage structure"), tr("Could not remove item"), QMessageBox::Ok);
+        }
+    }
+}
+
+void ParamDialog::moveUp(QAbstractItemView *view)
+{
+    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
+    BaseModel *model = qobject_cast<BaseModel*> (v->model());
+
+    QModelIndex index = v->currentIndex();
+    QModelIndex up_index = model->moveUp(index.row());
 
     if (up_index.isValid()) {
-        ui->tV_storages->setCurrentIndex(up_index);
+        v->setCurrentIndex(up_index);
     }
 }
 
-void ParamDialog::moveDown()
+void ParamDialog::moveDown(QAbstractItemView *view)
 {
-    QModelIndex index = ui->tV_storages->currentIndex();
-    QModelIndex down_index = m_storage_model->moveDown(index.row(), 2);
+    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
+    BaseModel *model = qobject_cast<BaseModel*> (v->model());
+
+    QModelIndex index = v->currentIndex();
+    QModelIndex down_index = model->moveDown(index.row());
 
     if (down_index.isValid()) {
-        ui->tV_storages->setCurrentIndex(down_index);
-    }
-}
-
-void ParamDialog::removeItem(QWidget *widget)
-{
-    QAbstractItemView *view = qobject_cast<QAbstractItemView*> (widget);
-    BaseModel *model = qobject_cast<BaseModel*> (view->model());
-
-    QModelIndexList indexes = view->selectionModel()->selectedIndexes();
-    if (!model->remove(indexes)) {
-        QMessageBox::warning(this, tr("Storage structure"), tr("Could not remove item"), QMessageBox::Ok);
+        v->setCurrentIndex(down_index);
     }
 }

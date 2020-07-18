@@ -56,14 +56,14 @@ QModelIndex BaseModel::baseMove(SortDirection direction, int row, int column)
     return x_index;
 }
 
-QModelIndex BaseModel::moveUp(int row, int column)
+QModelIndex BaseModel::moveUp(int row)
 {
-    return baseMove(SortDirection::SortUp, row, column);
+    return baseMove(SortDirection::SortUp, row, getPositionColumn());
 }
 
-QModelIndex BaseModel::moveDown(int row, int column)
+QModelIndex BaseModel::moveDown(int row)
 {
-    return baseMove(SortDirection::SortDown, row, column);
+    return baseMove(SortDirection::SortDown, row, getPositionColumn());
 }
 
 bool BaseModel::remove(QModelIndexList &list)
@@ -83,4 +83,9 @@ void BaseModel::setParentId(int column, QVariant id)
 {
      m_parent_id=id;
      setFilter(record().fieldName(column) + "=" + id.toString());
+}
+
+void BaseModel::setPositionColumn(int column)
+{
+    position_column = column;
 }
