@@ -2,7 +2,9 @@
 #define STORAGEMODEL_H
 
 #include "basemodel.h"
+
 #include <QObject>
+#include <QSqlRecord>
 
 class StorageModel : public BaseModel
 {
@@ -13,7 +15,7 @@ public:
     StorageModel(QObject *parent = nullptr);
 
 public slots:
-    void setDefaultRecord(int, QSqlRecord&);
+    void setDefaultRecord(int, QSqlRecord&) override;
 };
 
 #endif // STORAGEMODEL_H

@@ -192,7 +192,6 @@ void MainWindow::openParamDialog()
     }
 }
 
-
 /*
  * SLOT openSearchDialog()
  */

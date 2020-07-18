@@ -1,8 +1,5 @@
 #include "storagemodel.h"
 
-#include <QSqlRecord>
-#include <QSqlRelation>
-
 StorageModel::StorageModel(QObject *parent) : BaseModel(parent)
 {
     setTable("storage");

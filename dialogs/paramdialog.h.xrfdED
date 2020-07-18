@@ -43,7 +43,6 @@ private slots:
     void moveDown();
     void selectCorpus(const QModelIndex &index);
     void removeItem(QWidget *widget);
-    void setControlsState(const QModelIndex &index);
 };
 
 #endif // SEARCHDIALOG_H

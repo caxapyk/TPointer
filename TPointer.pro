@@ -25,11 +25,13 @@ SOURCES += \
     mainwindow.cpp \
     models/basemodel.cpp \
     models/corpusmodel.cpp \
+    models/featuremodel.cpp \
     models/fundmodel.cpp \
     models/fundproxymodel.cpp \
     models/hierarchymodel.cpp \
     models/maintablemodel.cpp \
-    models/storagemodel.cpp
+    models/storagemodel.cpp \
+    widgets/buttoncontrols.cpp
 
 HEADERS += \
     application.h \
@@ -40,16 +42,19 @@ HEADERS += \
     mainwindow.h \
     models/basemodel.h \
     models/corpusmodel.h \
+    models/featuremodel.h \
     models/fundmodel.h \
     models/fundproxymodel.h \
     models/hierarchymodel.h \
     models/maintablemodel.h \
-    models/storagemodel.h
+    models/storagemodel.h \
+    widgets/buttoncontrols.h
 
 FORMS += \
     dialogs/paramdialog.ui \
     dialogs/searchdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    widgets/buttoncontrols.ui
 
 TRANSLATIONS += \
     translations/tpointer_en.ts \
