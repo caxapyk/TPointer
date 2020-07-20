@@ -14,8 +14,8 @@ QWidget *IntListDelegate::createEditor(QWidget *parent, const QStyleOptionViewIt
 {
     QLineEdit *editor = new QLineEdit(parent);
 
-    //Comma separated integer from 1-19 or blank line
-    QRegExp rx("^(([1-9]|([1-9][0-9]))(,([1-9]|([1-9][0-9])))*)?$");
+    //Comma separated integer from -9-99 or blank line
+    QRegExp rx("^((-[1-9]|[0]|[1-9]|([1-9][0-9]))(,(-[1-9]|[0]|[1-9]|([1-9][0-9])))*)?$");
     QValidator *validator = new QRegExpValidator(rx, parent);
 
     editor->setValidator(validator);

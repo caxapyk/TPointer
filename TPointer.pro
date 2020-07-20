@@ -31,6 +31,8 @@ SOURCES += \
     models/fundproxymodel.cpp \
     models/hierarchymodel.cpp \
     models/maintablemodel.cpp \
+    models/noitemlistmodel.cpp \
+    models/searchmodel.cpp \
     models/storagemodel.cpp \
     widgets/buttoncontrols.cpp
 
@@ -49,6 +51,8 @@ HEADERS += \
     models/fundproxymodel.h \
     models/hierarchymodel.h \
     models/maintablemodel.h \
+    models/noitemlistmodel.h \
+    models/searchmodel.h \
     models/storagemodel.h \
     widgets/buttoncontrols.h
 

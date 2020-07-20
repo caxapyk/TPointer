@@ -20,4 +20,6 @@ void FundModel::select()
         QStandardItem *item = new QStandardItem(query.value(0).toString());
         parentItem->appendRow(item);
     }
+
+    setHeaderData(0, Qt::Horizontal, tr("Funds"));
 }

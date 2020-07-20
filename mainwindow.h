@@ -4,6 +4,7 @@
 #include "models/maintablemodel.h"
 #include "models/hierarchymodel.h"
 #include "models/fundmodel.h"
+#include "models/searchmodel.h"
 #include "dialogs/searchdialog.h"
 
 #include <QCloseEvent>
@@ -11,6 +12,7 @@
 #include <QMainWindow>
 #include <QModelIndex>
 #include <QSortFilterProxyModel>
+#include <QSqlQueryModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -42,16 +44,16 @@ private:
     void restoreAppState();
     void setupModels();
     void setupStatusBar();
-
-    void fillMainTable();
+    void setDisplayRows(int rows);
 
 private slots:
-    void treeObjectSelected(const QModelIndex &index);
+    void loadData(const QModelIndex &index);
     void filterFunds(const QString &text);
     void clearFundFilter();
     void openParamDialog();
     void openSearchDialog();
     void rowSelected(const QModelIndex &current, const QModelIndex&);
+    void search(QString &filter);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

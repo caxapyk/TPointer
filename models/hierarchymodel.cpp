@@ -10,6 +10,9 @@
 HierarchyModel::HierarchyModel()
 {
     root = new HierarchyRootNode;
+
+    setHeaderData(0, Qt::Horizontal, tr("Place path"));
+    setHeaderData(1, Qt::Horizontal, tr("Floors"));
 }
 
 HierarchyModel::~HierarchyModel()
@@ -74,6 +77,7 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
     {
         StorageModel model;
         model.setParentId(1, parentNode->id);
+        model.setSort(2, Qt::AscendingOrder);
         model.select();
 
         for (int i=0; i < model.rowCount(); ++i) {

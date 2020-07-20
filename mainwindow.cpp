@@ -3,6 +3,7 @@
 #include "application.h"
 #include "dialogs/paramdialog.h"
 #include "models/hierarchymodel.h"
+#include "models/searchmodel.h"
 
 #include <QDebug>
 
@@ -50,16 +51,13 @@ void MainWindow::setupModels()
     m_hierarchy_model = new HierarchyModel;
     m_hierarchy_model->select();
 
-    m_hierarchy_model->setHeaderData(0, Qt::Horizontal, tr("Place path"));
-    m_hierarchy_model->setHeaderData(1, Qt::Horizontal, tr("Floors"));
-
     ui->tV_hierarchy->setModel(m_hierarchy_model);
     ui->tV_hierarchy->setColumnWidth(0, 200);
     ui->tV_hierarchy->resizeColumnToContents(1);
 
     ui->tV_hierarchy->expandToDepth(0);
 
-    connect(ui->tV_hierarchy, &QTreeView::clicked, this, &MainWindow::treeObjectSelected);
+    connect(ui->tV_hierarchy, &QTreeView::clicked, this, &MainWindow::loadData);
 
      /* FundModel */
     m_fund_model = new FundModel(this);
@@ -67,13 +65,12 @@ void MainWindow::setupModels()
 
     m_fund_proxymodel = new QSortFilterProxyModel(this);
     m_fund_proxymodel->setSourceModel(m_fund_model);
-    m_fund_proxymodel->setHeaderData(0, Qt::Horizontal, tr("Funds"));
 
     ui->tV_funds->setModel(m_fund_proxymodel);
     ui->tV_funds->setColumnWidth(0, 200);
     ui->tV_funds->resizeColumnToContents(1);
 
-    connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::treeObjectSelected);
+    connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::loadData);
     connect(ui->lE_fundFilter, &QLineEdit::textChanged, this, &MainWindow::filterFunds);
     connect(ui->pB_clearFundFilter, &QPushButton::released, this, &MainWindow::clearFundFilter);
 }
@@ -91,7 +88,7 @@ void MainWindow::setupStatusBar()
      ui->statusbar->showMessage(tr("Ready"), 2000);
 }
 
-void MainWindow::treeObjectSelected(const QModelIndex &index)
+void MainWindow::loadData(const QModelIndex &index)
 {
     if (dynamic_cast<const HierarchyModel*>(index.model())){
         const HierarchyNode *node = static_cast<const HierarchyNode*>(index.internalPointer());
@@ -104,7 +101,15 @@ void MainWindow::treeObjectSelected(const QModelIndex &index)
                                         + "'");
             ui->tV_funds->setCurrentIndex(QModelIndex());
 
-            fillMainTable();
+            m_table_model->select();
+            ui->tV_MainTable->setModel(m_table_model);
+
+            ui->tV_MainTable->showColumn(7);
+
+            ui->tV_MainTable->hideColumn(0);
+            ui->tV_MainTable->hideColumn(2);
+            ui->tV_MainTable->hideColumn(3);
+            ui->tV_MainTable->hideColumn(4);
 
             setWindowTitle(tr("Archival topographic pointer")
                            + tr(" [%1, %2, Comp.%3, Sh.%4]")
@@ -112,30 +117,38 @@ void MainWindow::treeObjectSelected(const QModelIndex &index)
                             .arg(node->parent->parent->name.toString())
                             .arg(node->parent->name.toString())
                             .arg(node->name.toString()));
+
+            connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
         }
     } else if (dynamic_cast<const QSortFilterProxyModel*>(index.model())) {
         m_table_model->setFilter("fund='" + index.data().toString() + "'");
         ui->tV_hierarchy->setCurrentIndex(QModelIndex());
 
-        fillMainTable();
+        m_table_model->select();
+        ui->tV_MainTable->setModel(m_table_model);
+
+        ui->tV_MainTable->showColumn(2);
+        ui->tV_MainTable->showColumn(3);
+        ui->tV_MainTable->showColumn(4);
+
+        ui->tV_MainTable->hideColumn(0);
+        ui->tV_MainTable->hideColumn(7);
 
         setWindowTitle(tr("Archival topographic pointer")
                        + tr(" [Fund %1]")
                         .arg(index.data().toString()));
-    }}
 
-void MainWindow::fillMainTable()
-{
-    m_table_model->select();
+        connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+    }
 
-    ui->tV_MainTable->setModel(m_table_model);
-    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+    ui->tV_MainTable->resizeColumnsToContents();
+    ui->tV_MainTable->setColumnWidth(10, 180);
 
-    ui->statusbar->showMessage(tr("Showing rows: ") + QString::number(m_table_model->rowCount()));
+    setDisplayRows(m_table_model->rowCount());
 
     /* Restore table state */
-    QSettings* settings = application->applicationSettings();
-    ui->tV_MainTable->horizontalHeader()->restoreState(settings->value("DataTable/tableState").toByteArray());
+    //QSettings* settings = application->applicationSettings();
+    //ui->tV_MainTable->horizontalHeader()->restoreState(settings->value("DataTable/tableState").toByteArray());
 }
 
 void MainWindow::filterFunds(const QString &text)
@@ -150,6 +163,38 @@ void MainWindow::clearFundFilter()
     ui->pB_clearFundFilter->setEnabled(false);
 }
 
+void MainWindow::search(QString &filter)
+{
+    m_table_model->setFilter(filter);
+    ui->tV_hierarchy->setCurrentIndex(QModelIndex());
+    ui->tV_funds->setCurrentIndex(QModelIndex());
+
+    m_table_model->select();
+    ui->tV_MainTable->setModel(m_table_model);
+
+    ui->tV_MainTable->showColumn(2);
+    ui->tV_MainTable->showColumn(3);
+    ui->tV_MainTable->showColumn(4);
+    ui->tV_MainTable->showColumn(7);
+
+    ui->tV_MainTable->hideColumn(0);
+
+    setWindowTitle(tr("Archival topographic pointer")
+                   + tr(" [Search]"));
+
+    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+
+    ui->tV_MainTable->resizeColumnsToContents();
+    ui->tV_MainTable->setColumnWidth(10, 180);
+
+    setDisplayRows(m_table_model->rowCount());
+}
+
+void MainWindow::setDisplayRows(int rows)
+{
+     ui->statusbar->showMessage(tr("Showing rows: ") + QString::number(rows));
+}
+
 /*
  * Overrides QMainWindow::closeEvent(QCloseEvent *event)
  */
@@ -162,9 +207,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings->setValue("windowState", saveState());
     settings->endGroup();
 
-    settings->beginGroup("DataTable");
+    /*settings->beginGroup("DataTable");
     settings->setValue("tableState", ui->tV_MainTable->horizontalHeader()->saveState());
-    settings->endGroup();
+    settings->endGroup();*/
 
     QMainWindow::closeEvent(event);
 }
@@ -198,12 +243,14 @@ void MainWindow::openParamDialog()
 void MainWindow::openSearchDialog()
 {
     if (!search_dialog) {
-        search_dialog = new SearchDialog();
+        search_dialog = new SearchDialog(this);
     }
 
     search_dialog->show();
     search_dialog->raise();
     search_dialog->activateWindow();
+
+    connect(search_dialog, &SearchDialog::searched, this, &MainWindow::search);
 }
 
 
