@@ -28,6 +28,7 @@ ParamDialog::ParamDialog(QWidget *parent) :
 
     /* triggers for placement tab */
 
+    // corpuses
     connect(ui->pB_corpusAdd, &QPushButton::released, [=] {
         createItem(ui->lV_corpuses);
     });
@@ -37,7 +38,7 @@ ParamDialog::ParamDialog(QWidget *parent) :
 
     connect(ui->lV_corpuses, &QListView::clicked, this, &ParamDialog::selectCorpus);
 
-    /* storage triggres */
+    // storages
     connect(storage_controls->buttonAdd(), &QPushButton::released, [=] {
         createItem(ui->tV_storages);
     });
@@ -55,6 +56,7 @@ ParamDialog::ParamDialog(QWidget *parent) :
 
     /* triggers for other tab */
 
+    // features
     connect(feature_controls->buttonAdd(), &QPushButton::released, [=] {
         createItem(ui->tV_features);
     });
@@ -105,8 +107,10 @@ void ParamDialog::loadCorpuses() {
     ui->lV_corpuses->setModelColumn(1);
 
     /* Load the first entry */
-    QModelIndex index = m_corpus_model->index(0, 0);
-    loadStorages(index.data());
+    if (m_corpus_model->rowCount() > 0) {
+        QModelIndex index = m_corpus_model->index(0, 0);
+        loadStorages(index.data());
+    }
 }
 
 void ParamDialog::selectCorpus(const QModelIndex &index)
@@ -121,12 +125,9 @@ void ParamDialog::selectCorpus(const QModelIndex &index)
 
 void ParamDialog::loadStorages(QVariant id)
 {
-    m_storage_model->setParentId(1, id);
+    m_storage_model->setFilter("corpus_id=" + id.toString());
+    m_storage_model->setParentId(id.toInt());
     m_storage_model->select();
-
-    m_storage_model->setHeaderData(3, Qt::Horizontal, tr("Name"));
-    m_storage_model->setHeaderData(4, Qt::Horizontal, tr("Rooms count"));
-    m_storage_model->setHeaderData(5, Qt::Horizontal, tr("Floors"));
 
     ui->tV_storages->setModel(m_storage_model);
     ui->tV_storages->setItemDelegateForColumn(4, new IntDelegate());
@@ -135,6 +136,8 @@ void ParamDialog::loadStorages(QVariant id)
     ui->tV_storages->hideColumn(0);
     ui->tV_storages->hideColumn(1);
     ui->tV_storages->hideColumn(2);
+    ui->tV_storages->hideColumn(6);
+
     ui->tV_storages->setColumnWidth(3, 200);
     ui->tV_storages->setColumnWidth(4, 90);
     ui->tV_storages->setColumnWidth(5, 90);

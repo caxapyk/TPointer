@@ -52,12 +52,12 @@ void MainWindow::setupModels()
     m_hierarchy_model->select();
 
     ui->tV_hierarchy->setModel(m_hierarchy_model);
-    ui->tV_hierarchy->setColumnWidth(0, 200);
+    ui->tV_hierarchy->setColumnWidth(0, 250);
     ui->tV_hierarchy->resizeColumnToContents(1);
 
     ui->tV_hierarchy->expandToDepth(0);
 
-    connect(ui->tV_hierarchy, &QTreeView::clicked, this, &MainWindow::loadData);
+    connect(ui->tV_hierarchy, &QTreeView::clicked, this, &MainWindow::loadByShelving);
 
      /* FundModel */
     m_fund_model = new FundModel(this);
@@ -70,7 +70,7 @@ void MainWindow::setupModels()
     ui->tV_funds->setColumnWidth(0, 200);
     ui->tV_funds->resizeColumnToContents(1);
 
-    connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::loadData);
+    connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::loadByFund);
     connect(ui->lE_fundFilter, &QLineEdit::textChanged, this, &MainWindow::filterFunds);
     connect(ui->pB_clearFundFilter, &QPushButton::released, this, &MainWindow::clearFundFilter);
 }
@@ -88,67 +88,105 @@ void MainWindow::setupStatusBar()
      ui->statusbar->showMessage(tr("Ready"), 2000);
 }
 
-void MainWindow::loadData(const QModelIndex &index)
+void MainWindow::loadByShelving(const QModelIndex &index)
 {
-    if (dynamic_cast<const HierarchyModel*>(index.model())){
-        const HierarchyNode *node = static_cast<const HierarchyNode*>(index.internalPointer());
-        if (node->level == HierarchyModel::ShelvingLevel) {
-            m_table_model->setFilter("storage=" + node->parent->parent->id.toString()
-                                        + " AND compartment='"
-                                        + node->parent->name.toString()
-                                        + "' AND shelving='"
-                                        + node->name.toString()
-                                        + "'");
-            ui->tV_funds->setCurrentIndex(QModelIndex());
+    const HierarchyNode *node = static_cast<const HierarchyNode*>(index.internalPointer());
 
-            m_table_model->select();
-            ui->tV_MainTable->setModel(m_table_model);
+    if (node->level == HierarchyModel::ShelvingLevel) {
 
-            ui->tV_MainTable->showColumn(7);
+        FilterStruct fs;
+        fs.storage = node->parent->parent->id;
+        fs.compartment = node->parent->name;
+        fs.shelving = node->name;
 
-            ui->tV_MainTable->hideColumn(0);
-            ui->tV_MainTable->hideColumn(2);
-            ui->tV_MainTable->hideColumn(3);
-            ui->tV_MainTable->hideColumn(4);
-
-            setWindowTitle(tr("Archival topographic pointer")
-                           + tr(" [%1, %2, Comp.%3, Sh.%4]")
-                            .arg(node->parent->parent->parent->name.toString())
-                            .arg(node->parent->parent->name.toString())
-                            .arg(node->parent->name.toString())
-                            .arg(node->name.toString()));
-
-            connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
-        }
-    } else if (dynamic_cast<const QSortFilterProxyModel*>(index.model())) {
-        m_table_model->setFilter("fund='" + index.data().toString() + "'");
-        ui->tV_hierarchy->setCurrentIndex(QModelIndex());
-
+        m_table_model->_setFilter(fs);
         m_table_model->select();
+
         ui->tV_MainTable->setModel(m_table_model);
 
-        ui->tV_MainTable->showColumn(2);
-        ui->tV_MainTable->showColumn(3);
-        ui->tV_MainTable->showColumn(4);
+        ui->tV_MainTable->showColumn(7);
 
         ui->tV_MainTable->hideColumn(0);
-        ui->tV_MainTable->hideColumn(7);
+        ui->tV_MainTable->hideColumn(2);
+        ui->tV_MainTable->hideColumn(3);
+        ui->tV_MainTable->hideColumn(4);
 
-        setWindowTitle(tr("Archival topographic pointer")
-                       + tr(" [Fund %1]")
-                        .arg(index.data().toString()));
+        ui->tV_MainTable->resizeColumnsToContents();
+        ui->tV_MainTable->setColumnWidth(10, 180);
 
         connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+
+        ui->tV_funds->setCurrentIndex(QModelIndex());
+
+        setWindowTitle(application->basename()
+                       + tr(" [%1, Str. %2, Comp. %3, Sh. %4]")
+                       .arg(node->parent->parent->parent->name.toString())
+                       .arg(node->parent->parent->name.toString())
+                       .arg(node->parent->name.toString())
+                       .arg(node->name.toString()));
+
+        setDisplayRows(m_table_model->rowCount());
     }
+}
+
+void MainWindow::loadByFund(const QModelIndex &index)
+{
+    FilterStruct fs;
+    fs.fund = index.data();
+    fs.fund_strict = true;
+
+    m_table_model->_setFilter(fs);
+    m_table_model->select();
+
+    ui->tV_MainTable->setModel(m_table_model);
+
+    ui->tV_MainTable->showColumn(2);
+    ui->tV_MainTable->showColumn(3);
+    ui->tV_MainTable->showColumn(4);
+
+    ui->tV_MainTable->hideColumn(0);
+    ui->tV_MainTable->hideColumn(7);
 
     ui->tV_MainTable->resizeColumnsToContents();
     ui->tV_MainTable->setColumnWidth(10, 180);
 
-    setDisplayRows(m_table_model->rowCount());
+    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
 
-    /* Restore table state */
-    //QSettings* settings = application->applicationSettings();
-    //ui->tV_MainTable->horizontalHeader()->restoreState(settings->value("DataTable/tableState").toByteArray());
+    ui->tV_hierarchy->setCurrentIndex(QModelIndex());
+
+    setWindowTitle(application->basename()
+                   + tr(" [Fund %1]")
+                   .arg(index.data().toString()));
+
+    setDisplayRows(m_table_model->rowCount());
+}
+
+void MainWindow::search(const FilterStruct &fs)
+{
+    m_table_model->_setFilter(fs);
+    m_table_model->select();
+
+    ui->tV_MainTable->setModel(m_table_model);
+
+    ui->tV_MainTable->showColumn(2);
+    ui->tV_MainTable->showColumn(3);
+    ui->tV_MainTable->showColumn(4);
+    ui->tV_MainTable->showColumn(7);
+
+    ui->tV_MainTable->hideColumn(0);
+
+    ui->tV_MainTable->resizeColumnsToContents();
+    ui->tV_MainTable->setColumnWidth(10, 180);
+
+    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+
+    ui->tV_hierarchy->setCurrentIndex(QModelIndex());
+    ui->tV_funds->setCurrentIndex(QModelIndex());
+
+    setWindowTitle(application->basename()
+                   + tr(" [Search]"));
+
+    setDisplayRows(m_table_model->rowCount());
 }
 
 void MainWindow::filterFunds(const QString &text)
@@ -163,41 +201,11 @@ void MainWindow::clearFundFilter()
     ui->pB_clearFundFilter->setEnabled(false);
 }
 
-void MainWindow::search(QString &filter)
-{
-    m_table_model->setFilter(filter);
-    ui->tV_hierarchy->setCurrentIndex(QModelIndex());
-    ui->tV_funds->setCurrentIndex(QModelIndex());
-
-    m_table_model->select();
-    ui->tV_MainTable->setModel(m_table_model);
-
-    ui->tV_MainTable->showColumn(2);
-    ui->tV_MainTable->showColumn(3);
-    ui->tV_MainTable->showColumn(4);
-    ui->tV_MainTable->showColumn(7);
-
-    ui->tV_MainTable->hideColumn(0);
-
-    setWindowTitle(tr("Archival topographic pointer")
-                   + tr(" [Search]"));
-
-    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
-
-    ui->tV_MainTable->resizeColumnsToContents();
-    ui->tV_MainTable->setColumnWidth(10, 180);
-
-    setDisplayRows(m_table_model->rowCount());
-}
-
 void MainWindow::setDisplayRows(int rows)
 {
      ui->statusbar->showMessage(tr("Showing rows: ") + QString::number(rows));
 }
 
-/*
- * Overrides QMainWindow::closeEvent(QCloseEvent *event)
- */
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     QSettings* settings = application->applicationSettings();
@@ -214,18 +222,16 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-/*
- * SLOT selectRow(const QModelIndex &index)
- */
 void MainWindow::rowSelected(const QModelIndex &current, const QModelIndex&)
 {
-    QString t = current.sibling(current.row(), m_descColumn).data().toString();
+    QString descr =current.sibling(current.row(), 10).data().toString();
+    QString feature = current.sibling(current.row(), 11).data().toString();
+
+    QString t = descr + (descr.isNull() ? "" : "\n") + feature;
+
     ui->pTE_Desc->setPlainText(t);
 }
 
-/*
- * SLOT openParamDialog()
- */
 void MainWindow::openParamDialog()
 {
     ParamDialog dialog;
@@ -237,9 +243,6 @@ void MainWindow::openParamDialog()
     }
 }
 
-/*
- * SLOT openSearchDialog()
- */
 void MainWindow::openSearchDialog()
 {
     if (!search_dialog) {

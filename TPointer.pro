@@ -47,6 +47,7 @@ HEADERS += \
     models/basemodel.h \
     models/corpusmodel.h \
     models/featuremodel.h \
+    models/filterstruct.h \
     models/fundmodel.h \
     models/fundproxymodel.h \
     models/hierarchymodel.h \

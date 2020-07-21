@@ -79,12 +79,6 @@ bool BaseModel::remove(QModelIndexList &list)
     return true;
 }
 
-void BaseModel::setParentId(int column, QVariant id)
-{
-     m_parent_id=id;
-     setFilter(record().fieldName(column) + "=" + id.toString());
-}
-
 void BaseModel::setPositionColumn(int column)
 {
     position_column = column;

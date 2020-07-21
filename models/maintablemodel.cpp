@@ -1,3 +1,4 @@
+#include "application.h"
 #include "maintablemodel.h"
 
 #include <QSqlQuery>
@@ -24,6 +25,42 @@ MainTableModel::MainTableModel(QObject *parent, QSqlDatabase db) :  QSqlRelation
     setHeaderData(9, Qt::Horizontal, tr("Records"));
     setHeaderData(10, Qt::Horizontal, tr("Note"));
     setHeaderData(11, Qt::Horizontal, tr("Features"));
+}
+
+void MainTableModel::_setFilter(const FilterStruct &fs)
+{
+    QString filter;
+    // storage
+    if (!fs.storage.isNull()) {
+        filter += QString(" storage=%1 ").arg(fs.storage.toInt());
+    }
+    // compartment
+    if (!fs.compartment.isNull()) {
+        if (!filter.isNull()) filter += QString("AND");
+        filter += QString(" compartment=%1 ").arg(fs.compartment.toString());
+    }
+    // shelving
+    if (!fs.shelving.isNull()) {
+        if (!filter.isNull()) filter += QString("AND");
+        filter += QString(" shelving=%1 ").arg(fs.shelving.toString());
+    }
+    // fund
+    if (!fs.fund.isNull() && fs.fund_strict) {
+        if (!filter.isNull()) filter += QString("AND");
+        filter += QString(" fund='%1' ").arg(fs.fund.toString());
+    } else if (!fs.fund.isNull() && !fs.fund_strict) {
+        if (!filter.isNull()) filter += QString("AND");
+        filter += QString(" fund LIKE '%%1%' ").arg(fs.fund.toString());
+    }
+    // feature
+    if (!fs.feature.isNull()) {
+        if (!filter.isNull()) filter += QString("AND");
+        filter += QString(" feature=%1 ").arg(fs.feature.toInt());
+    }
+
+    if(!filter.isNull()) {
+        setFilter(filter);
+    }
 }
 
 int MainTableModel::count() const

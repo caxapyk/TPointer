@@ -76,7 +76,7 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
     case (HierarchyModel::StorageLevel):
     {
         StorageModel model;
-        model.setParentId(1, parentNode->id);
+        model.setFilter("corpus_id=" + parentNode->id.toString());
         model.setSort(2, Qt::AscendingOrder);
         model.select();
 
@@ -260,10 +260,12 @@ QVariant HierarchyModel::data(const QModelIndex &index, int role) const
     if (index.column() == HierarchyModel::NameColumn && role == Qt::DisplayRole) {
         const HierarchyNode* currentNode = static_cast<HierarchyNode*>(index.internalPointer());
 
-        if (currentNode->level == HierarchyModel::CompartmentLevel) {
-            return QVariant(tr("Compartment ") + currentNode->name.toString());
+        if (currentNode->level == HierarchyModel::StorageLevel) {
+            return QVariant(tr("Storage №") + currentNode->name.toString());
+        } else if (currentNode->level == HierarchyModel::CompartmentLevel) {
+            return QVariant(tr("Compartment №") + currentNode->name.toString());
         } else if (currentNode->level == HierarchyModel::ShelvingLevel) {
-            return QVariant(tr("Shelving ") + currentNode->name.toString());
+            return QVariant(tr("Shelving №") + currentNode->name.toString());
         } else {
             return currentNode->name;
         }

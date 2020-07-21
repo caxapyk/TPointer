@@ -62,7 +62,7 @@ void Application::initializeSettings()
 {
     setOrganizationName(m_orgName);
     setApplicationName(m_appName);
-    setApplicationVersion(m_version);
+    setApplicationVersion(m_version.toString());
 
     m_settings = new QSettings(QSettings::NativeFormat,
                                QSettings::UserScope, m_orgName, m_appName);
@@ -79,7 +79,7 @@ void Application::initializeLanguage()
 
 void Application::about() const {
     QString message;
-    message += "<h3>" + tr("Archival topographic pointer") + tr(" v %1").arg(version()) + "</h3>";
+    message += "<h3>" + tr("Archival topographic pointer") + tr(" v %1").arg(version().toString()) + "</h3>";
     message += "<p>" + tr("This program is free software: you can redistribute it and/or modify"
         " it under the terms of the GNU General Public License as published by"
         " the Free Software Foundation, either version 3 of the License, or"

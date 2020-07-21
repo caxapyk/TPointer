@@ -38,7 +38,6 @@ private:
 
     SearchDialog *search_dialog = nullptr;
 
-    const unsigned int m_descColumn = 10;
     unsigned int total = 0;
 
     void restoreAppState();
@@ -47,13 +46,14 @@ private:
     void setDisplayRows(int rows);
 
 private slots:
-    void loadData(const QModelIndex &index);
+    void loadByShelving(const QModelIndex &index);
+    void loadByFund(const QModelIndex &index);
     void filterFunds(const QString &text);
     void clearFundFilter();
     void openParamDialog();
     void openSearchDialog();
     void rowSelected(const QModelIndex &current, const QModelIndex&);
-    void search(QString &filter);
+    void search(const FilterStruct &sf);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

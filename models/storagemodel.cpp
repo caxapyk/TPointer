@@ -6,18 +6,23 @@
 StorageModel::StorageModel(QObject *parent) : BaseModel(parent)
 {
     setTable("storage");
-    setRelation(1, QSqlRelation("corpus", "id", "name"));
+    setRelation(1, QSqlRelation("corpus", "id", "name as corpus_name"));
 
     setItemName(tr("New storage"));
     setSort(2, Qt::AscendingOrder);
     setPositionColumn(2);
 
     setEditStrategy(QSqlTableModel::OnFieldChange);
+
+    setHeaderData(3, Qt::Horizontal, tr("Name"));
+    setHeaderData(4, Qt::Horizontal, tr("Rooms count"));
+    setHeaderData(5, Qt::Horizontal, tr("Floors"));
 }
 
 bool StorageModel::select()
 {
-    if (BaseModel::select() && insertColumn(columnCount())) {
+    // insert column for Corpus/Storage value
+    if (BaseModel::select() && insertColumns(columnCount(), 1)) {
         return true;
     } else {
         return false;
@@ -26,7 +31,7 @@ bool StorageModel::select()
 
 QVariant StorageModel::data(const QModelIndex &index, int role) const
 {
-    if (role == Qt::DisplayRole && index.column() == columnCount() - 1) {
+    if (role == Qt::DisplayRole && index.column() == 6) {
         // return Corpus/Storage value
         return QVariant(index.siblingAtColumn(1).data().toString()
                         + "/"

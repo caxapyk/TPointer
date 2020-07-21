@@ -4,6 +4,7 @@
 #include "models/storagemodel.h"
 #include "models/featuremodel.h"
 #include "models/noitemlistmodel.h"
+#include "models/filterstruct.h"
 
 #include <QDialog>
 
@@ -20,7 +21,7 @@ public:
     ~SearchDialog();
 
 signals:
-    void searched(QString &filter);
+    void searched(const FilterStruct &fs);
 
 protected:
     void closeEvent(QCloseEvent *e) override;
@@ -32,6 +33,8 @@ private:
     NoItemListModel *_storage_model;
     FeatureModel *feature_model;
     NoItemListModel *_feature_model;
+
+    FilterStruct fs;
 
 private slots:
     void search();
