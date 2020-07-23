@@ -1,6 +1,6 @@
 #include "noitemlistmodel.h"
 
-NoItemListModel::NoItemListModel(QAbstractItemModel *baseModel, QObject *parent) : QAbstractListModel(parent)
+NoItemListModel::NoItemListModel(QAbstractItemModel *baseModel) : QAbstractListModel()
 {
     m_model = baseModel;
 }
@@ -8,7 +8,7 @@ NoItemListModel::~NoItemListModel()
 {
 }
 
-int NoItemListModel::rowCount(const QModelIndex &parent) const
+int NoItemListModel::rowCount(const QModelIndex&) const
 {
    return baseModel()->rowCount(QModelIndex()) + 1;
 }

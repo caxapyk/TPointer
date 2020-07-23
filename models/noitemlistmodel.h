@@ -8,7 +8,7 @@ class NoItemListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    NoItemListModel(QAbstractItemModel *baseModel, QObject *parent = nullptr);
+    NoItemListModel(QAbstractItemModel *baseModel);
     ~NoItemListModel();
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

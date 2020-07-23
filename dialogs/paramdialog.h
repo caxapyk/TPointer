@@ -2,13 +2,12 @@
 #define PARAMDIALOG_H
 
 #include "models/basemodel.h"
+#include "widgets/itemcontroller.h"
 
 #include <QAbstractItemView>
 #include <QButtonGroup>
 #include <QDialog>
 #include <QModelIndex>
-
-#include "widgets/buttoncontrols.h"
 
 namespace Ui {
 class ParamDialog;
@@ -34,14 +33,15 @@ private:
     BaseModel *m_storage_model;
     BaseModel *m_feature_model;
 
-    ButtonControls *storage_controls;
-    ButtonControls *feature_controls;
+    ItemController *corpus_controls;
+    ItemController *storage_controls;
+    ItemController *feature_controls;
 
 private slots:
     void createItem(QAbstractItemView *view);
     void moveUp(QAbstractItemView *view);
     void moveDown(QAbstractItemView *view);
-    void selectCorpus(const QModelIndex &index);
+    void selectCorpus(const QItemSelection &selected, const QItemSelection &deselected);
     void removeItem(QAbstractItemView *view);
 };
 

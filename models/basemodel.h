@@ -14,7 +14,7 @@ class BaseModel : public QSqlRelationalTableModel
     Q_OBJECT
 
 public:
-    BaseModel(QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
+    BaseModel();
     bool insert();
     QString itemName() const { return m_item_name; };
     QModelIndex moveUp(int row);

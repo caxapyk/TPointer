@@ -9,7 +9,7 @@ class CorpusModel : public BaseModel
     Q_OBJECT
 
 public:
-    CorpusModel(QObject *parent = nullptr);
+    CorpusModel();
 
 public slots:
     void setDefaultRecord(int, QSqlRecord&) override;

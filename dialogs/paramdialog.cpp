@@ -21,56 +21,53 @@ ParamDialog::ParamDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setupControls();
     setupModels();
+    setupControls();
+
     loadCorpuses();
     loadFeatures();
 
     /* triggers for placement tab */
 
     // corpuses
-    connect(ui->pB_corpusAdd, &QPushButton::released, [=] {
+    connect(corpus_controls->button(ItemController::Add), &QPushButton::released, [=] {
         createItem(ui->lV_corpuses);
     });
-    connect(ui->pB_corpusRemove, &QPushButton::released, [=] {
+    connect(corpus_controls->button(ItemController::Remove), &QPushButton::released, [=] {
         removeItem(ui->lV_corpuses);
     });
 
-    connect(ui->lV_corpuses, &QListView::clicked, this, &ParamDialog::selectCorpus);
+    connect(ui->lV_corpuses->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ParamDialog::selectCorpus);
 
     // storages
-    connect(storage_controls->buttonAdd(), &QPushButton::released, [=] {
+    connect(storage_controls->button(ItemController::Add), &QPushButton::released, [=] {
         createItem(ui->tV_storages);
     });
-    connect(storage_controls->buttonRemove(), &QPushButton::released, [=] {
+    connect(storage_controls->button(ItemController::Remove), &QPushButton::released, [=] {
         removeItem(ui->tV_storages);
     });
-    connect(storage_controls->buttonUp(), &QPushButton::released, this, [=] {
+    connect(storage_controls->button(ItemController::Up), &QPushButton::released, this, [=] {
         moveUp(ui->tV_storages);
     });
-    connect(storage_controls->buttonDown(), &QPushButton::released, this, [=] {
+    connect(storage_controls->button(ItemController::Down), &QPushButton::released, this, [=] {
         moveDown(ui->tV_storages);
     });
-
-    connect(ui->tV_storages, &QListView::clicked, storage_controls, &ButtonControls::modelSelected);
 
     /* triggers for other tab */
 
     // features
-    connect(feature_controls->buttonAdd(), &QPushButton::released, [=] {
+    connect(feature_controls->button(ItemController::Add), &QPushButton::released, [=] {
         createItem(ui->tV_features);
     });
-    connect(feature_controls->buttonRemove(), &QPushButton::released, [=] {
+    connect(feature_controls->button(ItemController::Remove), &QPushButton::released, [=] {
         removeItem(ui->tV_features);
     });
-    connect(feature_controls->buttonUp(), &QPushButton::released, this, [=] {
+    connect(feature_controls->button(ItemController::Up), &QPushButton::released, this, [=] {
         moveUp(ui->tV_features);
     });
-    connect(feature_controls->buttonDown(), &QPushButton::released, this, [=] {
+    connect(feature_controls->button(ItemController::Down), &QPushButton::released, this, [=] {
         moveDown(ui->tV_features);
     });
-
-    connect(ui->tV_features, &QListView::clicked, feature_controls, &ButtonControls::modelSelected);
 }
 
 ParamDialog::~ParamDialog()
@@ -80,24 +77,32 @@ ParamDialog::~ParamDialog()
     delete m_storage_model;
     delete m_feature_model;
 
+    delete corpus_controls;
     delete storage_controls;
     delete feature_controls;
 }
 
 void ParamDialog::setupControls()
 {
-    storage_controls = new ButtonControls;
-    feature_controls = new ButtonControls;
+    corpus_controls = new ItemController(
+                ItemController::Add | ItemController::Remove, Qt::Horizontal);
 
+    storage_controls = new ItemController(
+                ItemController::Add | ItemController::Remove | ItemController::Up | ItemController::Down);
+
+    feature_controls = new ItemController(
+                ItemController::Add | ItemController::Remove | ItemController::Up | ItemController::Down);
+
+    ui->gB_corpuses->layout()->addWidget(corpus_controls);
     ui->gB_storages->layout()->addWidget(storage_controls);
     ui->gB_features->layout()->addWidget(feature_controls);
 }
 
 void ParamDialog::setupModels()
 {
-    m_corpus_model = new CorpusModel(this);
-    m_storage_model = new StorageModel(this);
-    m_feature_model = new FeatureModel(this);
+    m_corpus_model = new CorpusModel;
+    m_storage_model = new StorageModel;
+    m_feature_model = new FeatureModel;
 }
 
 void ParamDialog::loadCorpuses() {
@@ -106,6 +111,9 @@ void ParamDialog::loadCorpuses() {
     ui->lV_corpuses->setModel(m_corpus_model);
     ui->lV_corpuses->setModelColumn(1);
 
+    corpus_controls->assetView(ui->lV_corpuses);
+    corpus_controls->setEnabled(true, ItemController::Add);
+
     /* Load the first entry */
     if (m_corpus_model->rowCount() > 0) {
         QModelIndex index = m_corpus_model->index(0, 0);
@@ -113,13 +121,16 @@ void ParamDialog::loadCorpuses() {
     }
 }
 
-void ParamDialog::selectCorpus(const QModelIndex &index)
+void ParamDialog::selectCorpus(const QItemSelection &selected, const QItemSelection&)
 {
-    if (index.isValid()){
-        storage_controls->disable();
+    if (!selected.indexes().isEmpty()) {
+        QModelIndex current = selected.indexes().at(0);
 
-        QVariant id = index.sibling(index.row(), 0).data();
-        loadStorages(id);
+        if (current.isValid()){
+
+            QVariant id = current.sibling(current.row(), 0).data();
+            loadStorages(id);
+        }
     }
 }
 
@@ -127,20 +138,24 @@ void ParamDialog::loadStorages(QVariant id)
 {
     m_storage_model->setFilter("corpus_id=" + id.toString());
     m_storage_model->setParentId(id.toInt());
-    m_storage_model->select();
 
-    ui->tV_storages->setModel(m_storage_model);
-    ui->tV_storages->setItemDelegateForColumn(4, new IntDelegate());
-    ui->tV_storages->setItemDelegateForColumn(5, new IntListDelegate());
+    if (m_storage_model->select()) {
+        ui->tV_storages->setModel(m_storage_model);
+        ui->tV_storages->setItemDelegateForColumn(4, new IntDelegate());
+        ui->tV_storages->setItemDelegateForColumn(5, new IntListDelegate());
 
-    ui->tV_storages->hideColumn(0);
-    ui->tV_storages->hideColumn(1);
-    ui->tV_storages->hideColumn(2);
-    ui->tV_storages->hideColumn(6);
+        ui->tV_storages->hideColumn(0);
+        ui->tV_storages->hideColumn(1);
+        ui->tV_storages->hideColumn(2);
+        ui->tV_storages->hideColumn(6);
 
-    ui->tV_storages->setColumnWidth(3, 200);
-    ui->tV_storages->setColumnWidth(4, 90);
-    ui->tV_storages->setColumnWidth(5, 90);
+        ui->tV_storages->setColumnWidth(3, 200);
+        ui->tV_storages->setColumnWidth(4, 90);
+        ui->tV_storages->setColumnWidth(5, 90);
+
+        storage_controls->assetView(ui->tV_storages);
+        storage_controls->setEnabled(true, ItemController::Add);
+    }
 }
 
 void ParamDialog::loadFeatures() {
@@ -152,6 +167,11 @@ void ParamDialog::loadFeatures() {
 
     ui->tV_features->hideColumn(0);
     ui->tV_features->hideColumn(1);
+
+    ui->tV_features->setColumnWidth(2, 200);
+
+    feature_controls->assetView(ui->tV_features);
+    feature_controls->setEnabled(true, ItemController::Add);
 }
 
 void ParamDialog::createItem(QAbstractItemView *view)
@@ -174,8 +194,19 @@ void ParamDialog::removeItem(QAbstractItemView *view)
 
     if(model) {
         QModelIndexList indexes = v->selectionModel()->selectedIndexes();
-        if (!model->remove(indexes)) {
-            QMessageBox::warning(this, tr("Storage structure"), tr("Could not remove item"), QMessageBox::Ok);
+        if(!indexes.isEmpty()) {
+            if (model->remove(indexes)) {
+                v->selectionModel()->clearSelection();
+                model->select();
+            } else {
+                model->select();
+                QMessageBox::warning(this, tr("Storage structure"), tr("Could not remove item"), QMessageBox::Ok);
+            }
+
+            // select previous item
+            v->selectionModel()->select(model->index(
+                                        indexes.at(0).row()-1, indexes.at(0).column()),
+                                        QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         }
     }
 }

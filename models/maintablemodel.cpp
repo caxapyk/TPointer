@@ -5,7 +5,7 @@
 #include <QSqlRecord>
 #include <QSqlRelation>
 
-MainTableModel::MainTableModel(QObject *parent, QSqlDatabase db) :  QSqlRelationalTableModel(parent, db)
+MainTableModel::MainTableModel() :  QSqlRelationalTableModel()
 {
     setTable("tpointer");
     setRelation(2, QSqlRelation("storage", "id", "name AS storage_name"));

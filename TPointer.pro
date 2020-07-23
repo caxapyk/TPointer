@@ -31,10 +31,14 @@ SOURCES += \
     models/fundproxymodel.cpp \
     models/hierarchymodel.cpp \
     models/maintablemodel.cpp \
+    models/maintableproxymodel.cpp \
     models/noitemlistmodel.cpp \
     models/searchmodel.cpp \
+    models/storageextendedmodel.cpp \
     models/storagemodel.cpp \
-    widgets/buttoncontrols.cpp
+    widgets/customcontextmenu.cpp \
+    widgets/itemcontroller.cpp \
+    widgets/itemfilter.cpp
 
 HEADERS += \
     application.h \
@@ -52,29 +56,30 @@ HEADERS += \
     models/fundproxymodel.h \
     models/hierarchymodel.h \
     models/maintablemodel.h \
+    models/maintableproxymodel.h \
     models/noitemlistmodel.h \
     models/searchmodel.h \
+    models/storageextendedmodel.h \
     models/storagemodel.h \
-    widgets/buttoncontrols.h
+    widgets/customcontextmenu.h \
+    widgets/itemcontroller.h \
+    widgets/itemfilter.h
 
 FORMS += \
     dialogs/paramdialog.ui \
     dialogs/searchdialog.ui \
-    mainwindow.ui \
-    widgets/buttoncontrols.ui
+    mainwindow.ui
 
 TRANSLATIONS += \
-    translations/tpointer_en.ts \
-    translations/tpointer_ru.ts
+    translations/tpointer_ru.ts \
+    translations/tpointer_en.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    translations/tpointer_en.ts \
-    translations/tpointer_ru.ts
+DISTFILES +=
 
 RESOURCES += \
     resources.qrc

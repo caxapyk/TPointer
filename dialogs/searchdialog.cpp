@@ -13,7 +13,7 @@ SearchDialog::SearchDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
-    storage_model = new StorageModel;
+    storage_model = new StorageExtendedModel;
     storage_model->select();
 
     _storage_model = new NoItemListModel(storage_model);

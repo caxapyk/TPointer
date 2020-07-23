@@ -12,7 +12,7 @@ class MainTableModel : public QSqlRelationalTableModel
 {
 
 public:
-    MainTableModel(QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
+    MainTableModel();
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     int count() const;
     void _setFilter(const FilterStruct &fs);

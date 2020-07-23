@@ -1,6 +1,6 @@
 #include "featuremodel.h"
 
-FeatureModel::FeatureModel(QObject *parent) : BaseModel(parent)
+FeatureModel::FeatureModel() : BaseModel()
 {
     setTable("feature");
     setItemName(tr("New feature"));

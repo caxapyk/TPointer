@@ -4,7 +4,7 @@
 #include <QRegExp>
 #include <QIntValidator>
 
-IntDelegate::IntDelegate(int min, int max, QObject *parent) : QItemDelegate(parent)
+IntDelegate::IntDelegate(int min, int max) : QItemDelegate()
 {
     m_min = min;
     m_max = max;

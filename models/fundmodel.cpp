@@ -3,7 +3,7 @@
 #include <QSqlQuery>
 #include <QStandardItem>
 
-FundModel::FundModel(QObject *parent) : QStandardItemModel(parent)
+FundModel::FundModel() : QStandardItemModel()
 {
 
 }

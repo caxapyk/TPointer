@@ -10,7 +10,7 @@ class FeatureModel : public BaseModel
 {
     Q_OBJECT
 public:
-    FeatureModel(QObject *parent = nullptr);
+    FeatureModel();
 
 public slots:
     void setDefaultRecord(int, QSqlRecord&) override;

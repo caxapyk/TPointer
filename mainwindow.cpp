@@ -4,6 +4,7 @@
 #include "dialogs/paramdialog.h"
 #include "models/hierarchymodel.h"
 #include "models/searchmodel.h"
+#include "widgets/customcontextmenu.h"
 
 #include <QDebug>
 
@@ -14,9 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     restoreAppState();
-    setupModels();
+    initialize();
     setupStatusBar();
 
+    // MainWindow actions
     connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParamDialog);
     connect(ui->action_about, &QAction::triggered, application, &Application::about);
     connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearchDialog);
@@ -26,10 +28,15 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete m_table_model;
+    delete m_table_proxymodel;
     delete m_hierarchy_model;
     delete m_fund_model;
     delete m_fund_proxymodel;
     delete lb_server;
+    delete lb_total;
+    delete fund_filter;
+    delete mt_filter;
+    delete mt_controls;
     delete search_dialog;
 }
 
@@ -37,14 +44,48 @@ void MainWindow::restoreAppState()
 {
     QSettings* settings = application->applicationSettings();
 
+    //restore main window geometry and state
     restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
     restoreState(settings->value("MainWindow/windowState").toByteArray());
+
+    //restore splitters state
+    ui->splitter_base->restoreState(settings->value("Splitters/splitter_base").toByteArray());
+    ui->splitter_pos->restoreState(settings->value("Splitters/splitter_pos").toByteArray());
+    ui->splitter_mt->restoreState(settings->value("Splitters/splitter_mt").toByteArray());
 }
 
-void MainWindow::setupModels()
+void MainWindow::initialize()
 {
     /* MainTableModel */
     m_table_model = new MainTableModel;
+    m_table_proxymodel = new MainTableProxyModel;
+    m_table_proxymodel->setSourceModel(m_table_model);
+
+    // main table controls
+    mt_controls = new ItemController(
+                ItemController::Add | ItemController::Edit | ItemController::Remove,
+                Qt::Horizontal);
+
+    mt_controls->connectToMenu(ItemController::Add, ui->action_newRecord);
+    mt_controls->connectToMenu(ItemController::Edit, ui->action_editRecord);
+    mt_controls->connectToMenu(ItemController::Remove, ui->action_removeRecord);
+    mt_controls->connectToMenu(ItemController::Refresh, ui->action_refresh);
+
+    mt_controls->setMaximumSize(QSize(300, 50));
+
+    ui->hL_mtPanel->addWidget(mt_controls, 0, Qt::AlignLeft);
+
+    // main table filter
+    mt_filter = new ItemFilter;
+    mt_filter->setPlaceholderText(tr("Filter by notes..."));
+    mt_filter->setMinimumSize(QSize(300, 0));
+    mt_filter->setEnabled(false);
+
+    ui->hL_mtPanel->addWidget(mt_filter, 0, Qt::AlignRight);
+
+    connect(mt_filter, &ItemFilter::filtered, this, &MainWindow::filterMainTable);
+
+    // get total rows
     total = m_table_model->count();
 
     /* HierarchyModel */
@@ -57,22 +98,54 @@ void MainWindow::setupModels()
 
     ui->tV_hierarchy->expandToDepth(0);
 
+    ui->tV_hierarchy->setContextMenuPolicy(Qt::CustomContextMenu);
+
     connect(ui->tV_hierarchy, &QTreeView::clicked, this, &MainWindow::loadByShelving);
+    connect(ui->tV_hierarchy, &QMenu::customContextMenuRequested, this, &MainWindow::showHContextMenu);
 
      /* FundModel */
-    m_fund_model = new FundModel(this);
+    m_fund_model = new FundModel;
     m_fund_model->select();
 
-    m_fund_proxymodel = new QSortFilterProxyModel(this);
+    m_fund_proxymodel = new QSortFilterProxyModel;
     m_fund_proxymodel->setSourceModel(m_fund_model);
 
     ui->tV_funds->setModel(m_fund_proxymodel);
     ui->tV_funds->setColumnWidth(0, 200);
     ui->tV_funds->resizeColumnToContents(1);
 
+    ui->tV_funds->setContextMenuPolicy(Qt::CustomContextMenu);
+
     connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::loadByFund);
-    connect(ui->lE_fundFilter, &QLineEdit::textChanged, this, &MainWindow::filterFunds);
-    connect(ui->pB_clearFundFilter, &QPushButton::released, this, &MainWindow::clearFundFilter);
+    connect(ui->tV_funds, &QMenu::customContextMenuRequested, this, &MainWindow::showFContextMenu);
+
+    // fund filter
+    fund_filter = new ItemFilter;
+    fund_filter->setPlaceholderText(tr("Fund filter..."));
+
+    ui->vL_funds->addWidget(fund_filter);
+
+    connect(fund_filter, &ItemFilter::filtered, this, &MainWindow::filterFunds);
+}
+
+void MainWindow::initializeMainTable()
+{
+    ui->tV_MainTable->setModel(m_table_proxymodel);
+    ui->tV_MainTable->resizeColumnsToContents();
+    ui->tV_MainTable->setColumnWidth(10, 180);
+
+    ui->tV_MainTable->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+    connect(ui->tV_MainTable, &QMenu::customContextMenuRequested, this, &MainWindow::showMTContextMenu, Qt::UniqueConnection);
+
+    mt_controls->assetView(ui->tV_MainTable);
+    mt_controls->setEnabled(true, ItemController::Add);
+    mt_controls->setEnabled(true, ItemController::Refresh);
+
+    // enable filter widget
+    mt_filter->setEnabled(true);
+    mt_filter->clear(); // clear every time model has changed
 }
 
 void MainWindow::setupStatusBar()
@@ -102,8 +175,6 @@ void MainWindow::loadByShelving(const QModelIndex &index)
         m_table_model->_setFilter(fs);
         m_table_model->select();
 
-        ui->tV_MainTable->setModel(m_table_model);
-
         ui->tV_MainTable->showColumn(7);
 
         ui->tV_MainTable->hideColumn(0);
@@ -111,10 +182,7 @@ void MainWindow::loadByShelving(const QModelIndex &index)
         ui->tV_MainTable->hideColumn(3);
         ui->tV_MainTable->hideColumn(4);
 
-        ui->tV_MainTable->resizeColumnsToContents();
-        ui->tV_MainTable->setColumnWidth(10, 180);
-
-        connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+        initializeMainTable();
 
         ui->tV_funds->setCurrentIndex(QModelIndex());
 
@@ -138,8 +206,6 @@ void MainWindow::loadByFund(const QModelIndex &index)
     m_table_model->_setFilter(fs);
     m_table_model->select();
 
-    ui->tV_MainTable->setModel(m_table_model);
-
     ui->tV_MainTable->showColumn(2);
     ui->tV_MainTable->showColumn(3);
     ui->tV_MainTable->showColumn(4);
@@ -147,10 +213,8 @@ void MainWindow::loadByFund(const QModelIndex &index)
     ui->tV_MainTable->hideColumn(0);
     ui->tV_MainTable->hideColumn(7);
 
-    ui->tV_MainTable->resizeColumnsToContents();
-    ui->tV_MainTable->setColumnWidth(10, 180);
 
-    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
+    initializeMainTable();
 
     ui->tV_hierarchy->setCurrentIndex(QModelIndex());
 
@@ -166,7 +230,7 @@ void MainWindow::search(const FilterStruct &fs)
     m_table_model->_setFilter(fs);
     m_table_model->select();
 
-    ui->tV_MainTable->setModel(m_table_model);
+    initializeMainTable();
 
     ui->tV_MainTable->showColumn(2);
     ui->tV_MainTable->showColumn(3);
@@ -174,11 +238,6 @@ void MainWindow::search(const FilterStruct &fs)
     ui->tV_MainTable->showColumn(7);
 
     ui->tV_MainTable->hideColumn(0);
-
-    ui->tV_MainTable->resizeColumnsToContents();
-    ui->tV_MainTable->setColumnWidth(10, 180);
-
-    connect(ui->tV_MainTable->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowSelected, Qt::UniqueConnection);
 
     ui->tV_hierarchy->setCurrentIndex(QModelIndex());
     ui->tV_funds->setCurrentIndex(QModelIndex());
@@ -189,16 +248,49 @@ void MainWindow::search(const FilterStruct &fs)
     setDisplayRows(m_table_model->rowCount());
 }
 
+void MainWindow::showHContextMenu(const QPoint&)
+{
+    CustomContextMenu menu(CustomContextMenu::Refresh);
+    connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
+        m_hierarchy_model->select();
+        ui->tV_hierarchy->expandToDepth(0);
+    });
+
+    menu.exec(QCursor().pos());
+}
+
+void MainWindow::showFContextMenu(const QPoint&)
+{
+    CustomContextMenu menu(CustomContextMenu::Refresh);
+    connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
+        m_fund_model->select();
+    });
+
+    menu.exec(QCursor().pos());
+}
+
+void MainWindow::showMTContextMenu(const QPoint&)
+{
+    CustomContextMenu menu(CustomContextMenu::NoStandartAction);
+    menu.addAction(ui->action_newRecord);
+    menu.addSeparator();
+    menu.addAction(ui->action_editRecord);
+    menu.addAction(ui->action_removeRecord);
+    menu.addSeparator();
+    menu.addAction(ui->action_refresh);
+
+    menu.exec(QCursor().pos());
+}
+
 void MainWindow::filterFunds(const QString &text)
 {
     m_fund_proxymodel->setFilterFixedString(text);
-    ui->pB_clearFundFilter->setEnabled(text.length() > 0);
 }
 
-void MainWindow::clearFundFilter()
+void MainWindow::filterMainTable(const QString &text)
 {
-    ui->lE_fundFilter->clear();
-    ui->pB_clearFundFilter->setEnabled(false);
+    m_table_proxymodel->setFilterKeyColumn(10);
+    m_table_proxymodel->setFilterFixedString(text);
 }
 
 void MainWindow::setDisplayRows(int rows)
@@ -215,21 +307,27 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings->setValue("windowState", saveState());
     settings->endGroup();
 
-    /*settings->beginGroup("DataTable");
-    settings->setValue("tableState", ui->tV_MainTable->horizontalHeader()->saveState());
-    settings->endGroup();*/
+    settings->beginGroup("Splitters");
+    settings->setValue("splitter_base", ui->splitter_base->saveState());
+    settings->setValue("splitter_pos", ui->splitter_pos->saveState());
+    settings->setValue("splitter_mt", ui->splitter_mt->saveState());
+    settings->endGroup();
 
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::rowSelected(const QModelIndex &current, const QModelIndex&)
+void MainWindow::rowSelected(const QItemSelection &selected, const QItemSelection&)
 {
-    QString descr =current.sibling(current.row(), 10).data().toString();
-    QString feature = current.sibling(current.row(), 11).data().toString();
+    if (!selected.indexes().isEmpty()) {
+        QModelIndex current = selected.indexes().at(0);
 
-    QString t = descr + (descr.isNull() ? "" : "\n") + feature;
+        QString descr =current.sibling(current.row(), 10).data().toString();
+        QString feature = current.sibling(current.row(), 11).data().toString();
 
-    ui->pTE_Desc->setPlainText(t);
+        QString t = descr + (descr.isNull() ? "" : "\n") + feature;
+
+        ui->pTE_Desc->setPlainText(t);
+    }
 }
 
 void MainWindow::openParamDialog()

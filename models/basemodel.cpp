@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QSqlError>
 
-BaseModel::BaseModel(QObject *parent, QSqlDatabase db) :  QSqlRelationalTableModel(parent, db)
+BaseModel::BaseModel() :  QSqlRelationalTableModel()
 {
     connect(this, SIGNAL(primeInsert(int, QSqlRecord&)),
             this, SLOT(setDefaultRecord(int, QSqlRecord&)));
@@ -70,11 +70,9 @@ bool BaseModel::remove(QModelIndexList &list)
 {
     for (int i = 0; i < list.size(); ++i) {
         if (!removeRows(list.at(i).row(), 1)) {
-            select();
             return false;
         }
      }
-    select();
 
     return true;
 }

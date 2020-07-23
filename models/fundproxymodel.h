@@ -8,7 +8,7 @@ class FundProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    FundProxyModel(QObject *parent = nullptr);
+    FundProxyModel();
 };
 
 #endif // FUNDPROXYMODEL_H

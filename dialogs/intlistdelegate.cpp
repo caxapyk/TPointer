@@ -5,7 +5,7 @@
 #include <QRegExpValidator>
 #include <QValidator>
 
-IntListDelegate::IntListDelegate(QObject *parent) : QItemDelegate(parent)
+IntListDelegate::IntListDelegate() : QItemDelegate()
 {
 
 }

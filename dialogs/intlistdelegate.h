@@ -10,7 +10,7 @@ class IntListDelegate : public QItemDelegate
     Q_OBJECT
 
 public:
-    IntListDelegate(QObject *parent = nullptr);
+    IntListDelegate();
 
 private:
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

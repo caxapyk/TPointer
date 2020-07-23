@@ -1,7 +1,7 @@
 #ifndef SEARCHDIALOG_H
 #define SEARCHDIALOG_H
 
-#include "models/storagemodel.h"
+#include "models/storageextendedmodel.h"
 #include "models/featuremodel.h"
 #include "models/noitemlistmodel.h"
 #include "models/filterstruct.h"
@@ -29,7 +29,7 @@ protected:
 
 private:
     Ui::SearchDialog *ui;
-    StorageModel *storage_model;
+    StorageExtendedModel *storage_model;
     NoItemListModel *_storage_model;
     FeatureModel *feature_model;
     NoItemListModel *_feature_model;

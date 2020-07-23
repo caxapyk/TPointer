@@ -72,7 +72,7 @@ void Application::initializeLanguage()
 {
     QTranslator* translator = new QTranslator(this);
 
-    if(translator->load("tpointer_ru_RU.qml", "/home/caxapyk/Projects/TPointer/translations")) {
+    if(translator->load("tpointer_ru.qm", ":/translations/translations/")) {
         installTranslator(translator);
     }
 }

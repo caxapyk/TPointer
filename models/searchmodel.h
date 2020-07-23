@@ -10,7 +10,7 @@ class SearchModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
-    SearchModel(QObject *parent = nullptr);
+    SearchModel();
 
 private:
     QString m_filter;

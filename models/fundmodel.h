@@ -8,7 +8,7 @@ class FundModel : public QStandardItemModel
 {
     Q_OBJECT
 public:
-    FundModel(QObject *parent = nullptr);
+    FundModel();
     void select();
 };
 

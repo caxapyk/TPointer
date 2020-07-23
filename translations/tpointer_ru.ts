@@ -4,232 +4,427 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Database connection error</source>
-        <translation type="obsolete">Ошибка соединения с базой данных</translation>
-    </message>
-    <message>
-        <location filename="../application.cpp" line="23"/>
-        <location filename="../application.cpp" line="80"/>
-        <location filename="../application.cpp" line="91"/>
         <source>Archival topographic pointer</source>
         <translation>Архивный топографический указатель</translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="26"/>
         <source>Address of database server</source>
-        <translation>Адрес сервера баз данных</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="28"/>
         <source>Database name</source>
-        <translation>Имя базы данных</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="30"/>
         <source>Database user</source>
-        <translation>Пользователь базы данных</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="32"/>
         <source>Password to database user</source>
-        <translation>Пароль пользователя базы данных</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="80"/>
         <source> v %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="81"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="86"/>
         <source>Application icons by </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="88"/>
         <source>Copyright &amp;copy; 2020 Alexander Sakharuk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archival topographic pointer %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CorpusModel</name>
     <message>
-        <location filename="../models/corpusmodel.cpp" line="8"/>
         <source>New corpus</source>
-        <translation>Новый корпус</translation>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomContextMenu</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FeatureModel</name>
+    <message>
+        <source>New feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FundModel</name>
+    <message>
+        <source>Funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HierarchyModel</name>
+    <message>
+        <source>Place path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage №</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compartment №</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shelving №</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemController</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemFilter</name>
+    <message>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MainTableModel</name>
+    <message>
+        <source>Floor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compartment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shelving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cupboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shelf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fund</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inventory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Basement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 floor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="113"/>
         <source>File</source>
-        <translation>Файл</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="117"/>
         <source>Export</source>
-        <translation>Экспорт</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="131"/>
         <source>Help</source>
-        <translation>Помощь</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="137"/>
         <source>Edit</source>
-        <translation>Правка</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="143"/>
         <source>Service</source>
-        <translation>Сервис</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="155"/>
         <source>New</source>
-        <translation>Создать</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="160"/>
         <source>Spreadsheet (.csv)</source>
-        <translation>Электронные таблицы (.csv)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="165"/>
         <source>Exit</source>
-        <translation>Выход</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="170"/>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="175"/>
         <source>Form F15 (.xlsx)</source>
-        <oldsource>Форма Ф15 (.xlsx)</oldsource>
-        <translation>Форма Ф15 (.xlsx)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="180"/>
         <source>Form F16 (.xlsx)</source>
-        <oldsource>Форма Ф16 (.xlsx)</oldsource>
-        <translation>Форма Ф16 (.xlsx)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="185"/>
         <source>Search</source>
-        <translation>Поиск</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="190"/>
-        <source>Storage structure</source>
-        <translation>Параметры хранилищ</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="14"/>
         <source>Archival topographic pointer</source>
         <translation>Архивный топографический указатель</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="27"/>
-        <source>Place path</source>
-        <translation>Расположение</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="28"/>
-        <source>floors</source>
-        <translation>Этажи</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="35"/>
         <source>Ready</source>
-        <translation>Готово</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Shift+X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter by notes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fund filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>| Total rows: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> [%1, Str. %2, Comp. %3, Sh. %4]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> [Fund %1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> [Search]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Showing rows: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>StorageModel</name>
+    <name>NoItemListModel</name>
     <message>
-        <location filename="../models/storagemodel.cpp" line="9"/>
-        <source>New storage</source>
-        <translation type="unfinished">Новое архивохранилище</translation>
+        <source>Select item...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ParamDialog</name>
     <message>
-        <location filename="../dialogs/ParamDialog.ui" line="29"/>
-        <source>Structure of storage</source>
-        <translation>Параметры хранилищ</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/ParamDialog.ui" line="56"/>
         <source>Corpuses</source>
-        <translation>Корпуса</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/ParamDialog.ui" line="83"/>
-        <location filename="../dialogs/ParamDialog.ui" line="158"/>
-        <source>Add</source>
-        <translation>Добавить</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/ParamDialog.ui" line="94"/>
-        <location filename="../dialogs/ParamDialog.ui" line="172"/>
-        <source>Remove</source>
-        <translation>Удалить</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/ParamDialog.ui" line="122"/>
         <source>Archival Storages</source>
-        <translation>Архивохранилища</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/ParamDialog.ui" line="186"/>
-        <source>Up</source>
-        <translation>Вверх</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/ParamDialog.ui" line="200"/>
-        <source>Down</source>
-        <translation>Вниз</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/ParamDialog.cpp" line="76"/>
         <source>Name</source>
-        <translation>Наименование</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/ParamDialog.cpp" line="77"/>
-        <source>Rooms count</source>
-        <translation>Помещений</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/ParamDialog.cpp" line="78"/>
-        <source>Floors</source>
-        <translation>Этажи</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/ParamDialog.cpp" line="109"/>
-        <location filename="../dialogs/ParamDialog.cpp" line="140"/>
         <source>Storage structure</source>
-        <translation>Параметры хранилищ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/ParamDialog.cpp" line="109"/>
         <source>Could not create item</source>
-        <translation>Невозможно добавить запись</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/ParamDialog.cpp" line="140"/>
         <source>Could not remove item</source>
-        <translation>Невозможно удалить запись</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storages structure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Features</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compartment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shelving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fund №</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strict compliance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StorageModel</name>
+    <message>
+        <source>New storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rooms count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

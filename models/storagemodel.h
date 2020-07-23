@@ -12,13 +12,10 @@ class StorageModel : public BaseModel
     Q_OBJECT;
 
 public:
-    StorageModel(QObject *parent = nullptr);
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
+    StorageModel();
 
 public slots:
     void setDefaultRecord(int, QSqlRecord&) override;
-    bool select() override;
 };
 
 #endif // STORAGEMODEL_H
