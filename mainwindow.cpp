@@ -104,17 +104,17 @@ void MainWindow::initialize()
     connect(ui->tV_hierarchy, &QMenu::customContextMenuRequested, this, &MainWindow::showHContextMenu);
 
      /* FundModel */
-    m_fund_model = new FundModel;
+    m_fund_model = new FundReadonlyModel;
     m_fund_model->select();
 
-    m_fund_proxymodel = new QSortFilterProxyModel;
+    m_fund_proxymodel = new FundProxyModel;
     m_fund_proxymodel->setSourceModel(m_fund_model);
 
     ui->tV_funds->setModel(m_fund_proxymodel);
-    ui->tV_funds->setColumnWidth(0, 200);
-    ui->tV_funds->resizeColumnToContents(1);
-
     ui->tV_funds->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    ui->tV_funds->hideColumn(1);
+    ui->tV_funds->hideColumn(2);
 
     connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::loadByFund);
     connect(ui->tV_funds, &QMenu::customContextMenuRequested, this, &MainWindow::showFContextMenu);
@@ -200,7 +200,7 @@ void MainWindow::loadByShelving(const QModelIndex &index)
 void MainWindow::loadByFund(const QModelIndex &index)
 {
     FilterStruct fs;
-    fs.fund = index.data();
+    fs.fund = index.siblingAtColumn(1).data();
     fs.fund_strict = true;
 
     m_table_model->_setFilter(fs);
@@ -284,6 +284,7 @@ void MainWindow::showMTContextMenu(const QPoint&)
 
 void MainWindow::filterFunds(const QString &text)
 {
+    m_fund_proxymodel->setFilterKeyColumn(0);
     m_fund_proxymodel->setFilterFixedString(text);
 }
 

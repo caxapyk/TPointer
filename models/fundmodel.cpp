@@ -1,25 +1,14 @@
 #include "fundmodel.h"
 
-#include <QSqlQuery>
-#include <QStandardItem>
-
-FundModel::FundModel() : QStandardItemModel()
+FundModel::FundModel() : BaseModel()
 {
+    setTable("fund");
 
-}
+    setItemName(tr("New fund"));
+    setEditStrategy(QSqlTableModel::OnFieldChange);
 
-void FundModel::select()
-{
-    QStandardItem *parentItem = invisibleRootItem();
+    setHeaderData(1, Qt::Horizontal, tr("Number"));
+    setHeaderData(2, Qt::Horizontal, tr("Name"));
 
-    /* Substring digits from fund name to order by */
-    QSqlQuery query("SELECT DISTINCT(fund), REGEXP_SUBSTR(fund, '[[:digit:]]+') as r_fund FROM tpointer ORDER BY CAST(fund as unsigned), CAST(r_fund as unsigned)");
-    query.exec();
-
-    while (query.next()) {
-        QStandardItem *item = new QStandardItem(query.value(0).toString());
-        parentItem->appendRow(item);
-    }
-
-    setHeaderData(0, Qt::Horizontal, tr("Funds"));
+    setSort(1, Qt::AscendingOrder);
 }

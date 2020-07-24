@@ -4,7 +4,8 @@
 #include "models/maintablemodel.h"
 #include "models/maintableproxymodel.h"
 #include "models/hierarchymodel.h"
-#include "models/fundmodel.h"
+#include "models/fundreadonlymodel.h"
+#include "models/fundproxymodel.h"
 #include "models/searchmodel.h"
 #include "dialogs/searchdialog.h"
 #include "widgets/itemfilter.h"
@@ -14,7 +15,6 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QModelIndex>
-#include <QSortFilterProxyModel>
 #include <QSqlQueryModel>
 
 QT_BEGIN_NAMESPACE
@@ -34,8 +34,8 @@ private:
     MainTableModel *m_table_model;
     MainTableProxyModel *m_table_proxymodel;
     HierarchyModel *m_hierarchy_model;
-    FundModel *m_fund_model;
-    QSortFilterProxyModel *m_fund_proxymodel;
+    FundReadonlyModel *m_fund_model;
+    FundProxyModel *m_fund_proxymodel;
 
     QLabel *lb_server;
     QLabel *lb_total;

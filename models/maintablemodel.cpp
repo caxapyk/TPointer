@@ -9,6 +9,7 @@ MainTableModel::MainTableModel() :  QSqlRelationalTableModel()
 {
     setTable("tpointer");
     setRelation(2, QSqlRelation("storage", "id", "name AS storage_name"));
+    setRelation(7, QSqlRelation("fund", "id", "number AS fund_name"));
     setRelation(11, QSqlRelation("feature", "id", "name AS feature_name"));
 
     setJoinMode(QSqlRelationalTableModel::LeftJoin);
@@ -74,11 +75,17 @@ int MainTableModel::count() const
 
 QVariant MainTableModel::data(const QModelIndex &index, int role) const
 {
+    // rename 0 floor to 'Basement'
     if (role == Qt::DisplayRole && index.column() == 1) {
-        if (record(index.row()).value(1).toInt() == 0) {
+        if (record(index.row()).value(index.column()).toInt() == 0) {
             return QVariant(tr("Basement"));
         } else {
             return QVariant(tr("%1 floor").arg(record(index.row()).value(1).toString()));
+        }
+    //rename 0 compartmnet/shelving to blank line
+    } else if (role == Qt::DisplayRole && (index.column() == 3 || index.column() == 4)){
+        if (record(index.row()).value(index.column()).toInt() == 0) {
+            return QVariant();
         }
     }
 

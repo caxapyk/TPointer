@@ -1,15 +1,17 @@
 #ifndef FUNDMODEL_H
 #define FUNDMODEL_H
 
-#include <QObject>
-#include <QStandardItemModel>
+#include "basemodel.h"
 
-class FundModel : public QStandardItemModel
+#include <QObject>
+#include <QSqlQuery>
+
+class FundModel : public BaseModel
 {
     Q_OBJECT
+
 public:
     FundModel();
-    void select();
 };
 
 #endif // FUNDMODEL_H

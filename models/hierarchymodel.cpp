@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+#include <QRegularExpression>
 
 HierarchyModel::HierarchyModel()
 {
@@ -85,7 +86,7 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
 
             node->id = model.data(model.index(i, 0));
             node->name = model.data(model.index(i, 3));
-            node->floor = model.data(model.index(i, 5));
+            node->floor = model.data(model.index(i, 5)).toString();;
 
             node->level = level;
             node->row = i;
@@ -263,9 +264,17 @@ QVariant HierarchyModel::data(const QModelIndex &index, int role) const
         if (currentNode->level == HierarchyModel::StorageLevel) {
             return QVariant(tr("Storage №") + currentNode->name.toString());
         } else if (currentNode->level == HierarchyModel::CompartmentLevel) {
-            return QVariant(tr("Compartment №") + currentNode->name.toString());
+            if (currentNode->name.toInt() != 0) {
+                return QVariant(tr("Compartment №") + currentNode->name.toString());
+            } else {
+                return QVariant(tr("Undefined compartment"));
+            }
         } else if (currentNode->level == HierarchyModel::ShelvingLevel) {
-            return QVariant(tr("Shelving №") + currentNode->name.toString());
+            if (currentNode->name.toInt() != 0) {
+                return QVariant(tr("Shelving №") + currentNode->name.toString());
+            } else {
+                return QVariant(tr("Undefined shelving"));
+            }
         } else {
             return currentNode->name;
         }
