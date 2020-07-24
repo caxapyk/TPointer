@@ -4,7 +4,7 @@
 #include "models/maintablemodel.h"
 #include "models/maintableproxymodel.h"
 #include "models/hierarchymodel.h"
-#include "models/fundreadonlymodel.h"
+#include "models/fundtreemodel.h"
 #include "models/fundproxymodel.h"
 #include "models/searchmodel.h"
 #include "dialogs/searchdialog.h"
@@ -34,7 +34,7 @@ private:
     MainTableModel *m_table_model;
     MainTableProxyModel *m_table_proxymodel;
     HierarchyModel *m_hierarchy_model;
-    FundReadonlyModel *m_fund_model;
+    FundTreeModel *m_fund_model;
     FundProxyModel *m_fund_proxymodel;
 
     QLabel *lb_server;

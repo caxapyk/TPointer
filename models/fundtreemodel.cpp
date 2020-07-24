@@ -1,11 +1,11 @@
-#include "fundreadonlymodel.h"
+#include "fundtreemodel.h"
 
 #include <QRegExp>
 #include <QStandardItem>
 #include <QSqlQuery>
 #include <QDebug>
 
-FundReadonlyModel::FundReadonlyModel() : QStandardItemModel()
+FundTreeModel::FundTreeModel() : QStandardItemModel()
 {
     setColumnCount(3);
 
@@ -24,7 +24,7 @@ FundReadonlyModel::FundReadonlyModel() : QStandardItemModel()
     setItem(3, 0, f_others);
 }
 
-FundReadonlyModel::~FundReadonlyModel()
+FundTreeModel::~FundTreeModel()
 {
     delete f_pre_soviet;
     delete f_soviet;
@@ -34,7 +34,7 @@ FundReadonlyModel::~FundReadonlyModel()
     clear();
 }
 
-void FundReadonlyModel::select()
+void FundTreeModel::select()
 {
     QSqlQuery query("SELECT fund.number, fund.id, REGEXP_SUBSTR(fund.number, '[[:digit:]]+') AS r_number FROM fund");
     query.exec();
@@ -53,9 +53,9 @@ void FundReadonlyModel::select()
 
         if(value.contains(QRegExp("^\\d+$"))) {
             f_pre_soviet->appendRow(items);
-        } else if(value.contains(QRegExp("П+"))) {
+        } else if(value.contains(QRegExp("[Р|P]+"))) {// russian|english
             f_soviet->appendRow(items);
-        } else if(value.contains(QRegExp("[Р|P]+"))) { // russian|english
+        } else if(value.contains(QRegExp("П+"))) {
             f_consignment->appendRow(items);
         } else {
             f_others->appendRow(items);

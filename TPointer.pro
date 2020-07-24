@@ -29,7 +29,7 @@ SOURCES += \
     models/featuremodel.cpp \
     models/fundmodel.cpp \
     models/fundproxymodel.cpp \
-    models/fundreadonlymodel.cpp \
+    models/fundtreemodel.cpp \
     models/hierarchymodel.cpp \
     models/maintablemodel.cpp \
     models/maintableproxymodel.cpp \
@@ -55,7 +55,7 @@ HEADERS += \
     models/filterstruct.h \
     models/fundmodel.h \
     models/fundproxymodel.h \
-    models/fundreadonlymodel.h \
+    models/fundtreemodel.h \
     models/hierarchymodel.h \
     models/maintablemodel.h \
     models/maintableproxymodel.h \

@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QStandardItemModel>
 
-class FundReadonlyModel : public QStandardItemModel
+class FundTreeModel : public QStandardItemModel
 {
     Q_OBJECT
 public:
-    FundReadonlyModel();
-    ~FundReadonlyModel();
+    FundTreeModel();
+    ~FundTreeModel();
     void select();
 
 private:

@@ -104,7 +104,7 @@ void MainWindow::initialize()
     connect(ui->tV_hierarchy, &QMenu::customContextMenuRequested, this, &MainWindow::showHContextMenu);
 
      /* FundModel */
-    m_fund_model = new FundReadonlyModel;
+    m_fund_model = new FundTreeModel;
     m_fund_model->select();
 
     m_fund_proxymodel = new FundProxyModel;
