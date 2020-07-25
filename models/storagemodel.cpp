@@ -14,7 +14,7 @@ StorageModel::StorageModel() : BaseModel()
 
     setEditStrategy(QSqlTableModel::OnFieldChange);
 
-    setHeaderData(3, Qt::Horizontal, tr("Name"));
+    setHeaderData(3, Qt::Horizontal, tr("Fund number"));
     setHeaderData(4, Qt::Horizontal, tr("Rooms count"));
     setHeaderData(5, Qt::Horizontal, tr("Floors"));
 }

@@ -7,19 +7,17 @@
 #include "models/featuremodel.h"
 
 #include <QDebug>
-#include <QAbstractItemView>
-#include <QListView>
-#include <QMessageBox>
-#include <QPushButton>
 #include <QModelIndexList>
-#include <QSqlRelationalDelegate>
-#include <QVariant>
+#include <QMessageBox>
 
 ParamDialog::ParamDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ParamDialog)
 {
     ui->setupUi(this);
+
+    // model controller
+    controller = new ModelController();
 
     setupModels();
     setupControls();
@@ -30,44 +28,24 @@ ParamDialog::ParamDialog(QWidget *parent) :
     /* triggers for placement tab */
 
     // corpuses
-    connect(corpus_controls->button(ItemController::Add), &QPushButton::released, [=] {
-        createItem(ui->lV_corpuses);
-    });
-    connect(corpus_controls->button(ItemController::Remove), &QPushButton::released, [=] {
-        removeItem(ui->lV_corpuses);
-    });
+    connect(cp_controls, &ItemController::addRequested, this,  &ParamDialog::createItem);
+    connect(cp_controls, &ItemController::removeRequested, this,  &ParamDialog::removeItem);
 
     connect(ui->lV_corpuses->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ParamDialog::selectCorpus);
 
     // storages
-    connect(storage_controls->button(ItemController::Add), &QPushButton::released, [=] {
-        createItem(ui->tV_storages);
-    });
-    connect(storage_controls->button(ItemController::Remove), &QPushButton::released, [=] {
-        removeItem(ui->tV_storages);
-    });
-    connect(storage_controls->button(ItemController::Up), &QPushButton::released, this, [=] {
-        moveUp(ui->tV_storages);
-    });
-    connect(storage_controls->button(ItemController::Down), &QPushButton::released, this, [=] {
-        moveDown(ui->tV_storages);
-    });
+    connect(st_controls, &ItemController::addRequested, this,  &ParamDialog::createItem);
+    connect(st_controls, &ItemController::removeRequested, this,  &ParamDialog::removeItem);
+    connect(st_controls, &ItemController::upRequested, this,  &ParamDialog::moveUp);
+    connect(st_controls, &ItemController::downRequested, this,  &ParamDialog::moveDown);
 
     /* triggers for other tab */
 
     // features
-    connect(feature_controls->button(ItemController::Add), &QPushButton::released, [=] {
-        createItem(ui->tV_features);
-    });
-    connect(feature_controls->button(ItemController::Remove), &QPushButton::released, [=] {
-        removeItem(ui->tV_features);
-    });
-    connect(feature_controls->button(ItemController::Up), &QPushButton::released, this, [=] {
-        moveUp(ui->tV_features);
-    });
-    connect(feature_controls->button(ItemController::Down), &QPushButton::released, this, [=] {
-        moveDown(ui->tV_features);
-    });
+    connect(ft_controls, &ItemController::addRequested, this,  &ParamDialog::createItem);
+    connect(ft_controls, &ItemController::removeRequested, this,  &ParamDialog::removeItem);
+    connect(ft_controls, &ItemController::upRequested, this,  &ParamDialog::moveUp);
+    connect(ft_controls, &ItemController::downRequested, this,  &ParamDialog::moveDown);
 }
 
 ParamDialog::~ParamDialog()
@@ -77,25 +55,27 @@ ParamDialog::~ParamDialog()
     delete m_storage_model;
     delete m_feature_model;
 
-    delete corpus_controls;
-    delete storage_controls;
-    delete feature_controls;
+    delete cp_controls;
+    delete st_controls;
+    delete ft_controls;
+
+    delete controller;
 }
 
 void ParamDialog::setupControls()
 {
-    corpus_controls = new ItemController(
+    cp_controls = new ItemController(
                 ItemController::Add | ItemController::Remove, Qt::Horizontal);
 
-    storage_controls = new ItemController(
+    st_controls = new ItemController(
                 ItemController::Add | ItemController::Remove | ItemController::Up | ItemController::Down);
 
-    feature_controls = new ItemController(
+    ft_controls = new ItemController(
                 ItemController::Add | ItemController::Remove | ItemController::Up | ItemController::Down);
 
-    ui->gB_corpuses->layout()->addWidget(corpus_controls);
-    ui->gB_storages->layout()->addWidget(storage_controls);
-    ui->gB_features->layout()->addWidget(feature_controls);
+    ui->gB_corpuses->layout()->addWidget(cp_controls);
+    ui->gB_storages->layout()->addWidget(st_controls);
+    ui->gB_features->layout()->addWidget(ft_controls);
 }
 
 void ParamDialog::setupModels()
@@ -111,8 +91,8 @@ void ParamDialog::loadCorpuses() {
     ui->lV_corpuses->setModel(m_corpus_model);
     ui->lV_corpuses->setModelColumn(1);
 
-    corpus_controls->assetView(ui->lV_corpuses);
-    corpus_controls->setEnabled(true, ItemController::Add);
+    cp_controls->assetView(ui->lV_corpuses);
+    cp_controls->setEnabled(true, ItemController::Add);
 
     /* Load the first entry */
     if (m_corpus_model->rowCount() > 0) {
@@ -149,12 +129,12 @@ void ParamDialog::loadStorages(QVariant id)
         ui->tV_storages->hideColumn(2);
         ui->tV_storages->hideColumn(6);
 
-        ui->tV_storages->setColumnWidth(3, 200);
+        ui->tV_storages->setColumnWidth(3, 100);
         ui->tV_storages->setColumnWidth(4, 90);
         ui->tV_storages->setColumnWidth(5, 90);
 
-        storage_controls->assetView(ui->tV_storages);
-        storage_controls->setEnabled(true, ItemController::Add);
+        st_controls->assetView(ui->tV_storages);
+        st_controls->setEnabled(true, ItemController::Add);
     }
 }
 
@@ -170,69 +150,32 @@ void ParamDialog::loadFeatures() {
 
     ui->tV_features->setColumnWidth(2, 200);
 
-    feature_controls->assetView(ui->tV_features);
-    feature_controls->setEnabled(true, ItemController::Add);
+    ft_controls->assetView(ui->tV_features);
+    ft_controls->setEnabled(true, ItemController::Add);
 }
 
 void ParamDialog::createItem(QAbstractItemView *view)
 {
-    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
-    BaseModel *model = qobject_cast<BaseModel*> (v->model());
-
-    if (model && model->insert()) {
-        QModelIndex index = model->index(model->rowCount() - 1, 1);
-        v->setCurrentIndex(index);
-    } else {
-        QMessageBox::warning(this, tr("Storage structure"), tr("Could not create item"), QMessageBox::Ok);
+    if (!controller->createItem(view)) {
+        QMessageBox::warning(this, tr("Parameters"), tr("Could not create item"), QMessageBox::Ok);
     }
 }
 
 void ParamDialog::removeItem(QAbstractItemView *view)
 {
-    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
-    BaseModel *model = qobject_cast<BaseModel*> (v->model());
 
-    if(model) {
-        QModelIndexList indexes = v->selectionModel()->selectedIndexes();
-        if(!indexes.isEmpty()) {
-            if (model->remove(indexes)) {
-                v->selectionModel()->clearSelection();
-                model->select();
-            } else {
-                model->select();
-                QMessageBox::warning(this, tr("Storage structure"), tr("Could not remove item"), QMessageBox::Ok);
-            }
-
-            // select previous item
-            v->selectionModel()->select(model->index(
-                                        indexes.at(0).row()-1, indexes.at(0).column()),
-                                        QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-        }
+    if (!controller->removeItem(view)) {
+        QMessageBox::warning(this, tr("Parameters"), tr("Could not remove item"), QMessageBox::Ok);
     }
 }
 
 void ParamDialog::moveUp(QAbstractItemView *view)
 {
-    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
-    BaseModel *model = qobject_cast<BaseModel*> (v->model());
-
-    QModelIndex index = v->currentIndex();
-    QModelIndex up_index = model->moveUp(index.row());
-
-    if (up_index.isValid()) {
-        v->setCurrentIndex(up_index);
-    }
+   controller->moveUp(view);
 }
 
 void ParamDialog::moveDown(QAbstractItemView *view)
 {
-    QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
-    BaseModel *model = qobject_cast<BaseModel*> (v->model());
-
-    QModelIndex index = v->currentIndex();
-    QModelIndex down_index = model->moveDown(index.row());
-
-    if (down_index.isValid()) {
-        v->setCurrentIndex(down_index);
-    }
+    controller->moveDown(view);
 }
+

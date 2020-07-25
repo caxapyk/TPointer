@@ -9,8 +9,6 @@
 #include <QPushButton>
 #include <QModelIndex>
 #include <QBoxLayout>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QMenu>
 
@@ -39,6 +37,14 @@ public:
     void assetView(QAbstractItemView *view);
     void connectToMenu(ItemController::StandardControl control, QAction *action);
 
+signals:
+    void addRequested(QAbstractItemView *view);
+    void editRequested(QAbstractItemView *view);
+    void removeRequested(QAbstractItemView *view);
+    void upRequested(QAbstractItemView *view);
+    void downRequested(QAbstractItemView *view);
+    void refreshRequested(QAbstractItemView *view);
+
 private:
     QBoxLayout *layout_box;
     QPushButton *pB_add = nullptr;
@@ -48,9 +54,9 @@ private:
     QPushButton *pB_down = nullptr;
     QPushButton *pB_refresh = nullptr;
 
-    QButtonGroup *group;
+    QAbstractItemView *m_view = nullptr;
 
-
+    QMap<ItemController::StandardControl, QPushButton*> *bmap = new QMap<ItemController::StandardControl, QPushButton*>;
     QMap<ItemController::StandardControl, QAction*> *actions =  new QMap<ItemController::StandardControl, QAction*>;
 
 private slots:

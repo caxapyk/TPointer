@@ -7,9 +7,7 @@
 
 FundTreeModel::FundTreeModel() : QStandardItemModel()
 {
-    setColumnCount(3);
-
-   // parentItem = invisibleRootItem();
+    setColumnCount(1);
 
     f_pre_soviet = new QStandardItem(tr("Pre-Soviet period funds"));
     setItem(0, 0, f_pre_soviet);
@@ -36,20 +34,21 @@ FundTreeModel::~FundTreeModel()
 
 void FundTreeModel::select()
 {
-    QSqlQuery query("SELECT fund.number, fund.id, REGEXP_SUBSTR(fund.number, '[[:digit:]]+') AS r_number FROM fund");
+    //QSqlQuery query("SELECT fund.number, fund.id, REGEXP_SUBSTR(fund.number, '[[:digit:]]+') AS r_number FROM fund");
+    QSqlQuery query("SELECT id, number FROM fund");
     query.exec();
 
     while (query.next()) {
         QList<QStandardItem *> items;
 
-        QStandardItem *item_number = new QStandardItem(query.value(0).toString());
+        /*QStandardItem *item_id = new QStandardItem(query.value(1).toString());
+        items.append(item_id);*/
+        QStandardItem *item_number = new QStandardItem(query.value(1).toString());
         items.append(item_number);
-        QStandardItem *item_id = new QStandardItem(query.value(1).toString());
-        items.append(item_id);
-        QStandardItem *item_r_number = new QStandardItem(query.value(2).toString());
-        items.append(item_r_number);
+        //QStandardItem *item_r_number = new QStandardItem(query.value(2).toString());
+        //items.append(item_r_number);
 
-        QString value = query.value(0).toString();
+        QString value = query.value(1).toString();
 
         if(value.contains(QRegExp("^\\d+$"))) {
             f_pre_soviet->appendRow(items);
@@ -62,5 +61,5 @@ void FundTreeModel::select()
         }
     }
 
-    setHeaderData(0, Qt::Horizontal, tr("Funds (%1)").arg(rowCount()));
+    setHeaderData(1, Qt::Horizontal, tr("Funds (%1)").arg(query.size()));
 }

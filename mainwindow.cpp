@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "application.h"
 #include "dialogs/paramdialog.h"
+#include "dialogs/fundlistdialog.h"
 #include "models/hierarchymodel.h"
 #include "models/searchmodel.h"
 #include "widgets/customcontextmenu.h"
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParamDialog);
     connect(ui->action_about, &QAction::triggered, application, &Application::about);
     connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearchDialog);
+    connect(ui->action_fundList, &QAction::triggered, this, &MainWindow::openFundListDialog);
 }
 
 MainWindow::~MainWindow()
@@ -113,8 +115,8 @@ void MainWindow::initialize()
     ui->tV_funds->setModel(m_fund_proxymodel);
     ui->tV_funds->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    ui->tV_funds->hideColumn(1);
-    ui->tV_funds->hideColumn(2);
+    //ui->tV_funds->hideColumn(0);
+    //ui->tV_funds->hideColumn(2);
 
     connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::loadByFund);
     connect(ui->tV_funds, &QMenu::customContextMenuRequested, this, &MainWindow::showFContextMenu);
@@ -329,6 +331,11 @@ void MainWindow::rowSelected(const QItemSelection &selected, const QItemSelectio
 
         ui->pTE_Desc->setPlainText(t);
     }
+}
+void MainWindow::openFundListDialog()
+{
+    FundListDialog dialog;
+    dialog.exec();
 }
 
 void MainWindow::openParamDialog()

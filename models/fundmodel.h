@@ -12,6 +12,9 @@ class FundModel : public BaseModel
 
 public:
     FundModel();
+
+public slots:
+    void setDefaultRecord(int, QSqlRecord&) override;
 };
 
 #endif // FUNDMODEL_H

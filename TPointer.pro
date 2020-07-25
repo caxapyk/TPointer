@@ -18,6 +18,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     application.cpp \
     connection.cpp \
+    controllers/modelcontroller.cpp \
+    dialogs/basedialog.cpp \
+    dialogs/fundlistdialog.cpp \
     dialogs/intdelegate.cpp \
     dialogs/intlistdelegate.cpp \
     dialogs/paramdialog.cpp \
@@ -44,6 +47,9 @@ SOURCES += \
 HEADERS += \
     application.h \
     connection.h \
+    controllers/modelcontroller.h \
+    dialogs/basedialog.h \
+    dialogs/fundlistdialog.h \
     dialogs/intdelegate.h \
     dialogs/intlistdelegate.h \
     dialogs/paramdialog.h \
@@ -68,6 +74,7 @@ HEADERS += \
     widgets/itemfilter.h
 
 FORMS += \
+    dialogs/fundlistdialog.ui \
     dialogs/paramdialog.ui \
     dialogs/searchdialog.ui \
     mainwindow.ui

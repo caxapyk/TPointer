@@ -1,5 +1,7 @@
 #include "fundmodel.h"
 
+#include <QSqlRecord>
+
 FundModel::FundModel() : BaseModel()
 {
     setTable("fund");
@@ -12,3 +14,8 @@ FundModel::FundModel() : BaseModel()
 
     setSort(1, Qt::AscendingOrder);
 }
+
+void FundModel::setDefaultRecord(int, QSqlRecord &record) {
+    record.setValue(1, itemName());
+    record.setGenerated(1, true);
+};

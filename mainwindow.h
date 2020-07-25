@@ -61,6 +61,7 @@ private slots:
     void loadByFund(const QModelIndex &index);
     void filterFunds(const QString &text);
     void filterMainTable(const QString &text);
+    void openFundListDialog();
     void openParamDialog();
     void openSearchDialog();
     void rowSelected(const QItemSelection &selected, const QItemSelection &deselected);

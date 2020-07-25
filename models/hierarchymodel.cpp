@@ -62,8 +62,8 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
         for (int i=0; i < model.rowCount(); ++i) {
             HierarchyNode *node = new HierarchyNode();
 
-            node->id = model.data(model.index(i, 0));
-            node->name = model.data(model.index(i, 1));
+            node->id = model.record(i).value(0);
+            node->name = model.record(i).value(1);
 
             node->level = level;
             node->row = i;
@@ -84,9 +84,15 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
         for (int i=0; i < model.rowCount(); ++i) {
             HierarchyNode *node = new HierarchyNode();
 
-            node->id = model.data(model.index(i, 0));
-            node->name = model.data(model.index(i, 3));
-            node->floor = model.data(model.index(i, 5)).toString();;
+            node->id = model.record(i).value(0);
+            node->name = model.record(i).value(3);
+
+            /* replace 0 floor with 'basement', -n floor with '-n floor' */
+            QStringList floors = model.record(i).value(5).toString().split(",");
+            floors = floors.replaceInStrings(QRegExp("^[0]+$"), tr("bsmnt"));
+            floors = floors.replaceInStrings(QRegExp("^(-\\d)+$"), tr("\\1 fl."));
+
+            node->floor = QVariant(floors.join(", "));
 
             node->level = level;
             node->row = i;
@@ -108,7 +114,7 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
         for (int i=0; i < model.rowCount(); ++i) {
             HierarchyNode *node = new HierarchyNode();
 
-            node->name = model.data(model.index(i, 0)).toString();
+            node->name = (!model.record(i).value(0).isNull()) ? model.record(i).value(0) : QVariant(); // check compartment is null
 
             node->level = level;
             node->row = i;
@@ -128,13 +134,13 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
         QVariant compartment = parentNode->name;
 
         model.setQuery("SELECT DISTINCT shelving FROM tpointer WHERE storage=" + storage_id.toString()
-                       + " AND compartment='" + compartment.toString() + "'"
+                       + ((!compartment.isNull()) ? " AND compartment='" + compartment.toString() + "'" : " AND compartment IS NULL")
                        + " ORDER BY shelving");
 
         for (int i=0; i < model.rowCount(); ++i) {
             HierarchyNode *node = new HierarchyNode();
 
-            node->name = model.data(model.index(i, 0)).toString();
+            node->name = model.record(i).value(0);
 
             node->level = level;
             node->row = i;
@@ -172,8 +178,12 @@ bool HierarchyModel::hasChildren(const QModelIndex &parent) const
         }
         case (HierarchyModel::CompartmentLevel):
         {
-            query_str = "SELECT COUNT(DISTINCT shelving) FROM tpointer WHERE storage=" + parentNode->parent->id.toString()
-                    + " AND compartment='" + parentNode->name.toString() + "'";
+            query_str = "SELECT COUNT(DISTINCT shelving) FROM tpointer WHERE storage=" + parentNode->parent->id.toString();
+            if (!parentNode->name.isNull()) { //NULL compartment
+                query_str += " AND compartment='" + parentNode->name.toString() + "'";
+            } else {
+                   query_str += " AND compartment IS NULL";
+            }
             break;
         }
         case (HierarchyModel::ShelvingLevel):

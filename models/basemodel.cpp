@@ -5,6 +5,7 @@
 
 #include <QDebug>
 #include <QSqlError>
+#include <QSqlQuery>
 
 BaseModel::BaseModel() :  QSqlRelationalTableModel()
 {
@@ -16,6 +17,8 @@ bool BaseModel::insert() {
     if(insertRows(rowCount(), 1)) {
         submit();
         return true;
+    } else {
+        qDebug() << lastError().text();
     }
 
     return false;
@@ -70,6 +73,7 @@ bool BaseModel::remove(QModelIndexList &list)
 {
     for (int i = 0; i < list.size(); ++i) {
         if (!removeRows(list.at(i).row(), 1)) {
+            qDebug() << lastError().text();
             return false;
         }
      }
