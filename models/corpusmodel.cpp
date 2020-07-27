@@ -7,7 +7,7 @@ CorpusModel::CorpusModel() : BaseModel()
     setTable("corpus");
     setItemName(tr("New corpus"));
 
-    setEditStrategy(QSqlTableModel::OnFieldChange);
+    setEditStrategy(QSqlTableModel::OnRowChange);
 }
 
 void CorpusModel::setDefaultRecord(int, QSqlRecord &record) {

@@ -13,7 +13,6 @@ public:
     void select();
 
 private:
-    //QStandardItem *parentItem;
     QStandardItem *f_pre_soviet;
     QStandardItem *f_soviet;
     QStandardItem *f_consignment;

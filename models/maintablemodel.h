@@ -1,6 +1,7 @@
 #ifndef MAINTABLEMODEL_H
 #define MAINTABLEMODEL_H
 
+#include "models/basemodel.h"
 #include "models/filterstruct.h"
 
 #include <QObject>
@@ -8,7 +9,7 @@
 #include <QSqlDatabase>
 #include <QVariant>
 
-class MainTableModel : public QSqlRelationalTableModel
+class MainTableModel : public BaseModel
 {
 
 public:

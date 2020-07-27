@@ -152,6 +152,8 @@ void ItemController::connectToMenu(ItemController::StandardControl control, QAct
 {
     actions->insert(control, action);
 
+    connect(button(control), &QPushButton::pressed, this, [=] { emit action->triggered(); });
+
     // disable current action
     action->setDisabled(true);
 }

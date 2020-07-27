@@ -283,7 +283,7 @@ QVariant HierarchyModel::data(const QModelIndex &index, int role) const
             if (currentNode->name.toInt() != 0) {
                 return QVariant(tr("Shelving №") + currentNode->name.toString());
             } else {
-                return QVariant(tr("Undefined shelving"));
+                return currentNode->name;
             }
         } else {
             return currentNode->name;

@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "controllers/modelcontroller.h"
 #include "models/maintablemodel.h"
 #include "models/maintableproxymodel.h"
 #include "models/hierarchymodel.h"
@@ -31,9 +32,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
     MainTableModel *m_table_model;
     MainTableProxyModel *m_table_proxymodel;
+    ModelController *mt_controller;
+
+
     HierarchyModel *m_hierarchy_model;
+
     FundTreeModel *m_fund_model;
     FundProxyModel *m_fund_proxymodel;
 
@@ -45,13 +51,14 @@ private:
 
     SearchDialog *search_dialog = nullptr;
 
-    unsigned int total = 0;
+    QVariant total;
 
     void restoreAppState();
     void initialize();
     void initializeMainTable();
     void setupStatusBar();
     void setDisplayRows(int rows);
+    void setTotal(int total);
     void showHContextMenu(const QPoint &pos); // hierarchy context menu
     void showFContextMenu(const QPoint &pos); // funds context menu
     void showMTContextMenu(const QPoint &pos); // main table context menu
@@ -61,11 +68,14 @@ private slots:
     void loadByFund(const QModelIndex &index);
     void filterFunds(const QString &text);
     void filterMainTable(const QString &text);
-    void openFundListDialog();
-    void openParamDialog();
-    void openSearchDialog();
+    void openFundList();
+    void openParam();
+    void openSearch();
+    void openMainForm();
     void rowSelected(const QItemSelection &selected, const QItemSelection &deselected);
     void search(const FilterStruct &sf);
+    void createItem(QAbstractItemView *view);
+    void removeItem(QAbstractItemView *view);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

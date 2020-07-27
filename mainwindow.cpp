@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "application.h"
+#include "dialogs/mainformdialog.h"
 #include "dialogs/paramdialog.h"
 #include "dialogs/fundlistdialog.h"
 #include "models/hierarchymodel.h"
@@ -8,6 +9,7 @@
 #include "widgets/customcontextmenu.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,10 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     setupStatusBar();
 
     // MainWindow actions
-    connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParamDialog);
+    connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
     connect(ui->action_about, &QAction::triggered, application, &Application::about);
-    connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearchDialog);
-    connect(ui->action_fundList, &QAction::triggered, this, &MainWindow::openFundListDialog);
+    connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearch);
+    connect(ui->action_fundList, &QAction::triggered, this, &MainWindow::openFundList);
 }
 
 MainWindow::~MainWindow()
@@ -31,6 +33,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_table_model;
     delete m_table_proxymodel;
+    delete mt_controller;
     delete m_hierarchy_model;
     delete m_fund_model;
     delete m_fund_proxymodel;
@@ -63,15 +66,27 @@ void MainWindow::initialize()
     m_table_proxymodel = new MainTableProxyModel;
     m_table_proxymodel->setSourceModel(m_table_model);
 
+    mt_controller = new ModelController;
+
+    // MainTable actions
+    connect(ui->action_edit, &QAction::triggered, this, [=] {
+        openMainForm();
+    });
+    connect(ui->action_remove, &QAction::triggered, this, [=] {
+        removeItem(ui->tV_MainTable);
+    });
+    connect(ui->action_refresh, &QAction::triggered, mt_controller, [=] {
+        m_table_model->select();
+    });
+
     // main table controls
     mt_controls = new ItemController(
                 ItemController::Add | ItemController::Edit | ItemController::Remove,
                 Qt::Horizontal);
 
-    mt_controls->connectToMenu(ItemController::Add, ui->action_newRecord);
-    mt_controls->connectToMenu(ItemController::Edit, ui->action_editRecord);
-    mt_controls->connectToMenu(ItemController::Remove, ui->action_removeRecord);
-    mt_controls->connectToMenu(ItemController::Refresh, ui->action_refresh);
+    mt_controls->connectToMenu(ItemController::Add, ui->action_new);
+    mt_controls->connectToMenu(ItemController::Edit, ui->action_edit);
+    mt_controls->connectToMenu(ItemController::Remove, ui->action_remove);
 
     mt_controls->setMaximumSize(QSize(300, 50));
 
@@ -88,7 +103,7 @@ void MainWindow::initialize()
     connect(mt_filter, &ItemFilter::filtered, this, &MainWindow::filterMainTable);
 
     // get total rows
-    total = m_table_model->count();
+    total = QVariant(m_table_model->count());
 
     /* HierarchyModel */
     m_hierarchy_model = new HierarchyModel;
@@ -114,9 +129,6 @@ void MainWindow::initialize()
 
     ui->tV_funds->setModel(m_fund_proxymodel);
     ui->tV_funds->setContextMenuPolicy(Qt::CustomContextMenu);
-
-    //ui->tV_funds->hideColumn(0);
-    //ui->tV_funds->hideColumn(2);
 
     connect(ui->tV_funds, &QTreeView::clicked, this, &MainWindow::loadByFund);
     connect(ui->tV_funds, &QMenu::customContextMenuRequested, this, &MainWindow::showFContextMenu);
@@ -157,10 +169,15 @@ void MainWindow::setupStatusBar()
     ui->statusbar->addPermanentWidget(lb_server);
 
     lb_total = new QLabel(ui->statusbar);
-    lb_total->setText(tr("| Total rows: ") + QString::number(total));
+    setTotal(total.toInt());
     ui->statusbar->addPermanentWidget(lb_total);
 
      ui->statusbar->showMessage(tr("Ready"), 2000);
+}
+
+void MainWindow::setTotal(int total)
+{
+    lb_total->setText(tr("| Total rows: %1").arg(QString::number(total)));
 }
 
 void MainWindow::loadByShelving(const QModelIndex &index)
@@ -192,7 +209,7 @@ void MainWindow::loadByShelving(const QModelIndex &index)
                        + tr(" [%1, Str. %2, Comp. %3, Sh. %4]")
                        .arg(node->parent->parent->parent->name.toString())
                        .arg(node->parent->parent->name.toString())
-                       .arg(node->parent->name.toString())
+                       .arg(!node->parent->name.isNull() ? node->parent->name.toString() : tr("undefined"))
                        .arg(node->name.toString()));
 
         setDisplayRows(m_table_model->rowCount());
@@ -201,30 +218,32 @@ void MainWindow::loadByShelving(const QModelIndex &index)
 
 void MainWindow::loadByFund(const QModelIndex &index)
 {
-    FilterStruct fs;
-    fs.fund = index.siblingAtColumn(1).data();
-    fs.fund_strict = true;
+    if (index.parent().isValid()) {
+        FilterStruct fs;
+        fs.fund = index.data(Qt::UserRole + 1);
+        fs.fund_strict = true;
 
-    m_table_model->_setFilter(fs);
-    m_table_model->select();
+        m_table_model->_setFilter(fs);
+        m_table_model->select();
 
-    ui->tV_MainTable->showColumn(2);
-    ui->tV_MainTable->showColumn(3);
-    ui->tV_MainTable->showColumn(4);
+        ui->tV_MainTable->showColumn(2);
+        ui->tV_MainTable->showColumn(3);
+        ui->tV_MainTable->showColumn(4);
 
-    ui->tV_MainTable->hideColumn(0);
-    ui->tV_MainTable->hideColumn(7);
+        ui->tV_MainTable->hideColumn(0);
+        ui->tV_MainTable->hideColumn(7);
 
 
-    initializeMainTable();
+        initializeMainTable();
 
-    ui->tV_hierarchy->setCurrentIndex(QModelIndex());
+        ui->tV_hierarchy->setCurrentIndex(QModelIndex());
 
-    setWindowTitle(application->basename()
-                   + tr(" [Fund %1]")
-                   .arg(index.data().toString()));
+        setWindowTitle(application->basename()
+                       + tr(" [Fund %1]")
+                       .arg(index.data().toString()));
 
-    setDisplayRows(m_table_model->rowCount());
+        setDisplayRows(m_table_model->rowCount());
+    }
 }
 
 void MainWindow::search(const FilterStruct &fs)
@@ -274,10 +293,10 @@ void MainWindow::showFContextMenu(const QPoint&)
 void MainWindow::showMTContextMenu(const QPoint&)
 {
     CustomContextMenu menu(CustomContextMenu::NoStandartAction);
-    menu.addAction(ui->action_newRecord);
+    menu.addAction(ui->action_new);
     menu.addSeparator();
-    menu.addAction(ui->action_editRecord);
-    menu.addAction(ui->action_removeRecord);
+    menu.addAction(ui->action_edit);
+    menu.addAction(ui->action_remove);
     menu.addSeparator();
     menu.addAction(ui->action_refresh);
 
@@ -286,7 +305,9 @@ void MainWindow::showMTContextMenu(const QPoint&)
 
 void MainWindow::filterFunds(const QString &text)
 {
+    m_fund_proxymodel->setRecursiveFilteringEnabled(true);
     m_fund_proxymodel->setFilterKeyColumn(0);
+
     m_fund_proxymodel->setFilterFixedString(text);
 }
 
@@ -332,13 +353,57 @@ void MainWindow::rowSelected(const QItemSelection &selected, const QItemSelectio
         ui->pTE_Desc->setPlainText(t);
     }
 }
-void MainWindow::openFundListDialog()
+
+void MainWindow::createItem(QAbstractItemView *view)
 {
-    FundListDialog dialog;
-    dialog.exec();
+    mt_filter->clear();
+    m_table_proxymodel->invalidate();
+    if (!mt_controller->createItem(view)) {
+        QMessageBox::warning(this, tr("Fund list"), tr("Could not create item"), QMessageBox::Ok);
+    }
 }
 
-void MainWindow::openParamDialog()
+void MainWindow::removeItem(QAbstractItemView *view)
+{
+    int res = QMessageBox()
+            .critical(this,
+                      tr("Delete record"),
+                      tr("Are you shure that you want to delete %1 items?").arg(view->selectionModel()->selectedRows().length()),
+                      QMessageBox::No | QMessageBox::Yes);
+
+    if (res == QMessageBox::Yes) {
+        if(mt_controller->removeItem(view)) {
+            // update rows count
+            total = m_table_model->count();
+            setTotal(total.toInt());
+        } else {
+            QMessageBox::warning(this, tr("Fund list"), tr("Could not remove item"), QMessageBox::Ok);
+        }
+    }
+}
+
+void MainWindow::openMainForm()
+{
+    MainFormDialog dialog;
+    int res = dialog.exec();
+
+    if (res == QDialog::Accepted) {
+        // do something
+    }
+}
+
+
+void MainWindow::openFundList()
+{
+    FundListDialog dialog;
+    int res = dialog.exec();
+
+    if (res == QDialog::Accepted) {
+        m_fund_model->select();
+    }
+}
+
+void MainWindow::openParam()
 {
     ParamDialog dialog;
     int res = dialog.exec();
@@ -349,7 +414,7 @@ void MainWindow::openParamDialog()
     }
 }
 
-void MainWindow::openSearchDialog()
+void MainWindow::openSearch()
 {
     if (!search_dialog) {
         search_dialog = new SearchDialog(this);

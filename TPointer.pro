@@ -19,10 +19,10 @@ SOURCES += \
     application.cpp \
     connection.cpp \
     controllers/modelcontroller.cpp \
-    dialogs/basedialog.cpp \
     dialogs/fundlistdialog.cpp \
     dialogs/intdelegate.cpp \
     dialogs/intlistdelegate.cpp \
+    dialogs/mainformdialog.cpp \
     dialogs/paramdialog.cpp \
     dialogs/searchdialog.cpp \
     main.cpp \
@@ -48,10 +48,10 @@ HEADERS += \
     application.h \
     connection.h \
     controllers/modelcontroller.h \
-    dialogs/basedialog.h \
     dialogs/fundlistdialog.h \
     dialogs/intdelegate.h \
     dialogs/intlistdelegate.h \
+    dialogs/mainformdialog.h \
     dialogs/paramdialog.h \
     dialogs/searchdialog.h \
     mainwindow.h \
@@ -75,6 +75,7 @@ HEADERS += \
 
 FORMS += \
     dialogs/fundlistdialog.ui \
+    dialogs/mainformdialog.ui \
     dialogs/paramdialog.ui \
     dialogs/searchdialog.ui \
     mainwindow.ui

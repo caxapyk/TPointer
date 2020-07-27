@@ -72,7 +72,7 @@ QModelIndex BaseModel::moveDown(int row)
 bool BaseModel::remove(QModelIndexList &list)
 {
     for (int i = 0; i < list.size(); ++i) {
-        if (!removeRows(list.at(i).row(), 1)) {
+         if (!removeRows(list.at(i).row(), 1) && submit()) {
             qDebug() << lastError().text();
             return false;
         }

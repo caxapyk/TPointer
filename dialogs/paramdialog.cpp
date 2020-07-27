@@ -163,8 +163,13 @@ void ParamDialog::createItem(QAbstractItemView *view)
 
 void ParamDialog::removeItem(QAbstractItemView *view)
 {
+    int res = QMessageBox()
+                .critical(this,
+                          tr("Delete items"),
+                          tr("Are you shure that you want to delete %1 item?").arg(view->selectionModel()->selectedRows().length()),
+                          QMessageBox::No | QMessageBox::Yes);
 
-    if (!controller->removeItem(view)) {
+        if (res == QMessageBox::Yes && !controller->removeItem(view)) {
         QMessageBox::warning(this, tr("Parameters"), tr("Could not remove item"), QMessageBox::Ok);
     }
 }

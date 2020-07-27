@@ -39,23 +39,21 @@ bool ModelController::createItem(QAbstractItemView *view)
 bool ModelController::removeItem(QAbstractItemView *view)
 {
     QAbstractItemView *v = qobject_cast<QAbstractItemView*> (view);
-    QModelIndexList indexes = v->selectionModel()->selectedIndexes();
+    QModelIndexList indexes = v->selectionModel()->selectedRows();
 
     if(!indexes.isEmpty()) {
         BaseModel *model = qobject_cast<BaseModel*> (v->model());
 
         if(!model) { // check model is QSortFilterProxyModel
             QSortFilterProxyModel *m_proxy = qobject_cast<QSortFilterProxyModel*> (v->model());
-
             if (m_proxy) {
                 model = qobject_cast<BaseModel*> (m_proxy->sourceModel());
 
                 /* create new QModelIndexList with source model indexes */
                 QModelIndexList s_indexes;
                 for (int i=0; i<indexes.length();++i) {
-                    s_indexes.append(m_proxy->mapToSource(indexes.at(0)));
+                    s_indexes.append(m_proxy->mapToSource(indexes.at(i)));
                 }
-
                 if(model && model->remove(s_indexes)) {
                     v->selectionModel()->clearSelection();
                     model->select();
@@ -69,7 +67,6 @@ bool ModelController::removeItem(QAbstractItemView *view)
 
             return true;
         }
-
 
         model->select();
         // select previous item

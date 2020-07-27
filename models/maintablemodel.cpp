@@ -1,11 +1,12 @@
 #include "application.h"
 #include "maintablemodel.h"
 
+#include <QDebug>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlRelation>
 
-MainTableModel::MainTableModel() :  QSqlRelationalTableModel()
+MainTableModel::MainTableModel() :  BaseModel()
 {
     setTable("tpointer");
     setRelation(2, QSqlRelation("storage", "id", "name AS storage_name"));
@@ -13,7 +14,7 @@ MainTableModel::MainTableModel() :  QSqlRelationalTableModel()
     setRelation(11, QSqlRelation("feature", "id", "name AS feature_name"));
 
     setJoinMode(QSqlRelationalTableModel::LeftJoin);
-    setEditStrategy(QSqlTableModel::OnManualSubmit);
+    setEditStrategy(QSqlTableModel::OnRowChange);
 
     setHeaderData(1, Qt::Horizontal, tr("Floor"));
     setHeaderData(2, Qt::Horizontal, tr("Storage"));
@@ -39,6 +40,13 @@ void MainTableModel::_setFilter(const FilterStruct &fs)
     if (!fs.compartment.isNull()) {
         if (!filter.isNull()) filter += QString("AND");
         filter += QString(" compartment=%1 ").arg(fs.compartment.toString());
+    /// Хрень!!!!!!!!!!!!!!!!!!! убирай пустой compartment
+     /*check that now loading by shelving, not fund,
+     * because when loading by fund compartment cannot present in query
+     */
+    } else if (fs.compartment.isNull() && fs.fund.isNull()) {
+        if (!filter.isNull()) filter += QString("AND");
+        filter += QString(" compartment IS NULL ");
     }
     // shelving
     if (!fs.shelving.isNull()) {

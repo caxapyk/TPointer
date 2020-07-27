@@ -12,7 +12,7 @@ StorageModel::StorageModel() : BaseModel()
     setSort(2, Qt::AscendingOrder);
     setPositionColumn(2);
 
-    setEditStrategy(QSqlTableModel::OnFieldChange);
+    setEditStrategy(QSqlTableModel::OnRowChange);
 
     setHeaderData(3, Qt::Horizontal, tr("Fund number"));
     setHeaderData(4, Qt::Horizontal, tr("Rooms count"));

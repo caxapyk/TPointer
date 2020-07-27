@@ -18,8 +18,8 @@ FundListDialog::FundListDialog(QWidget *parent) :
 
     f_proxymodel = new FundProxyModel;
     f_proxymodel->setSourceModel(f_model);
+    //f_proxymodel->sort(1, Qt::DescendingOrder);
 
-    ui->tV_funds->sortByColumn(1, Qt::AscendingOrder);
     ui->tV_funds->setModel(f_proxymodel);
 
     ui->tV_funds->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -78,9 +78,13 @@ void FundListDialog::createItem(QAbstractItemView *view)
 
 void FundListDialog::removeItem(QAbstractItemView *view)
 {
-    filter->clear();
-    f_proxymodel->invalidate();
-    if (!controller->removeItem(view)) {
+    int res = QMessageBox()
+            .critical(this,
+                      tr("Delete items"),
+                      tr("Are you shure that you want to delete %1 fund?").arg(view->selectionModel()->selectedRows().length()),
+                      QMessageBox::No | QMessageBox::Yes);
+
+    if (res == QMessageBox::Yes && !controller->removeItem(view)) {
         QMessageBox::warning(this, tr("Fund list"), tr("Could not remove item"), QMessageBox::Ok);
     }
 }
