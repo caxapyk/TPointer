@@ -1,9 +1,9 @@
 #ifndef PARAMDIALOG_H
 #define PARAMDIALOG_H
 
-#include "controllers/modelcontroller.h"
-#include "models/basemodel.h"
-#include "widgets/itemcontroller.h"
+#include "views/tablemodelcontroller.h"
+#include "models/tablemodel.h"
+#include "widgets/buttonscontrol.h"
 
 namespace Ui {
 class ParamDialog;
@@ -25,15 +25,15 @@ private:
     void loadStorages(QVariant id);
 
     Ui::ParamDialog *ui;
-    BaseModel *m_corpus_model;
-    BaseModel *m_storage_model;
-    BaseModel *m_feature_model;
+    TableModel *m_corpus_model;
+    TableModel *m_storage_model;
+    TableModel *m_feature_model;
 
-    ItemController *cp_controls;
-    ItemController *st_controls;
-    ItemController *ft_controls;
+    ButtonsControl *cp_controls;
+    ButtonsControl *st_controls;
+    ButtonsControl *ft_controls;
 
-    ModelController *controller;
+    TableModelController *controller;
 
 private slots:
     void selectCorpus(const QItemSelection &selected, const QItemSelection &deselected);

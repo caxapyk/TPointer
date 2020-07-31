@@ -16,7 +16,8 @@ SearchDialog::SearchDialog(QWidget *parent) :
     storage_model = new StorageExtendedModel;
     storage_model->select();
 
-    _storage_model = new NoItemListModel(storage_model);
+    _storage_model = new NoItemListModel();
+    _storage_model->setModel(storage_model);
     _storage_model->setColumn(6);
 
     ui->cB_storage->setModel(_storage_model);
@@ -24,11 +25,12 @@ SearchDialog::SearchDialog(QWidget *parent) :
     feature_model = new FeatureModel;
     feature_model->select();
 
-    _feature_model = new NoItemListModel(feature_model);
-    _feature_model->setColumn(2);
+    //_feature_model = new NoItemListModel(feature_model);
+    //_feature_model->setColumn(2);
 
-    ui->cB_feature->setModel(_feature_model);
+    ui->cB_feature->setModel(feature_model);
 
+    connect(ui->pB_clear, &QPushButton::released, this, &SearchDialog::clear);
     connect(ui->pB_search, &QPushButton::released, this, &SearchDialog::search);
 }
 
@@ -39,6 +41,16 @@ SearchDialog::~SearchDialog()
     delete _storage_model;
     delete feature_model;
     delete _feature_model;
+}
+
+void SearchDialog::clear()
+{
+    ui->cB_storage->setCurrentIndex(0);
+    ui->lE_compartment->setText(QString());
+    ui->lE_shelving->setText(QString());
+    ui->lE_fund->setText(QString());
+    ui->cB_strict->setChecked(false);
+    ui->cB_feature->setCurrentIndex(0);
 }
 
 void SearchDialog::search()

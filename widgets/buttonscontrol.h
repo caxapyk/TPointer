@@ -12,7 +12,7 @@
 #include <QDialogButtonBox>
 #include <QMenu>
 
-class ItemController : public QWidget
+class ButtonsControl : public QWidget
 {
     Q_OBJECT
 
@@ -29,13 +29,13 @@ public:
     Q_DECLARE_FLAGS(StandardControls, StandardControl)
     Q_FLAG(StandardControls)
 
-    explicit ItemController(ItemController::StandardControls buttons, int orientation = Qt::Vertical, QWidget *parent = nullptr);
-    ~ItemController();
+    explicit ButtonsControl(ButtonsControl::StandardControls buttons, int orientation = Qt::Vertical, QWidget *parent = nullptr);
+    ~ButtonsControl();
 
-    QPushButton *button(ItemController::StandardControl which) const;
-    void setEnabled(bool b, ItemController::StandardControl which);
+    QPushButton *button(ButtonsControl::StandardControl which) const;
+    void setEnabled(bool b, ButtonsControl::StandardControl which);
     void assetView(QAbstractItemView *view);
-    void connectToMenu(ItemController::StandardControl control, QAction *action);
+    void connectToMenu(ButtonsControl::StandardControl control, QAction *action);
 
 signals:
     void addRequested(QAbstractItemView *view);
@@ -56,13 +56,13 @@ private:
 
     QAbstractItemView *m_view = nullptr;
 
-    QMap<ItemController::StandardControl, QPushButton*> *bmap = new QMap<ItemController::StandardControl, QPushButton*>;
-    QMap<ItemController::StandardControl, QAction*> *actions =  new QMap<ItemController::StandardControl, QAction*>;
+    QMap<ButtonsControl::StandardControl, QPushButton*> *bmap = new QMap<ButtonsControl::StandardControl, QPushButton*>;
+    QMap<ButtonsControl::StandardControl, QAction*> *actions =  new QMap<ButtonsControl::StandardControl, QAction*>;
 
 private slots:
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(ItemController::StandardControls)
+Q_DECLARE_OPERATORS_FOR_FLAGS(ButtonsControl::StandardControls)
 
 #endif // BUTTONCONTROLS_H

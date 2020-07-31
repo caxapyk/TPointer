@@ -1,6 +1,6 @@
-#include "maintableproxymodel.h"
+#include "dataproxymodel.h"
 
-MainTableProxyModel::MainTableProxyModel() : QSortFilterProxyModel()
+DataProxyModel::DataProxyModel() : QSortFilterProxyModel()
 {
 
 }

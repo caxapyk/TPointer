@@ -2,11 +2,17 @@
 #define FLOORSTRINGLIST_H
 
 #include <QObject>
+#include <QStringList>
 
-class FloorStringList : public QStringList
+class FloorsParser : public QObject
 {
+
+    Q_OBJECT;
+
 public:
-    FloorStringList();
+    FloorsParser();
+    QStringList process(const QString &floors) const;
+
 };
 
 #endif // FLOORSTRINGLIST_H

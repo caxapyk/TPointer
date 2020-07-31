@@ -1,13 +1,13 @@
 #include "featuremodel.h"
 
-FeatureModel::FeatureModel() : BaseModel()
+FeatureModel::FeatureModel() : TableModel()
 {
     setTable("feature");
     setItemName(tr("New feature"));
     setSort(1, Qt::AscendingOrder);
     setPositionColumn(1);
 
-    setEditStrategy(QSqlTableModel::OnFieldChange);
+    setEditStrategy(QSqlTableModel::OnFieldChange); //!important for sorting
 }
 
 void FeatureModel::setDefaultRecord(int, QSqlRecord &record) {

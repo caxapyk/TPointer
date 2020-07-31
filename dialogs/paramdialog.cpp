@@ -17,7 +17,7 @@ ParamDialog::ParamDialog(QWidget *parent) :
     ui->setupUi(this);
 
     // model controller
-    controller = new ModelController();
+    controller = new TableModelController();
 
     setupModels();
     setupControls();
@@ -28,24 +28,24 @@ ParamDialog::ParamDialog(QWidget *parent) :
     /* triggers for placement tab */
 
     // corpuses
-    connect(cp_controls, &ItemController::addRequested, this,  &ParamDialog::createItem);
-    connect(cp_controls, &ItemController::removeRequested, this,  &ParamDialog::removeItem);
+    connect(cp_controls, &ButtonsControl::addRequested, this,  &ParamDialog::createItem);
+    connect(cp_controls, &ButtonsControl::removeRequested, this,  &ParamDialog::removeItem);
 
     connect(ui->lV_corpuses->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ParamDialog::selectCorpus);
 
     // storages
-    connect(st_controls, &ItemController::addRequested, this,  &ParamDialog::createItem);
-    connect(st_controls, &ItemController::removeRequested, this,  &ParamDialog::removeItem);
-    connect(st_controls, &ItemController::upRequested, this,  &ParamDialog::moveUp);
-    connect(st_controls, &ItemController::downRequested, this,  &ParamDialog::moveDown);
+    connect(st_controls, &ButtonsControl::addRequested, this,  &ParamDialog::createItem);
+    connect(st_controls, &ButtonsControl::removeRequested, this,  &ParamDialog::removeItem);
+    connect(st_controls, &ButtonsControl::upRequested, this,  &ParamDialog::moveUp);
+    connect(st_controls, &ButtonsControl::downRequested, this,  &ParamDialog::moveDown);
 
     /* triggers for other tab */
 
     // features
-    connect(ft_controls, &ItemController::addRequested, this,  &ParamDialog::createItem);
-    connect(ft_controls, &ItemController::removeRequested, this,  &ParamDialog::removeItem);
-    connect(ft_controls, &ItemController::upRequested, this,  &ParamDialog::moveUp);
-    connect(ft_controls, &ItemController::downRequested, this,  &ParamDialog::moveDown);
+    connect(ft_controls, &ButtonsControl::addRequested, this,  &ParamDialog::createItem);
+    connect(ft_controls, &ButtonsControl::removeRequested, this,  &ParamDialog::removeItem);
+    connect(ft_controls, &ButtonsControl::upRequested, this,  &ParamDialog::moveUp);
+    connect(ft_controls, &ButtonsControl::downRequested, this,  &ParamDialog::moveDown);
 }
 
 ParamDialog::~ParamDialog()
@@ -64,14 +64,14 @@ ParamDialog::~ParamDialog()
 
 void ParamDialog::setupControls()
 {
-    cp_controls = new ItemController(
-                ItemController::Add | ItemController::Remove, Qt::Horizontal);
+    cp_controls = new ButtonsControl(
+                ButtonsControl::Add | ButtonsControl::Remove, Qt::Horizontal);
 
-    st_controls = new ItemController(
-                ItemController::Add | ItemController::Remove | ItemController::Up | ItemController::Down);
+    st_controls = new ButtonsControl(
+                ButtonsControl::Add | ButtonsControl::Remove | ButtonsControl::Up | ButtonsControl::Down);
 
-    ft_controls = new ItemController(
-                ItemController::Add | ItemController::Remove | ItemController::Up | ItemController::Down);
+    ft_controls = new ButtonsControl(
+                ButtonsControl::Add | ButtonsControl::Remove | ButtonsControl::Up | ButtonsControl::Down);
 
     ui->gB_corpuses->layout()->addWidget(cp_controls);
     ui->gB_storages->layout()->addWidget(st_controls);
@@ -92,7 +92,7 @@ void ParamDialog::loadCorpuses() {
     ui->lV_corpuses->setModelColumn(1);
 
     cp_controls->assetView(ui->lV_corpuses);
-    cp_controls->setEnabled(true, ItemController::Add);
+    cp_controls->setEnabled(true, ButtonsControl::Add);
 
     /* Load the first entry */
     if (m_corpus_model->rowCount() > 0) {
@@ -134,7 +134,7 @@ void ParamDialog::loadStorages(QVariant id)
         ui->tV_storages->setColumnWidth(5, 90);
 
         st_controls->assetView(ui->tV_storages);
-        st_controls->setEnabled(true, ItemController::Add);
+        st_controls->setEnabled(true, ButtonsControl::Add);
     }
 }
 
@@ -151,7 +151,7 @@ void ParamDialog::loadFeatures() {
     ui->tV_features->setColumnWidth(2, 200);
 
     ft_controls->assetView(ui->tV_features);
-    ft_controls->setEnabled(true, ItemController::Add);
+    ft_controls->setEnabled(true, ButtonsControl::Add);
 }
 
 void ParamDialog::createItem(QAbstractItemView *view)

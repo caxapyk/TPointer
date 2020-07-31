@@ -18,67 +18,83 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     application.cpp \
     connection.cpp \
-    controllers/modelcontroller.cpp \
+    dialogs/addnodedialog.cpp \
     dialogs/fundlistdialog.cpp \
+    dialogs/insertnodedialog.cpp \
     dialogs/intdelegate.cpp \
     dialogs/intlistdelegate.cpp \
-    dialogs/mainformdialog.cpp \
+    dialogs/nodedialog.cpp \
     dialogs/paramdialog.cpp \
     dialogs/searchdialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    models/basemodel.cpp \
     models/corpusmodel.cpp \
+    models/datafiltermodel.cpp \
+    models/datamodel.cpp \
+    models/dataproxymodel.cpp \
     models/featuremodel.cpp \
     models/fundmodel.cpp \
     models/fundproxymodel.cpp \
     models/fundtreemodel.cpp \
     models/hierarchymodel.cpp \
-    models/maintablemodel.cpp \
-    models/maintableproxymodel.cpp \
     models/noitemlistmodel.cpp \
     models/searchmodel.cpp \
     models/storageextendedmodel.cpp \
     models/storagemodel.cpp \
+    models/tablemodel.cpp \
+    utils/floorsparser.cpp \
+    views/dataview.cpp \
+    views/navigationview.cpp \
+    views/tablemodelcontroller.cpp \
+    views/view.cpp \
+    widgets/buttonscontrol.cpp \
     widgets/customcontextmenu.cpp \
-    widgets/itemcontroller.cpp \
     widgets/itemfilter.cpp
 
 HEADERS += \
     application.h \
     connection.h \
-    controllers/modelcontroller.h \
+    dialogs/addnodedialog.h \
     dialogs/fundlistdialog.h \
+    dialogs/insertnodedialog.h \
     dialogs/intdelegate.h \
     dialogs/intlistdelegate.h \
-    dialogs/mainformdialog.h \
+    dialogs/nodedialog.h \
     dialogs/paramdialog.h \
     dialogs/searchdialog.h \
     mainwindow.h \
-    models/basemodel.h \
     models/corpusmodel.h \
+    models/datafiltermodel.h \
+    models/datamodel.h \
+    models/dataproxymodel.h \
     models/featuremodel.h \
     models/filterstruct.h \
     models/fundmodel.h \
     models/fundproxymodel.h \
     models/fundtreemodel.h \
     models/hierarchymodel.h \
-    models/maintablemodel.h \
-    models/maintableproxymodel.h \
     models/noitemlistmodel.h \
     models/searchmodel.h \
     models/storageextendedmodel.h \
     models/storagemodel.h \
+    models/tablemodel.h \
+    utils/floorsparser.h \
+    views/dataview.h \
+    views/navigationview.h \
+    views/tablemodelcontroller.h \
+    views/view.h \
+    widgets/buttonscontrol.h \
     widgets/customcontextmenu.h \
-    widgets/itemcontroller.h \
     widgets/itemfilter.h
 
 FORMS += \
     dialogs/fundlistdialog.ui \
-    dialogs/mainformdialog.ui \
+    dialogs/nodedialog.ui \
     dialogs/paramdialog.ui \
     dialogs/searchdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    views/dataview.ui \
+    views/navigationview.ui
 
 TRANSLATIONS += \
     translations/tpointer_ru.ts \

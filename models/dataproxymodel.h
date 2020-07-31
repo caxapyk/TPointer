@@ -4,11 +4,11 @@
 #include <QObject>
 #include <QSortFilterProxyModel>
 
-class MainTableProxyModel : public QSortFilterProxyModel
+class DataProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    MainTableProxyModel();
+    DataProxyModel();
 };
 
 #endif // MAINTABLEPROXYMODEL_H

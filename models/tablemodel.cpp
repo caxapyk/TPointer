@@ -1,4 +1,4 @@
-#include "basemodel.h"
+#include "tablemodel.h"
 
 #include <QSqlRecord>
 #include <QVariant>
@@ -7,29 +7,13 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-BaseModel::BaseModel() :  QSqlRelationalTableModel()
+TableModel::TableModel() :  QSqlRelationalTableModel()
 {
     connect(this, SIGNAL(primeInsert(int, QSqlRecord&)),
             this, SLOT(setDefaultRecord(int, QSqlRecord&)));
 }
 
-bool BaseModel::insert() {
-    if(insertRows(rowCount(), 1)) {
-        submit();
-        return true;
-    } else {
-        qDebug() << lastError().text();
-    }
-
-    return false;
-}
-
-/*
-* Saves positon to database in <column>.
-* Uses <direction> to sort <row> up/down
-*/
-
-QModelIndex BaseModel::baseMove(SortDirection direction, int row, int column)
+QModelIndex TableModel::baseMove(SortDirection direction, int row, int column)
 {
     signed int x_row;
 
@@ -59,29 +43,17 @@ QModelIndex BaseModel::baseMove(SortDirection direction, int row, int column)
     return x_index;
 }
 
-QModelIndex BaseModel::moveUp(int row)
+QModelIndex TableModel::moveUp(int row)
 {
     return baseMove(SortDirection::SortUp, row, getPositionColumn());
 }
 
-QModelIndex BaseModel::moveDown(int row)
+QModelIndex TableModel::moveDown(int row)
 {
     return baseMove(SortDirection::SortDown, row, getPositionColumn());
 }
 
-bool BaseModel::remove(QModelIndexList &list)
-{
-    for (int i = 0; i < list.size(); ++i) {
-         if (!removeRows(list.at(i).row(), 1) && submit()) {
-            qDebug() << lastError().text();
-            return false;
-        }
-     }
-
-    return true;
-}
-
-void BaseModel::setPositionColumn(int column)
+void TableModel::setPositionColumn(int column)
 {
     position_column = column;
 }

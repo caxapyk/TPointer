@@ -1,10 +1,10 @@
 #ifndef CORPUSMODEL_H
 #define CORPUSMODEL_H
 
-#include "basemodel.h"
+#include "tablemodel.h"
 #include <QObject>
 
-class CorpusModel : public BaseModel
+class CorpusModel : public TableModel
 {
     Q_OBJECT
 

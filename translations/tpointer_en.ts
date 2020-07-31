@@ -132,7 +132,7 @@
     </message>
 </context>
 <context>
-    <name>ItemController</name>
+    <name>ButtonsControl</name>
     <message>
         <location filename="../widgets/itemcontroller.cpp" line="24"/>
         <source>Add</source>
@@ -178,7 +178,7 @@
     </message>
 </context>
 <context>
-    <name>MainTableModel</name>
+    <name>DataModel</name>
     <message>
         <location filename="../models/maintablemodel.cpp" line="17"/>
         <source>Floor</source>

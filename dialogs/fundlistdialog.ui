@@ -9,13 +9,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
+    <width>480</width>
     <height>320</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>540</width>
+    <width>480</width>
     <height>320</height>
    </size>
   </property>
@@ -39,14 +39,23 @@
    <item>
     <widget class="QTableView" name="tV_funds">
      <property name="selectionMode">
-      <enum>QAbstractItemView::ContiguousSelection</enum>
+      <enum>QAbstractItemView::ExtendedSelection</enum>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
+     <property name="showGrid">
+      <bool>true</bool>
+     </property>
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderHighlightSections">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
    <item>
@@ -55,7 +64,7 @@
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -67,7 +76,7 @@
  <connections>
   <connection>
    <sender>buttonBox</sender>
-   <signal>clicked(QAbstractButton*)</signal>
+   <signal>accepted()</signal>
    <receiver>FundListDialog</receiver>
    <slot>accept()</slot>
    <hints>
@@ -77,6 +86,22 @@
     </hint>
     <hint type="destinationlabel">
      <x>269</x>
+     <y>159</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>FundListDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>239</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
      <y>159</y>
     </hint>
    </hints>

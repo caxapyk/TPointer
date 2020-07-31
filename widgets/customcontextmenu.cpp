@@ -28,6 +28,7 @@ CustomContextMenu::CustomContextMenu(CustomContextMenu::StandardActions actions,
 
     // refresh action
     if(actions & CustomContextMenu::Refresh) {
+        addSeparator();
         action_refresh = addAction(tr("Refresh"));
         action_refresh->setIcon(QIcon(":/icons/types-16.png"));
         connect(action_refresh, &QAction::triggered, this, [=] { emit refreshRequested(); });
@@ -62,19 +63,10 @@ QAction *CustomContextMenu::action(CustomContextMenu::StandardAction which) cons
     }
 }
 
-void CustomContextMenu::setCurrentSelection(const QItemSelection &selected)
+void CustomContextMenu::setSelection(const QModelIndexList &selected)
 {
     //disable edit action for more then one row selected
-    if (selected.length() > 0) {
-        int row = selected.indexes().at(0).row();
-
-        for (int i=0; i<selected.indexes().length(); ++i) {
-            if(selected.indexes().at(i).row() != row) {
-               setEnabled(false, CustomContextMenu::Edit);
-               break;
-            }
-        }
-    }
+    setEnabled(selected.length() == 1, CustomContextMenu::Edit);
 
     setEnabled(!selected.isEmpty(), CustomContextMenu::Remove);
 }

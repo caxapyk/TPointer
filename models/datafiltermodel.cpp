@@ -1,6 +1,6 @@
 #include "datafiltermodel.h"
 
-DataFilterModel::DataFilterModel()
+DataFilterModel::DataFilterModel() : QStandardItemModel()
 {
 
 }

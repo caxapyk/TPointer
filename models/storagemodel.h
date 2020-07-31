@@ -1,12 +1,12 @@
 #ifndef STORAGEMODEL_H
 #define STORAGEMODEL_H
 
-#include "basemodel.h"
+#include "tablemodel.h"
 
 #include <QObject>
 #include <QSqlRecord>
 
-class StorageModel : public BaseModel
+class StorageModel : public TableModel
 {
 
     Q_OBJECT;

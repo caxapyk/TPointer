@@ -1,21 +1,12 @@
 #include "application.h"
-#include "maintablemodel.h"
+#include "datamodel.h"
 
 #include <QDebug>
-#include <QSqlQuery>
 #include <QSqlRecord>
-#include <QSqlRelation>
 
-MainTableModel::MainTableModel() :  BaseModel()
+DataModel::DataModel() :  QAbstractTableModel()
 {
-    setTable("tpointer");
-    setRelation(2, QSqlRelation("storage", "id", "name AS storage_name"));
-    setRelation(7, QSqlRelation("fund", "id", "number AS fund_name"));
-    setRelation(11, QSqlRelation("feature", "id", "name AS feature_name"));
-
-    setJoinMode(QSqlRelationalTableModel::LeftJoin);
-    setEditStrategy(QSqlTableModel::OnRowChange);
-
+    setHeaderData(0, Qt::Horizontal, tr("Id"));
     setHeaderData(1, Qt::Horizontal, tr("Floor"));
     setHeaderData(2, Qt::Horizontal, tr("Storage"));
     setHeaderData(3, Qt::Horizontal, tr("Compartment"));
@@ -29,50 +20,60 @@ MainTableModel::MainTableModel() :  BaseModel()
     setHeaderData(11, Qt::Horizontal, tr("Features"));
 }
 
-void MainTableModel::_setFilter(const FilterStruct &fs)
+DataModel::~DataModel()
 {
-    QString filter;
-    // storage
-    if (!fs.storage.isNull()) {
-        filter += QString(" storage=%1 ").arg(fs.storage.toInt());
-    }
-    // compartment
-    if (!fs.compartment.isNull()) {
-        if (!filter.isNull()) filter += QString("AND");
-        filter += QString(" compartment=%1 ").arg(fs.compartment.toString());
-    /// Хрень!!!!!!!!!!!!!!!!!!! убирай пустой compartment
-     /*check that now loading by shelving, not fund,
-     * because when loading by fund compartment cannot present in query
-     */
-    } else if (fs.compartment.isNull() && fs.fund.isNull()) {
-        if (!filter.isNull()) filter += QString("AND");
-        filter += QString(" compartment IS NULL ");
-    }
-    // shelving
-    if (!fs.shelving.isNull()) {
-        if (!filter.isNull()) filter += QString("AND");
-        filter += QString(" shelving=%1 ").arg(fs.shelving.toString());
-    }
-    // fund
-    if (!fs.fund.isNull() && fs.fund_strict) {
-        if (!filter.isNull()) filter += QString("AND");
-        filter += QString(" fund='%1' ").arg(fs.fund.toString());
-    } else if (!fs.fund.isNull() && !fs.fund_strict) {
-        if (!filter.isNull()) filter += QString("AND");
-        filter += QString(" fund LIKE '%%1%' ").arg(fs.fund.toString());
-    }
-    // feature
-    if (!fs.feature.isNull()) {
-        if (!filter.isNull()) filter += QString("AND");
-        filter += QString(" feature=%1 ").arg(fs.feature.toInt());
-    }
-
-    if(!filter.isNull()) {
-        setFilter(filter);
-    }
+    clear();
 }
 
-int MainTableModel::count() const
+void DataModel::clear()
+{
+    beginResetModel();
+    nodeList.clear();
+    nodeList.squeeze();
+    endResetModel();
+}
+
+bool DataModel::select()
+{
+    clear();
+    m_query.prepare(QString("SELECT tpointer.`id`,tpointer.`floor`,storage.`name` AS storage_name,tpointer.`compartment`,tpointer.`shelving`,tpointer.`cupboard`,tpointer.`shelf`,fund.`number` AS fund_number,tpointer.`inventory`,tpointer.`records`,tpointer.`note`,feature.`name` AS feature_name FROM tpointer "
+                  "LEFT JOIN storage ON tpointer.`storage`=storage.`id` "
+                  "LEFT JOIN fund ON tpointer.`fund`=fund.`id` "
+                  "LEFT JOIN feature ON tpointer.`feature`=feature.`id` "
+                  "%1"
+                  "ORDER BY storage.`name`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`")
+              .arg(!filter().isNull() ? "WHERE " + filter() : ""));
+
+    if (m_query.exec()) {
+        beginResetModel();
+        //qDebug() << m_query.lastQuery();
+        while (m_query.next()) {
+            Node node;
+            for (int i = 0; i < DataModel::ColumnsCount; ++i) {
+                node.append(m_query.value(i));
+            }
+
+            nodeList.append(node);
+        }
+        endResetModel();
+
+        return true;
+    }
+
+    return false;
+}
+
+int DataModel::columnCount(const QModelIndex&) const
+{
+   return DataModel::ColumnsCount;
+}
+
+int DataModel::rowCount(const QModelIndex&) const
+{
+   return nodeList.size();
+}
+
+int DataModel::count() const
 {
     QSqlQuery query("SELECT COUNT(id) from tpointer");
     query.exec();
@@ -81,21 +82,83 @@ int MainTableModel::count() const
     return query.value(0).toInt();
 }
 
-QVariant MainTableModel::data(const QModelIndex &index, int role) const
+QVariant DataModel::data(const QModelIndex &index, int role) const
 {
-    // rename 0 floor to 'Basement'
-    if (role == Qt::DisplayRole && index.column() == 1) {
-        if (record(index.row()).value(index.column()).toInt() == 0) {
+    if (role == Qt::DisplayRole ) {
+        QVariant value = nodeList.at(index.row()).at(index.column());
+
+        if (index.column() == 1 && value.toInt() == 0) {
             return QVariant(tr("Basement"));
-        } else {
-            return QVariant(tr("%1 floor").arg(record(index.row()).value(1).toString()));
         }
-    //rename 0 compartmnet/shelving to blank line
-    } else if (role == Qt::DisplayRole && (index.column() == 3 || index.column() == 4)){
-        if (record(index.row()).value(index.column()).toInt() == 0) {
-            return QVariant();
-        }
+
+        return value;
     }
 
-    return QSqlRelationalTableModel::data(index, role);
+    return QVariant();
+}
+
+bool DataModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int)
+{
+    if ((section < 0)
+            || ((orientation == Qt::Horizontal) && (section >= columnCount()))
+            || ((orientation == Qt::Vertical) && (section >= rowCount()))) {
+            return false;
+    }
+
+    if (orientation == Qt::Horizontal) {
+        columnHeaders.insert(section, value);
+        emit headerDataChanged(orientation, section, section);
+        return true;
+     }
+
+     return false;
+}
+
+QVariant DataModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if ((section < 0)
+            || ((orientation == Qt::Horizontal) && (section >= columnCount()))
+            || ((orientation == Qt::Vertical) && (section >= rowCount()))) {
+        return QVariant();
+    }
+
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+        return columnHeaders.value(section);
+     }
+
+    return QVariant();
+}
+
+void DataModel::setFilter(const FilterStruct &fs)
+{
+    m_filterStruct = fs;
+    m_filter.clear();
+
+    // storage
+    if (!fs.storage.isNull()) {
+        m_filter += QString(" tpointer.`storage`=%1 ").arg(fs.storage.toInt());
+    }
+    // compartment
+    if (!fs.compartment.isNull()) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
+        m_filter += QString(" tpointer.`compartment`=%1 ").arg(fs.compartment.toString());
+    }
+    // shelving
+    if (!fs.shelving.isNull()) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
+        m_filter += QString(" tpointer.`shelving`=%1 ").arg(fs.shelving.toString());
+    }
+    // fund
+    if (!fs.fund.isNull() && fs.fund_strict) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
+        m_filter += QString(" fund='%1' ").arg(fs.fund.toString());
+    } else if (!fs.fund.isNull() && !fs.fund_strict) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
+        m_filter += QString(" fund LIKE '%%1%' ").arg(fs.fund.toString());
+    }
+    // feature
+    if (!fs.feature.isNull()) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
+        m_filter += QString(" tpointer.`feature`=%1 ").arg(fs.feature.toInt());
+    }
 }

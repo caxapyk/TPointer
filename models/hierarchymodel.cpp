@@ -1,6 +1,7 @@
 #include "hierarchymodel.h"
 #include "models/corpusmodel.h"
 #include "models/storagemodel.h"
+#include "utils/floorsparser.h"
 
 #include <QColor>
 #include <QDebug>
@@ -87,10 +88,8 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
             node->id = model.record(i).value(0);
             node->name = model.record(i).value(3);
 
-            /* replace 0 floor with 'basement', -n floor with '-n floor' */
-            QStringList floors = model.record(i).value(5).toString().split(",");
-            floors = floors.replaceInStrings(QRegExp("^[0]+$"), tr("bsmnt"));
-            floors = floors.replaceInStrings(QRegExp("^(-\\d)+$"), tr("\\1 fl."));
+            FloorsParser parser;
+            QStringList floors = parser.process(model.record(i).value(5).toString());
 
             node->floor = QVariant(floors.join(", "));
 
@@ -134,7 +133,7 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
         QVariant compartment = parentNode->name;
 
         model.setQuery("SELECT DISTINCT shelving FROM tpointer WHERE storage=" + storage_id.toString()
-                       + ((!compartment.isNull()) ? " AND compartment='" + compartment.toString() + "'" : " AND compartment IS NULL")
+                       + " AND compartment=" + compartment.toString()
                        + " ORDER BY shelving");
 
         for (int i=0; i < model.rowCount(); ++i) {
@@ -178,12 +177,9 @@ bool HierarchyModel::hasChildren(const QModelIndex &parent) const
         }
         case (HierarchyModel::CompartmentLevel):
         {
-            query_str = "SELECT COUNT(DISTINCT shelving) FROM tpointer WHERE storage=" + parentNode->parent->id.toString();
-            if (!parentNode->name.isNull()) { //NULL compartment
-                query_str += " AND compartment='" + parentNode->name.toString() + "'";
-            } else {
-                   query_str += " AND compartment IS NULL";
-            }
+            query_str = "SELECT COUNT(DISTINCT shelving) FROM tpointer WHERE storage=" + parentNode->parent->id.toString()
+                    + " AND compartment=" + parentNode->name.toString();
+
             break;
         }
         case (HierarchyModel::ShelvingLevel):
@@ -274,17 +270,9 @@ QVariant HierarchyModel::data(const QModelIndex &index, int role) const
         if (currentNode->level == HierarchyModel::StorageLevel) {
             return QVariant(tr("Storage №") + currentNode->name.toString());
         } else if (currentNode->level == HierarchyModel::CompartmentLevel) {
-            if (currentNode->name.toInt() != 0) {
-                return QVariant(tr("Compartment №") + currentNode->name.toString());
-            } else {
-                return QVariant(tr("Undefined compartment"));
-            }
+            return QVariant(tr("Compartment №") + currentNode->name.toString());
         } else if (currentNode->level == HierarchyModel::ShelvingLevel) {
-            if (currentNode->name.toInt() != 0) {
-                return QVariant(tr("Shelving №") + currentNode->name.toString());
-            } else {
-                return currentNode->name;
-            }
+            return QVariant(tr("Shelving №") + currentNode->name.toString());
         } else {
             return currentNode->name;
         }
@@ -310,7 +298,7 @@ bool HierarchyModel::setHeaderData(int section, Qt::Orientation orientation, con
     }
 
     if (orientation == Qt::Horizontal) {
-        columnHeaders.append(value);
+        columnHeaders.insert(section, value);
         emit headerDataChanged(orientation, section, section);
         return true;
      }
@@ -327,7 +315,7 @@ QVariant HierarchyModel::headerData(int section, Qt::Orientation orientation, in
     }
 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        return columnHeaders.at(section);
+        return columnHeaders.value(section);
      }
 
     return QVariant();

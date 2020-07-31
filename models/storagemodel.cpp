@@ -3,7 +3,7 @@
 #include <QSqlRelation>
 #include <QDebug>
 
-StorageModel::StorageModel() : BaseModel()
+StorageModel::StorageModel() : TableModel()
 {
     setTable("storage");
     setRelation(1, QSqlRelation("corpus", "id", "name as corpus_name"));
@@ -12,13 +12,12 @@ StorageModel::StorageModel() : BaseModel()
     setSort(2, Qt::AscendingOrder);
     setPositionColumn(2);
 
-    setEditStrategy(QSqlTableModel::OnRowChange);
+    setEditStrategy(QSqlTableModel::OnFieldChange); //!important for sorting
 
-    setHeaderData(3, Qt::Horizontal, tr("Fund number"));
+    setHeaderData(3, Qt::Horizontal, tr("Storage number"));
     setHeaderData(4, Qt::Horizontal, tr("Rooms count"));
     setHeaderData(5, Qt::Horizontal, tr("Floors"));
 }
-
 
 void StorageModel::setDefaultRecord(int, QSqlRecord &record) {
     record.setValue(1, parentId()); //corpus_id

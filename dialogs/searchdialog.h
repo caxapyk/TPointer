@@ -37,6 +37,7 @@ private:
     FilterStruct fs;
 
 private slots:
+    void clear();
     void search();
 };
 

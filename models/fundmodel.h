@@ -1,12 +1,12 @@
 #ifndef FUNDMODEL_H
 #define FUNDMODEL_H
 
-#include "basemodel.h"
+#include "tablemodel.h"
 
 #include <QObject>
 #include <QSqlQuery>
 
-class FundModel : public BaseModel
+class FundModel : public TableModel
 {
     Q_OBJECT
 

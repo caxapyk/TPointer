@@ -1,6 +1,6 @@
 #include "insertnodedialog.h"
 
-InsertNodeDialog::InsertNodeDialog()
+InsertNodeDialog::InsertNodeDialog() : NodeDialog()
 {
-
+    setWindowTitle(tr("Insert record"));
 }

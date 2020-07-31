@@ -108,7 +108,7 @@
     </message>
 </context>
 <context>
-    <name>ItemController</name>
+    <name>ButtonsControl</name>
     <message>
         <source>Add</source>
         <translation type="unfinished"></translation>
@@ -146,7 +146,7 @@
     </message>
 </context>
 <context>
-    <name>MainTableModel</name>
+    <name>DataModel</name>
     <message>
         <source>Floor</source>
         <translation type="unfinished"></translation>

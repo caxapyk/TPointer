@@ -1,12 +1,12 @@
 #ifndef FEATUREMODEL_H
 #define FEATUREMODEL_H
 
-#include "basemodel.h"
+#include "tablemodel.h"
 
 #include <QObject>
 #include <QSqlRecord>
 
-class FeatureModel : public BaseModel
+class FeatureModel : public TableModel
 {
     Q_OBJECT
 public:

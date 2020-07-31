@@ -1,7 +1,7 @@
 #ifndef SEARCHMODEL_H
 #define SEARCHMODEL_H
 
-#include "maintablemodel.h"
+#include "datamodel.h"
 
 #include <QObject>
 #include <QSqlQueryModel>

@@ -1,6 +1,16 @@
-#include "floorstringlist.h"
+#include "floorsparser.h"
 
-FloorStringList::FloorStringList()
+FloorsParser::FloorsParser() : QObject()
 {
 
+}
+
+QStringList FloorsParser::process(const QString &floors) const{
+    QStringList fList = floors.split(",");
+
+     /* replace 0 floor with 'basement', -n floor with '-n floor' */
+    fList = fList.replaceInStrings(QRegExp("^[0]+$"), tr("bsmnt"));
+    fList = fList.replaceInStrings(QRegExp("^(-\\d)+$"), tr("\\1 fl."));
+
+    return fList;
 }

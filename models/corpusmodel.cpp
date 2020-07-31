@@ -2,7 +2,7 @@
 
 #include <QSqlRecord>
 
-CorpusModel::CorpusModel() : BaseModel()
+CorpusModel::CorpusModel() : TableModel()
 {
     setTable("corpus");
     setItemName(tr("New corpus"));

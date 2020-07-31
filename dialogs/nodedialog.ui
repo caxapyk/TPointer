@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainFormDialog</class>
- <widget class="QDialog" name="MainFormDialog">
+ <class>NodeDialog</class>
+ <widget class="QDialog" name="NodeDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>383</width>
-    <height>430</height>
+    <width>390</width>
+    <height>480</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>390</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>390</width>
+    <height>480</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/icons/icon.png</normaloff>:/icons/icon.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -30,15 +46,60 @@
           <string>Placement</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="1" colspan="3">
+           <widget class="QComboBox" name="cB_storage">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="label_12">
+            <property name="styleSheet">
+             <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
+            </property>
+            <property name="text">
+             <string>=0, if empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Shelf</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Cupboard</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="label_11">
+            <property name="styleSheet">
+             <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
+            </property>
+            <property name="text">
+             <string>=0, if empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Shelving</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Compartment</string>
             </property>
            </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit"/>
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label">
@@ -53,48 +114,27 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="5" column="3">
+           <widget class="QLineEdit" name="lE_shelf"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lE_compartment"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="lE_cupboard"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lE_shelving"/>
+          </item>
+          <item row="4" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>Floor</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" colspan="3">
-           <widget class="QComboBox" name="comboBox_2"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Cupboard</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_3"/>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Shelf</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QLineEdit" name="lineEdit_4"/>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Shelving</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLineEdit" name="lineEdit_2"/>
+          <item row="4" column="1" colspan="2">
+           <widget class="QComboBox" name="cB_floor"/>
           </item>
          </layout>
         </widget>
@@ -115,7 +155,7 @@
           <item row="0" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <widget class="QComboBox" name="comboBox_3">
+             <widget class="QComboBox" name="cB_fund">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -128,18 +168,21 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="editable">
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="pB_openFundList">
               <property name="maximumSize">
                <size>
-                <width>24</width>
+                <width>70</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
-               <string/>
+               <string>Choose</string>
               </property>
              </widget>
             </item>
@@ -153,7 +196,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_5">
+           <widget class="QLineEdit" name="lE_inventory">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -170,7 +213,7 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_6">
+           <widget class="QLineEdit" name="lE_records">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -187,7 +230,7 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QComboBox" name="comboBox_4">
+           <widget class="QComboBox" name="cB_feature">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -225,7 +268,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QTextEdit" name="textEdit"/>
+           <widget class="QTextEdit" name="tE_note"/>
           </item>
          </layout>
         </widget>
@@ -246,12 +289,14 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>MainFormDialog</receiver>
+   <receiver>NodeDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -267,7 +312,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>MainFormDialog</receiver>
+   <receiver>NodeDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

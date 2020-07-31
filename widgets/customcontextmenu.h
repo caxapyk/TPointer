@@ -2,8 +2,8 @@
 #define CUSTOMCONTEXMENU_H
 
 #include <QObject>
-#include <QItemSelection>
 #include <QMenu>
+#include <QModelIndexList>
 
 class CustomContextMenu : public QMenu
 {
@@ -24,7 +24,7 @@ public:
     ~CustomContextMenu();
     QAction *action(CustomContextMenu::StandardAction which) const;
     void setEnabled(bool b, CustomContextMenu::StandardAction which);
-    void setCurrentSelection(const QItemSelection &selected);
+    void setSelection(const QModelIndexList &selected);
 
 signals:
     void addRequested();

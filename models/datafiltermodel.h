@@ -2,8 +2,9 @@
 #define DATAFILTERMODEL_H
 
 #include <QObject>
+#include <QStandardItemModel>
 
-class DataFilterModel : public QStandartItemModel
+class DataFilterModel : public QStandardItemModel
 {
     Q_OBJECT
 public:

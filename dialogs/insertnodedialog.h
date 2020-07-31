@@ -1,7 +1,7 @@
 #ifndef INSERTNODEDIALOG_H
 #define INSERTNODEDIALOG_H
 
-#include <QWidget>
+#include "nodedialog.h"
 
 class InsertNodeDialog : public NodeDialog
 {

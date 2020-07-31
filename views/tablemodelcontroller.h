@@ -1,5 +1,10 @@
-#ifndef TABLEMODELCONTROLLER_H
-#define TABLEMODELCONTROLLER_H
+#ifndef MODELCONTROLLER_H
+#define MODELCONTROLLER_H
+
+#include "models/tablemodel.h"
+
+#include <QAbstractItemView>
+#include <QDialog>
 
 #include <QObject>
 
@@ -9,8 +14,10 @@ class TableModelController : public QObject
 public:
     explicit TableModelController(QObject *parent = nullptr);
 
-signals:
-
+    bool createItem(QAbstractItemView *view);
+    bool removeItem(QAbstractItemView *view);
+    void moveUp(QAbstractItemView *view);
+    void moveDown(QAbstractItemView *view);
 };
 
-#endif // TABLEMODELCONTROLLER_H
+#endif // MODELCONTROLLER_H

@@ -2,7 +2,7 @@
 
 #include <QSqlRecord>
 
-FundModel::FundModel() : BaseModel()
+FundModel::FundModel() : TableModel()
 {
     setTable("fund");
 
@@ -11,8 +11,6 @@ FundModel::FundModel() : BaseModel()
 
     setHeaderData(1, Qt::Horizontal, tr("Number"));
     setHeaderData(2, Qt::Horizontal, tr("Name"));
-
-    setSort(1, Qt::AscendingOrder);
 }
 
 void FundModel::setDefaultRecord(int, QSqlRecord &record) {

@@ -9,18 +9,16 @@
 
 enum SortDirection{SortUp,SortDown};
 
-class BaseModel : public QSqlRelationalTableModel
+class TableModel : public QSqlRelationalTableModel
 {
     Q_OBJECT
 
 public:
-    BaseModel();
-    bool insert();
+    TableModel();
     QString itemName() const { return m_item_name; };
     QModelIndex moveUp(int row);
     QModelIndex  moveDown(int row);
     int parentId() { return m_parent; };
-    bool remove(QModelIndexList &list);
     void setItemName(QString name) { m_item_name=name; };
     void setPositionColumn(int column);
     void setParentId(int parent) { m_parent=parent; };

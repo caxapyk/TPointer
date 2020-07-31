@@ -1,11 +1,10 @@
 #ifndef STORAGESEARCHMODEL_H
 #define STORAGESEARCHMODEL_H
 
-#include "storagemodel.h"
-
 #include <QObject>
+#include <QSqlQueryModel>
 
-class StorageExtendedModel : public StorageModel
+class StorageExtendedModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
@@ -13,7 +12,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 public slots:
-    bool select() override;
+    void select();
 };
 
 #endif // STORAGESEARCHMODEL_H

@@ -1,8 +1,7 @@
 #include "noitemlistmodel.h"
 
-NoItemListModel::NoItemListModel(QAbstractItemModel *baseModel) : QAbstractListModel()
+NoItemListModel::NoItemListModel() : QAbstractListModel()
 {
-    m_model = baseModel;
 }
 NoItemListModel::~NoItemListModel()
 {

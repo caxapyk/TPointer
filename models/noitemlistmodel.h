@@ -8,13 +8,15 @@ class NoItemListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    NoItemListModel(QAbstractItemModel *baseModel);
+    NoItemListModel();
     ~NoItemListModel();
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    QAbstractItemModel *baseModel() const { return m_model; };
-    void setColumn(int column){ m_col=column; };
     int baseColumn() const { return m_col; };
+    QAbstractItemModel* baseModel() const { return m_model; };
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    void setColumn(int column){ m_col=column; };
+    void setModel(QAbstractItemModel *model){ m_model=model; };
 
 private:
     QAbstractItemModel *m_model;
