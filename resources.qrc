@@ -3,11 +3,17 @@
         <file>icons/icon.png</file>
         <file>icons/arrow-top-16.png</file>
         <file>icons/arrow_down-16.png</file>
-        <file>icons/plus-16.png</file>
         <file>icons/delete-16.png</file>
         <file>icons/clear-filter-16.png</file>
         <file>icons/edit-16.png</file>
         <file>icons/types-16.png</file>
+        <file>icons/folder-16.png</file>
+        <file>icons/shelving-16.png</file>
+        <file>icons/documents-16.png</file>
+        <file>icons/add-16.png</file>
+        <file>icons/new-16.png</file>
+        <file>icons/refresh-16.png</file>
+        <file>icons/search-16.png</file>
     </qresource>
     <qresource prefix="/translations">
         <file>translations/tpointer_ru.qm</file>

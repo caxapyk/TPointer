@@ -7,8 +7,8 @@
 DataModel::DataModel() :  QAbstractTableModel()
 {
     setHeaderData(0, Qt::Horizontal, tr("Id"));
-    setHeaderData(1, Qt::Horizontal, tr("Floor"));
-    setHeaderData(2, Qt::Horizontal, tr("Storage"));
+    setHeaderData(1, Qt::Horizontal, tr("Storage"));
+    setHeaderData(2, Qt::Horizontal, tr("Floor"));
     setHeaderData(3, Qt::Horizontal, tr("Compartment"));
     setHeaderData(4, Qt::Horizontal, tr("Shelving"));
     setHeaderData(5, Qt::Horizontal, tr("Cupboard"));
@@ -36,12 +36,12 @@ void DataModel::clear()
 bool DataModel::select()
 {
     clear();
-    m_query.prepare(QString("SELECT tpointer.`id`,tpointer.`floor`,storage.`name` AS storage_name,tpointer.`compartment`,tpointer.`shelving`,tpointer.`cupboard`,tpointer.`shelf`,fund.`number` AS fund_number,tpointer.`inventory`,tpointer.`records`,tpointer.`note`,feature.`name` AS feature_name FROM tpointer "
+    m_query.prepare(QString("SELECT tpointer.`id`, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, tpointer.`note`, feature.`name` AS feature_name FROM tpointer "
                   "LEFT JOIN storage ON tpointer.`storage`=storage.`id` "
                   "LEFT JOIN fund ON tpointer.`fund`=fund.`id` "
                   "LEFT JOIN feature ON tpointer.`feature`=feature.`id` "
                   "%1"
-                  "ORDER BY storage.`name`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`")
+                  "ORDER BY storage.`name`, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`")
               .arg(!filter().isNull() ? "WHERE " + filter() : ""));
 
     if (m_query.exec()) {
@@ -87,7 +87,7 @@ QVariant DataModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole ) {
         QVariant value = nodeList.at(index.row()).at(index.column());
 
-        if (index.column() == 1 && value.toInt() == 0) {
+        if (index.column() == 2 && value.toInt() == 0) {
             return QVariant(tr("Basement"));
         }
 

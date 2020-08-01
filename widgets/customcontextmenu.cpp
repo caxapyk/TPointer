@@ -8,29 +8,28 @@ CustomContextMenu::CustomContextMenu(CustomContextMenu::StandardActions actions,
     // add action
     if(actions & CustomContextMenu::Add) {
         action_add = addAction(tr("Add"));
-        action_add->setIcon(QIcon(":/icons/types-16.png"));
+        action_add->setIcon(QIcon(":/icons/add-16.png"));
         connect(action_add, &QAction::triggered, this, [=] { emit addRequested(); });
     }
 
     // edit action
     if(actions & CustomContextMenu::Edit) {
         action_edit = addAction(tr("Edit"));
-        action_edit->setIcon(QIcon(":/icons/types-16.png"));
+        action_edit->setIcon(QIcon(":/icons/edit-16.png"));
         connect(action_edit, &QAction::triggered, this, [=] { emit editRequested(); });
     }
 
     // remove action
     if(actions & CustomContextMenu::Remove) {
         action_remove = addAction(tr("Remove"));
-        action_remove->setIcon(QIcon(":/icons/types-16.png"));
+        action_remove->setIcon(QIcon(":/icons/delete-16.png"));
         connect(action_remove, &QAction::triggered, this, [=] { emit removeRequested(); });
     }
 
     // refresh action
     if(actions & CustomContextMenu::Refresh) {
-        addSeparator();
         action_refresh = addAction(tr("Refresh"));
-        action_refresh->setIcon(QIcon(":/icons/types-16.png"));
+        action_refresh->setIcon(QIcon(":/icons/refresh-16.png"));
         connect(action_refresh, &QAction::triggered, this, [=] { emit refreshRequested(); });
     }
 }

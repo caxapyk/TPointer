@@ -5,6 +5,7 @@
 
 #include <QColor>
 #include <QDebug>
+#include <QIcon>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QRegularExpression>
@@ -264,26 +265,46 @@ int HierarchyModel::columnCount(const QModelIndex &) const
 
 QVariant HierarchyModel::data(const QModelIndex &index, int role) const
 {
-    if (index.column() == HierarchyModel::NameColumn && role == Qt::DisplayRole) {
-        const HierarchyNode* currentNode = static_cast<HierarchyNode*>(index.internalPointer());
+    switch (role) {
+    case Qt::DisplayRole:
+        if (index.column() == HierarchyModel::NameColumn) {
+            const HierarchyNode* currentNode = static_cast<HierarchyNode*>(index.internalPointer());
 
-        if (currentNode->level == HierarchyModel::StorageLevel) {
-            return QVariant(tr("Storage №") + currentNode->name.toString());
-        } else if (currentNode->level == HierarchyModel::CompartmentLevel) {
-            return QVariant(tr("Compartment №") + currentNode->name.toString());
-        } else if (currentNode->level == HierarchyModel::ShelvingLevel) {
-            return QVariant(tr("Shelving №") + currentNode->name.toString());
-        } else {
-            return currentNode->name;
-        }
-    } else if (index.column() == HierarchyModel::FloorsColumn && role == Qt::DisplayRole) {
-        const HierarchyNode* currentNode = static_cast<HierarchyNode*>(index.internalPointer());
+            if (currentNode->level == HierarchyModel::StorageLevel) {
+                return QVariant(tr("Storage №") + currentNode->name.toString());
+            } else if (currentNode->level == HierarchyModel::CompartmentLevel) {
+                return QVariant(tr("Compartment №") + currentNode->name.toString());
+            } else if (currentNode->level == HierarchyModel::ShelvingLevel) {
+                return QVariant(tr("Shelving №") + currentNode->name.toString());
+            } else {
+                return currentNode->name;
+            }
+        } else if (index.column() == HierarchyModel::FloorsColumn) {
+            const HierarchyNode* currentNode = static_cast<HierarchyNode*>(index.internalPointer());
 
-        if (currentNode->level == HierarchyModel::StorageLevel) {
-            return currentNode->floor;
+            if (currentNode->level == HierarchyModel::StorageLevel) {
+                return currentNode->floor;
+            }
         }
-    } else if (index.column() == HierarchyModel::FloorsColumn && role == Qt::ForegroundRole) {
-        return QVariant( QColor( Qt::gray ) );
+        break;
+    case Qt::DecorationRole:
+        if (index.column() == HierarchyModel::NameColumn) {
+            const HierarchyNode* currentNode = static_cast<HierarchyNode*>(index.internalPointer());
+
+            if (currentNode->level == HierarchyModel::CorpusLevel
+                    || currentNode->level == HierarchyModel::StorageLevel
+                    || currentNode->level == HierarchyModel::CompartmentLevel) {
+                return QIcon(":/icons/folder-16.png");
+            } else if (currentNode->level == HierarchyModel::ShelvingLevel) {
+                return QIcon(":/icons/shelving-16.png");
+            }
+        }
+        break;
+    case Qt::ForegroundRole:
+        if (index.column() == HierarchyModel::FloorsColumn) {
+            return QVariant( QColor( Qt::gray ) );
+        }
+        break;
     }
 
     return QVariant();

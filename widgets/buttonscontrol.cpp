@@ -19,7 +19,7 @@ ButtonsControl::ButtonsControl(ButtonsControl::StandardControls buttons, int ori
         pB_add = new QPushButton();
         pB_add->setEnabled(false);
         pB_add->setText(tr("Add"));
-        pB_add->setIcon(QIcon(":/icons/plus-16.png"));
+        pB_add->setIcon(QIcon(":/icons/add-16.png"));
 
         bmap->insert(ButtonsControl::Add, pB_add);
         layout_box->addWidget(pB_add);

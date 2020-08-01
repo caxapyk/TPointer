@@ -52,7 +52,17 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QTreeView" name="tV_hierarchy"/>
+     <widget class="QTreeView" name="tV_hierarchy">
+      <attribute name="headerDefaultSectionSize">
+       <number>28</number>
+      </attribute>
+      <attribute name="headerHighlightSections">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+     </widget>
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="vL_funds">
        <item>

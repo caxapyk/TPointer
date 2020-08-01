@@ -3,6 +3,7 @@
 
 #include "application.h"
 #include "dialogs/addnodedialog.h"
+#include "dialogs/movenodedialog.h"
 #include "widgets/customcontextmenu.h"
 
 #include <QMessageBox>
@@ -13,9 +14,11 @@ DataView::DataView(QWidget *parent) :
     ui(new Ui::DataView)
 {
     ui->setupUi(this);
-    restoreViewState();
+
     setMainWidget(ui->splitter_mt);
+
     initialize();
+    restoreViewState();
 }
 
 DataView::~DataView()
@@ -129,7 +132,18 @@ void DataView::addItem()
     }
 }
 
-void DataView::removeItem()
+void DataView::moveItems()
+{
+    MoveNodeDialog dialog;
+
+    int res = dialog.exec();
+
+    if (res == QDialog::Accepted) {
+        // do something
+    }
+}
+
+void DataView::removeItems()
 {
     int res = QMessageBox()
             .critical(this,
@@ -176,6 +190,27 @@ void DataView::showContextMenu(const QPoint&)
         m_model->select();
     });
 
+    /* default sort action */
+    QAction *defaultSortAction = new QAction(tr("Sort by default"));
+    menu.insertAction(menu.action(CustomContextMenu::Add), defaultSortAction);
+    defaultSortAction->setEnabled(ui->tV_dataTable->horizontalHeader()->sortIndicatorSection() >= 0);
+    connect(defaultSortAction, &QAction::triggered, this, [=] {
+        ui->tV_dataTable->sortByColumn(-1, Qt::AscendingOrder);
+    });
+    menu.insertSeparator(menu.action(CustomContextMenu::Add));
+
+    /* move action */
+    QAction *moveAction = new QAction(tr("Move"));
+    menu.insertAction(menu.action(CustomContextMenu::Refresh), moveAction);
+    moveAction->setEnabled(!ui->tV_dataTable->selectionModel()->selectedRows().isEmpty());
+    connect(moveAction, &QAction::triggered, this, &DataView::moveItems);
+    menu.insertSeparator(moveAction);
+    menu.insertSeparator(menu.action(CustomContextMenu::Refresh));
+
     menu.exec(QCursor().pos());
+
+    // ??
+    delete defaultSortAction;
+    delete moveAction;
 }
 

@@ -63,3 +63,16 @@ void FundTreeModel::select()
 
     setHeaderData(0, Qt::Horizontal, tr("Funds (%1)").arg(model.rowCount()));
 }
+
+QVariant FundTreeModel::data(const QModelIndex &index, int role) const
+{
+    if (index.column() == 0 && role == Qt::DecorationRole) {
+        if (!index.parent().isValid()) {
+            return QIcon(":/icons/folder-16.png");
+        } else {
+            return QIcon(":/icons/documents-16.png");
+        }
+    }
+
+    return QStandardItemModel::data(index, role);
+}

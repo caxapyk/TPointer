@@ -25,10 +25,11 @@ SearchDialog::SearchDialog(QWidget *parent) :
     feature_model = new FeatureModel;
     feature_model->select();
 
-    //_feature_model = new NoItemListModel(feature_model);
-    //_feature_model->setColumn(2);
+    _feature_model = new NoItemListModel();
+    _feature_model->setModel(feature_model);
+    _feature_model->setColumn(2);
 
-    ui->cB_feature->setModel(feature_model);
+    ui->cB_feature->setModel(_feature_model);
 
     connect(ui->pB_clear, &QPushButton::released, this, &SearchDialog::clear);
     connect(ui->pB_search, &QPushButton::released, this, &SearchDialog::search);

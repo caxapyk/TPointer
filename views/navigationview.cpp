@@ -13,10 +13,11 @@ NavigationView::NavigationView(QWidget *parent) :
     ui(new Ui::NavigationView)
 {
     ui->setupUi(this);
-    restoreViewState();
+
     setMainWidget(ui->splitter_nav);
 
     initialize();
+    restoreViewState();
 }
 
 NavigationView::~NavigationView()
@@ -35,6 +36,7 @@ void NavigationView::restoreViewState()
     QSettings* settings = application->applicationSettings();
 
     ui->splitter_nav->restoreState(settings->value("Views/splitter_nav").toByteArray());
+    ui->tV_hierarchy->header()->restoreState(settings->value("Views/tV_hierarchy").toByteArray());
 }
 
 void NavigationView::saveViewState()
@@ -44,6 +46,7 @@ void NavigationView::saveViewState()
 
     settings->beginGroup("Views");
     settings->setValue("splitter_nav", ui->splitter_nav->saveState());
+    settings->setValue("tV_hierarchy", ui->tV_hierarchy->header()->saveState());
     settings->endGroup();
 }
 

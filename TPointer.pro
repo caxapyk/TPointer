@@ -23,6 +23,7 @@ SOURCES += \
     dialogs/insertnodedialog.cpp \
     dialogs/intdelegate.cpp \
     dialogs/intlistdelegate.cpp \
+    dialogs/movenodedialog.cpp \
     dialogs/nodedialog.cpp \
     dialogs/paramdialog.cpp \
     dialogs/searchdialog.cpp \
@@ -43,6 +44,7 @@ SOURCES += \
     models/storagemodel.cpp \
     models/tablemodel.cpp \
     utils/floorsparser.cpp \
+    utils/fundsorter.cpp \
     views/dataview.cpp \
     views/navigationview.cpp \
     views/tablemodelcontroller.cpp \
@@ -59,6 +61,7 @@ HEADERS += \
     dialogs/insertnodedialog.h \
     dialogs/intdelegate.h \
     dialogs/intlistdelegate.h \
+    dialogs/movenodedialog.h \
     dialogs/nodedialog.h \
     dialogs/paramdialog.h \
     dialogs/searchdialog.h \
@@ -79,6 +82,7 @@ HEADERS += \
     models/storagemodel.h \
     models/tablemodel.h \
     utils/floorsparser.h \
+    utils/fundsorter.h \
     views/dataview.h \
     views/navigationview.h \
     views/tablemodelcontroller.h \
@@ -89,6 +93,7 @@ HEADERS += \
 
 FORMS += \
     dialogs/fundlistdialog.ui \
+    dialogs/movenodedialog.ui \
     dialogs/nodedialog.ui \
     dialogs/paramdialog.ui \
     dialogs/searchdialog.ui \

@@ -10,6 +10,7 @@ class FundTreeModel : public QStandardItemModel
 public:
     FundTreeModel();
     ~FundTreeModel();
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     void select();
 
 private:

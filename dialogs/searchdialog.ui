@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
+    <width>320</width>
     <height>320</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>360</width>
+    <width>320</width>
     <height>320</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>360</width>
+    <width>320</width>
     <height>320</height>
    </size>
   </property>
@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../resources.qrc">
-    <normaloff>:/icons/icon.png</normaloff>:/icons/icon.png</iconset>
+    <normaloff>:/icons/search-16.png</normaloff>:/icons/search-16.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
