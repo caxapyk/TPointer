@@ -7,9 +7,9 @@ StorageExtendedModel::StorageExtendedModel() : QSqlQueryModel()
 
 void StorageExtendedModel::select()
 {
-    setQuery("SELECT storage.`id`, corpus.`name`, storage.`position`, storage.`name`, storage.`rooms`, storage.`floors` from storage "
-             "JOIN corpus ON storage.`corpus_id`=corpus.`id` "
-             "ORDER BY corpus.`name`, storage.`position`");
+    setQuery("SELECT storage.`id`, corpus.`name`, storage.`pos`, storage.`name`, storage.`rooms`, storage.`floors` FROM storage "
+             "JOIN corpus ON storage.`corpus`=corpus.`id` "
+             "ORDER BY corpus.`name`, storage.`pos`");
 
     // insert column for Corpus/Storage value
     insertColumns(columnCount(), 1);

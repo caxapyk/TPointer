@@ -8,6 +8,7 @@
 class IntDelegate : public QItemDelegate
 {
     Q_OBJECT
+
 public:
     IntDelegate(int min = 1, int max = 99);
     int min() const { return m_min; };

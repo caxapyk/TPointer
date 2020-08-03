@@ -5,8 +5,6 @@
 FundModel::FundModel() : TableModel()
 {
     setTable("fund");
-
-    setItemName(tr("New fund"));
     setEditStrategy(QSqlTableModel::OnFieldChange);
 
     setHeaderData(1, Qt::Horizontal, tr("Number"));
@@ -14,6 +12,6 @@ FundModel::FundModel() : TableModel()
 }
 
 void FundModel::setDefaultRecord(int, QSqlRecord &record) {
-    record.setValue(1, itemName());
+    record.setValue(1, tr("New fund"));
     record.setGenerated(1, true);
 };

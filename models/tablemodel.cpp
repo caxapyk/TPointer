@@ -57,3 +57,16 @@ void TableModel::setPositionColumn(int column)
 {
     position_column = column;
 }
+
+int TableModel::itemMaxNum(int column) const
+{
+    int max = 1;
+    for(int i = 0; i < rowCount(); ++i) {
+        int num = index(i, column).data().toString().remove(QRegExp("\\D+")).toInt();
+        if (num >= max) {
+            max = num + 1;
+        }
+    }
+
+    return max;
+}

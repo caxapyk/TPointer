@@ -7,8 +7,6 @@ StorageModel::StorageModel() : TableModel()
 {
     setTable("storage");
     setRelation(1, QSqlRelation("corpus", "id", "name as corpus_name"));
-
-    setItemName(tr("New storage"));
     setSort(2, Qt::AscendingOrder);
     setPositionColumn(2);
 
@@ -24,6 +22,6 @@ void StorageModel::setDefaultRecord(int, QSqlRecord &record) {
     record.setGenerated(1, true);
     record.setValue(2, rowCount()); //position
     record.setGenerated(2, true);
-    record.setValue(3, itemName()); //name
+    record.setValue(3, itemMaxNum(3)); //name
     record.setGenerated(3, true);
 };

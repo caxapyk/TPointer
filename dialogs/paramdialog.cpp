@@ -116,7 +116,7 @@ void ParamDialog::selectCorpus(const QItemSelection &selected, const QItemSelect
 
 void ParamDialog::loadStorages(QVariant id)
 {
-    m_storage_model->setFilter("corpus_id=" + id.toString());
+    m_storage_model->setFilter("corpus=" + id.toString());
     m_storage_model->setParentId(id.toInt());
 
     if (m_storage_model->select()) {
@@ -129,9 +129,9 @@ void ParamDialog::loadStorages(QVariant id)
         ui->tV_storages->hideColumn(2);
         ui->tV_storages->hideColumn(6);
 
-        ui->tV_storages->setColumnWidth(3, 100);
-        ui->tV_storages->setColumnWidth(4, 90);
-        ui->tV_storages->setColumnWidth(5, 90);
+        ui->tV_storages->resizeColumnToContents(3);
+        ui->tV_storages->setColumnWidth(4, 120);
+        ui->tV_storages->setColumnWidth(5, 120);
 
         st_controls->assetView(ui->tV_storages);
         st_controls->setEnabled(true, ButtonsControl::Add);

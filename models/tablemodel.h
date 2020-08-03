@@ -15,11 +15,9 @@ class TableModel : public QSqlRelationalTableModel
 
 public:
     TableModel();
-    QString itemName() const { return m_item_name; };
     QModelIndex moveUp(int row);
     QModelIndex  moveDown(int row);
     int parentId() { return m_parent; };
-    void setItemName(QString name) { m_item_name=name; };
     void setPositionColumn(int column);
     void setParentId(int parent) { m_parent=parent; };
     int getPositionColumn() const { return position_column; };
@@ -27,9 +25,11 @@ public:
 public slots:
     virtual void setDefaultRecord(int, QSqlRecord&) {};
 
+protected:
+    int itemMaxNum(int column) const;
+
 private:
     QModelIndex baseMove(SortDirection direction, int row, int column);
-    QString m_item_name;
 
     int position_column;
     int m_parent;

@@ -19,7 +19,7 @@ QVariant NoItemListModel::data(const QModelIndex &index, int role) const
     }
 
     if (index.row() == 0 && role == Qt::DisplayRole) {
-           return QVariant(tr("Select item..."));
+           return QVariant(tr("Undefined"));
     }
     return baseModel()->data(baseModel()->index(index.row() - 1, baseColumn()), role);
 }

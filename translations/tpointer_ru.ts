@@ -82,7 +82,11 @@
     <name>CorpusModel</name>
     <message>
         <source>New corpus</source>
-        <translation>Новый корпус/здание</translation>
+        <translation type="vanished">Новый корпус/здание</translation>
+    </message>
+    <message>
+        <source>Corpus %1</source>
+        <translation>Корпус %1</translation>
     </message>
 </context>
 <context>
@@ -195,17 +199,28 @@
     </message>
 </context>
 <context>
+    <name>EditNodeDialog</name>
+    <message>
+        <source>Edit record</source>
+        <translation type="unfinished">Править</translation>
+    </message>
+</context>
+<context>
     <name>FeatureModel</name>
     <message>
         <source>New feature</source>
-        <translation>Новая характеристика</translation>
+        <translation type="vanished">Новая характеристика</translation>
+    </message>
+    <message>
+        <source>Feature %1</source>
+        <translation>Характиристика %1</translation>
     </message>
 </context>
 <context>
     <name>FloorsParser</name>
     <message>
         <source>bsmnt</source>
-        <translation>пдвл</translation>
+        <translation>подвал</translation>
     </message>
     <message>
         <source>\1 fl.</source>
@@ -322,51 +337,51 @@
     <name>MainWindow</name>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Правка</translation>
     </message>
     <message>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Сервис</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Новая запись</translation>
     </message>
     <message>
         <source>Spreadsheet (.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Электронные таблицы (.csv)</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <source>Form F15 (.xlsx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Форма Ф15 (.xlsx)</translation>
     </message>
     <message>
         <source>Form F16 (.xlsx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Форма Ф16 (.xlsx)</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск</translation>
     </message>
     <message>
         <source>Archival topographic pointer</source>
@@ -382,15 +397,15 @@
     </message>
     <message>
         <source>Ctrl+Shift+X</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры</translation>
     </message>
     <message>
         <source>Edit record</source>
-        <translation type="unfinished"></translation>
+        <translation>Править</translation>
     </message>
     <message>
         <source>F2</source>
@@ -398,39 +413,39 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Server: </source>
-        <translation type="unfinished"></translation>
+        <translation>Сервер: </translation>
     </message>
     <message>
         <source> [Search]</source>
-        <translation type="unfinished"></translation>
+        <translation> [Поиск]</translation>
     </message>
     <message>
         <source>Fund list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список фондов</translation>
     </message>
     <message>
         <source>| Total rows: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>| Всего записей: %1</translation>
     </message>
     <message>
         <source>Showing rows: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Показано записей: %1</translation>
     </message>
 </context>
 <context>
@@ -491,7 +506,11 @@
     <name>NoItemListModel</name>
     <message>
         <source>Select item...</source>
-        <translation>Выберите значение...</translation>
+        <translation type="vanished">Выбрать...</translation>
+    </message>
+    <message>
+        <source>Undefined</source>
+        <translation>Не указано</translation>
     </message>
 </context>
 <context>
@@ -620,7 +639,7 @@
     <name>SearchDialog</name>
     <message>
         <source>Search</source>
-        <translation>Поиск...</translation>
+        <translation>Поиск</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -647,19 +666,19 @@
         <translation>Характеристика</translation>
     </message>
     <message>
-        <source>= 0 - if undefined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translation>Сброс</translation>
+    </message>
+    <message>
+        <source>=0, if empty</source>
+        <translation>=0, если пусто</translation>
     </message>
 </context>
 <context>
     <name>StorageModel</name>
     <message>
         <source>New storage</source>
-        <translation>№0
+        <translation type="vanished">№0
 </translation>
     </message>
     <message>

@@ -2,6 +2,7 @@
 #define ADDNODEDIALOG_H
 
 #include "dialogs/insertnodedialog.h"
+#include "models/filterstruct.h"
 
 #include <QObject>
 

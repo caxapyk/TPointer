@@ -19,11 +19,13 @@ SOURCES += \
     application.cpp \
     connection.cpp \
     dialogs/addnodedialog.cpp \
+    dialogs/editnodedialog.cpp \
     dialogs/fundlistdialog.cpp \
     dialogs/insertnodedialog.cpp \
     dialogs/intdelegate.cpp \
     dialogs/intlistdelegate.cpp \
     dialogs/movenodedialog.cpp \
+    dialogs/nodedelegate.cpp \
     dialogs/nodedialog.cpp \
     dialogs/paramdialog.cpp \
     dialogs/searchdialog.cpp \
@@ -57,11 +59,13 @@ HEADERS += \
     application.h \
     connection.h \
     dialogs/addnodedialog.h \
+    dialogs/editnodedialog.h \
     dialogs/fundlistdialog.h \
     dialogs/insertnodedialog.h \
     dialogs/intdelegate.h \
     dialogs/intlistdelegate.h \
     dialogs/movenodedialog.h \
+    dialogs/nodedelegate.h \
     dialogs/nodedialog.h \
     dialogs/paramdialog.h \
     dialogs/searchdialog.h \

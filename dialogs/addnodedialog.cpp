@@ -22,7 +22,7 @@ void AddNodeDialog::applyFilter(const FilterStruct &fs)
             }
         }
     }
-    // floor
+    // floor - disable floor if count = 1
     if (m_floorModel->rowCount() == 1) {
         ui->cB_floor->setDisabled(true);
     }

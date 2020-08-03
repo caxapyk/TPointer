@@ -6,18 +6,18 @@
 
 DataModel::DataModel() :  QAbstractTableModel()
 {
-    setHeaderData(0, Qt::Horizontal, tr("Id"));
-    setHeaderData(1, Qt::Horizontal, tr("Storage"));
-    setHeaderData(2, Qt::Horizontal, tr("Floor"));
-    setHeaderData(3, Qt::Horizontal, tr("Compartment"));
-    setHeaderData(4, Qt::Horizontal, tr("Shelving"));
-    setHeaderData(5, Qt::Horizontal, tr("Cupboard"));
-    setHeaderData(6, Qt::Horizontal, tr("Shelf"));
-    setHeaderData(7, Qt::Horizontal, tr("Fund"));
-    setHeaderData(8, Qt::Horizontal, tr("Inventory"));
-    setHeaderData(9, Qt::Horizontal, tr("Records"));
-    setHeaderData(10, Qt::Horizontal, tr("Note"));
-    setHeaderData(11, Qt::Horizontal, tr("Features"));
+    setHeaderData(0, Qt::Horizontal, QCoreApplication::translate("DataModel", "Id", nullptr));
+    setHeaderData(1, Qt::Horizontal, QCoreApplication::translate("DataModel", "Storage", nullptr));
+    setHeaderData(2, Qt::Horizontal, QCoreApplication::translate("DataModel", "Floor", nullptr));
+    setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("DataModel", "Compartment", nullptr));
+    setHeaderData(4, Qt::Horizontal, QCoreApplication::translate("DataModel", "Shelving", nullptr));
+    setHeaderData(5, Qt::Horizontal, QCoreApplication::translate("DataModel", "Cupboard", nullptr));
+    setHeaderData(6, Qt::Horizontal, QCoreApplication::translate("DataModel", "Shelf", nullptr));
+    setHeaderData(7, Qt::Horizontal, QCoreApplication::translate("DataModel", "Fund", nullptr));
+    setHeaderData(8, Qt::Horizontal, QCoreApplication::translate("DataModel", "Inventory", nullptr));
+    setHeaderData(9, Qt::Horizontal, QCoreApplication::translate("DataModel", "Records", nullptr));
+    setHeaderData(10, Qt::Horizontal, QCoreApplication::translate("DataModel", "Note", nullptr));
+    setHeaderData(11, Qt::Horizontal, QCoreApplication::translate("DataModel", "Features", nullptr));
 }
 
 DataModel::~DataModel()
@@ -38,6 +38,7 @@ bool DataModel::select()
     clear();
     m_query.prepare(QString("SELECT tpointer.`id`, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, tpointer.`note`, feature.`name` AS feature_name FROM tpointer "
                   "LEFT JOIN storage ON tpointer.`storage`=storage.`id` "
+                  "LEFT JOIN corpus ON storage.`corpus`=corpus.`id` "
                   "LEFT JOIN fund ON tpointer.`fund`=fund.`id` "
                   "LEFT JOIN feature ON tpointer.`feature`=feature.`id` "
                   "%1"
@@ -46,7 +47,6 @@ bool DataModel::select()
 
     if (m_query.exec()) {
         beginResetModel();
-        //qDebug() << m_query.lastQuery();
         while (m_query.next()) {
             Node node;
             for (int i = 0; i < DataModel::ColumnsCount; ++i) {
@@ -61,6 +61,22 @@ bool DataModel::select()
     }
 
     return false;
+}
+
+void DataModel::setMetaField(const QModelIndex &index)
+{
+    QVariant id = index.siblingAtColumn(0).data();
+
+    QSqlQuery query(
+                "SELECT corpus.`name` FROM tpointer "
+                "LEFT JOIN storage ON  tpointer.`storage`=storage.`id` "
+                "LEFT JOIN corpus ON storage.`corpus`=corpus.`id` "
+                "WHERE tpointer.`id`=" + id.toString());
+
+    query.exec();
+    if(query.first()) {
+        meta.insert(DataModel::CorpusName, query.value(0));
+    }
 }
 
 int DataModel::columnCount(const QModelIndex&) const
@@ -84,11 +100,11 @@ int DataModel::count() const
 
 QVariant DataModel::data(const QModelIndex &index, int role) const
 {
-    if (role == Qt::DisplayRole ) {
+    if (role == Qt::DisplayRole) {
         QVariant value = nodeList.at(index.row()).at(index.column());
 
-        if (index.column() == 2 && value.toInt() == 0) {
-            return QVariant(tr("Basement"));
+        if (index.column() == DataModel::Floor && value.toInt() == 0) {
+            return QVariant(QCoreApplication::translate("DataModel", "Basement", nullptr));
         }
 
         return value;

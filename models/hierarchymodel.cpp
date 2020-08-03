@@ -79,7 +79,7 @@ void HierarchyModel::setupModelData(const QModelIndex &index)
     case (HierarchyModel::StorageLevel):
     {
         StorageModel model;
-        model.setFilter("corpus_id=" + parentNode->id.toString());
+        model.setFilter("corpus=" + parentNode->id.toString());
         model.setSort(2, Qt::AscendingOrder);
         model.select();
 
@@ -168,7 +168,7 @@ bool HierarchyModel::hasChildren(const QModelIndex &parent) const
     switch (parentNode->level) {
         case (HierarchyModel::CorpusLevel):
         {
-            query_str = "SELECT COUNT(id) FROM storage WHERE corpus_id=" + parentNode->id.toString();
+            query_str = "SELECT COUNT(id) FROM storage WHERE corpus=" + parentNode->id.toString();
             break;
         }
         case (HierarchyModel::StorageLevel):

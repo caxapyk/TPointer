@@ -3,6 +3,7 @@
 
 #include "application.h"
 #include "dialogs/addnodedialog.h"
+#include "dialogs/editnodedialog.h"
 #include "dialogs/movenodedialog.h"
 #include "widgets/customcontextmenu.h"
 
@@ -122,8 +123,21 @@ void DataView::loadData(const FilterStruct &filter)
 void DataView::addItem()
 {
     AddNodeDialog dialog;
-    dialog.setDataModel(m_model);
     dialog.applyFilter(m_model->filterStruct());
+
+    int res = dialog.exec();
+
+    if (res == QDialog::Accepted) {
+        // do something
+    }
+}
+
+void DataView::editItem()
+{
+    QModelIndex index = ui->tV_dataTable->currentIndex();
+    m_model->setMetaField(index);
+
+    EditNodeDialog dialog(m_model, index.row());
 
     int res = dialog.exec();
 
@@ -185,6 +199,11 @@ void DataView::showContextMenu(const QPoint&)
     CustomContextMenu menu(
                 CustomContextMenu::Add | CustomContextMenu::Edit | CustomContextMenu::Remove | CustomContextMenu::Refresh);
     menu.setSelection(ui->tV_dataTable->selectionModel()->selectedRows());
+
+    connect(&menu, &CustomContextMenu::addRequested, this, &DataView::addItem);
+    connect(&menu, &CustomContextMenu::editRequested, this, &DataView::editItem);
+    connect(&menu, &CustomContextMenu::removeRequested, this, &DataView::removeItems);
+
 
     connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
         m_model->select();

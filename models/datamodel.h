@@ -10,11 +10,13 @@
 class DataModel : public QAbstractTableModel
 {
 
+    Q_OBJECT
+
 public:
     enum DataFields{
         Id,
-        Floor,
         Storage,
+        Floor,
         Compartment,
         Shelving,
         Cupboard,
@@ -25,6 +27,10 @@ public:
         Note,
         Features,
         ColumnsCount
+    };
+
+    enum DataMetaFields{
+        CorpusName
     };
 
     typedef QList<QVariant> Node;
@@ -44,10 +50,15 @@ public:
     void setFilter(const FilterStruct &filter);
     QSqlQuery query() const { return m_query; };
 
+
+    void setMetaField(const QModelIndex &index);
+    QMap<int, QVariant> metaField() const { return meta; };
+
 private:
     FilterStruct m_filterStruct;
 
     QVector<Node> nodeList;
+    QMap<int, QVariant> meta;
     QMap<int, QVariant> columnHeaders;
     QString m_filter;
     QSqlQuery m_query;

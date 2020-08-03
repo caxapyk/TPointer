@@ -44,6 +44,7 @@ private:
 
 private slots:
     void addItem();
+    void editItem();
     void filterMainTable(const QString &text);
     void moveItems();
     void removeItems();

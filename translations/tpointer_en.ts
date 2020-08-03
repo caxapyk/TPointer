@@ -100,8 +100,8 @@
 <context>
     <name>CorpusModel</name>
     <message>
-        <location filename="../models/corpusmodel.cpp" line="8"/>
-        <source>New corpus</source>
+        <location filename="../models/corpusmodel.cpp" line="12"/>
+        <source>Corpus %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -204,46 +204,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="86"/>
+        <location filename="../views/dataview.cpp" line="87"/>
         <source>Filter by notes...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="150"/>
+        <location filename="../views/dataview.cpp" line="161"/>
         <source>Delete record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="151"/>
+        <location filename="../views/dataview.cpp" line="162"/>
         <source>Are you shure that you want to delete %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="158"/>
+        <location filename="../views/dataview.cpp" line="169"/>
         <source>Fund list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="158"/>
+        <location filename="../views/dataview.cpp" line="169"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="194"/>
+        <location filename="../views/dataview.cpp" line="210"/>
         <source>Sort by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="203"/>
+        <location filename="../views/dataview.cpp" line="219"/>
         <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditNodeDialog</name>
+    <message>
+        <location filename="../dialogs/editnodedialog.cpp" line="9"/>
+        <source>Edit record</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FeatureModel</name>
     <message>
-        <location filename="../models/featuremodel.cpp" line="6"/>
-        <source>New feature</source>
+        <location filename="../models/featuremodel.cpp" line="15"/>
+        <source>Feature %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -298,17 +306,17 @@
 <context>
     <name>FundModel</name>
     <message>
-        <location filename="../models/fundmodel.cpp" line="9"/>
+        <location filename="../models/fundmodel.cpp" line="15"/>
         <source>New fund</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/fundmodel.cpp" line="12"/>
+        <location filename="../models/fundmodel.cpp" line="10"/>
         <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/fundmodel.cpp" line="13"/>
+        <location filename="../models/fundmodel.cpp" line="11"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -604,7 +612,7 @@
     <name>NoItemListModel</name>
     <message>
         <location filename="../models/noitemlistmodel.cpp" line="22"/>
-        <source>Select item...</source>
+        <source>Undefined</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -787,7 +795,7 @@
     </message>
     <message>
         <location filename="../dialogs/searchdialog.ui" line="110"/>
-        <source>= 0 - if undefined</source>
+        <source>=0, if empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -814,22 +822,17 @@
 <context>
     <name>StorageModel</name>
     <message>
-        <location filename="../models/storagemodel.cpp" line="11"/>
-        <source>New storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../models/storagemodel.cpp" line="17"/>
+        <location filename="../models/storagemodel.cpp" line="15"/>
         <source>Storage number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/storagemodel.cpp" line="18"/>
+        <location filename="../models/storagemodel.cpp" line="16"/>
         <source>Rooms count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/storagemodel.cpp" line="19"/>
+        <location filename="../models/storagemodel.cpp" line="17"/>
         <source>Floors</source>
         <translation type="unfinished"></translation>
     </message>
