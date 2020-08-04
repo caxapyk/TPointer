@@ -1,6 +1,5 @@
 #include "nodedialog.h"
 #include "addnodedialog.h"
-#include "models/filterstruct.h"
 #include "ui_nodedialog.h"
 
 #include <QDebug>
@@ -12,11 +11,22 @@ AddNodeDialog::AddNodeDialog() : InsertNodeDialog()
 
 void AddNodeDialog::applyFilter(const FilterStruct &fs)
 {
+    // corpus
+    if(fs.corpus.isValid()) {
+        for (int i = 0; i < m_corpusModel->rowCount(); ++i) {
+            if(m_corpusModel->index(i, 0).data() == fs.corpus) {
+                ui->cB_corpus->setCurrentIndex(i + 1);
+                ui->cB_corpus->setDisabled(true);
+                break;
+            }
+        }
+    }
+
     // storage
     if(fs.storage.isValid()) {
-        for (int i = 0; i < m_nILstorageModel->rowCount(); ++i) {
+        for (int i = 0; i < m_storageModel->rowCount(); ++i) {
             if(m_storageModel->index(i, 0).data() == fs.storage) {
-                ui->cB_storage->setCurrentIndex(i + 1);
+                ui->cB_storage->setCurrentIndex(i);
                 ui->cB_storage->setDisabled(true);
                 break;
             }

@@ -23,7 +23,6 @@ private:
     Ui::MoveNodeDialog *ui;
 
     StorageExtendedModel *m_storageModel;
-    NoItemListModel *m_nILstorageModel;
     QStringListModel *m_floorModel;
 
     void setupModels();

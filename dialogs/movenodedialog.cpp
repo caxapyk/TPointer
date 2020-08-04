@@ -22,18 +22,18 @@ void MoveNodeDialog::setupModels()
 {
     m_storageModel = new StorageExtendedModel;
     m_storageModel->select();
-    m_nILstorageModel = new NoItemListModel;
-    m_nILstorageModel->setModel(m_storageModel);
-    m_nILstorageModel->setColumn(6);
-    ui->cB_storage->setModel(m_nILstorageModel);
+    ui->cB_storage->setModel(m_storageModel);
+    ui->cB_storage->setModelColumn(6);
 
     m_floorModel = new QStringListModel;
     ui->cB_floor->setModel(m_floorModel);
+
+    fillFloor(0);
 }
 
 void MoveNodeDialog::fillFloor(int index)
 {
-    QModelIndex storageModelIndex = m_storageModel->index(index - 1, 5);
+    QModelIndex storageModelIndex = m_storageModel->index(index, 5);
 
     FloorsParser parser;
     QStringList floors = parser.process(storageModelIndex.data().toString());

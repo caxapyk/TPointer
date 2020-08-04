@@ -3,21 +3,23 @@
 
 #include <QDebug>
 #include <QSqlRecord>
+#include <QSqlError>
 
 DataModel::DataModel() :  QAbstractTableModel()
 {
-    setHeaderData(0, Qt::Horizontal, QCoreApplication::translate("DataModel", "Id", nullptr));
-    setHeaderData(1, Qt::Horizontal, QCoreApplication::translate("DataModel", "Storage", nullptr));
-    setHeaderData(2, Qt::Horizontal, QCoreApplication::translate("DataModel", "Floor", nullptr));
-    setHeaderData(3, Qt::Horizontal, QCoreApplication::translate("DataModel", "Compartment", nullptr));
-    setHeaderData(4, Qt::Horizontal, QCoreApplication::translate("DataModel", "Shelving", nullptr));
-    setHeaderData(5, Qt::Horizontal, QCoreApplication::translate("DataModel", "Cupboard", nullptr));
-    setHeaderData(6, Qt::Horizontal, QCoreApplication::translate("DataModel", "Shelf", nullptr));
-    setHeaderData(7, Qt::Horizontal, QCoreApplication::translate("DataModel", "Fund", nullptr));
-    setHeaderData(8, Qt::Horizontal, QCoreApplication::translate("DataModel", "Inventory", nullptr));
-    setHeaderData(9, Qt::Horizontal, QCoreApplication::translate("DataModel", "Records", nullptr));
-    setHeaderData(10, Qt::Horizontal, QCoreApplication::translate("DataModel", "Note", nullptr));
-    setHeaderData(11, Qt::Horizontal, QCoreApplication::translate("DataModel", "Features", nullptr));
+    setHeaderData(0, Qt::Horizontal, tr("Id"));
+    setHeaderData(1, Qt::Horizontal, tr("Corpus"));
+    setHeaderData(2, Qt::Horizontal, tr("Storage"));
+    setHeaderData(3, Qt::Horizontal, tr("Floor"));
+    setHeaderData(4, Qt::Horizontal, tr("Compartment"));
+    setHeaderData(5, Qt::Horizontal, tr("Shelving"));
+    setHeaderData(6, Qt::Horizontal, tr("Cupboard"));
+    setHeaderData(7, Qt::Horizontal, tr("Shelf"));
+    setHeaderData(8, Qt::Horizontal, tr("Fund"));
+    setHeaderData(9, Qt::Horizontal, tr("Inventory"));
+    setHeaderData(10, Qt::Horizontal, tr("Records"));
+    setHeaderData(11, Qt::Horizontal, tr("Note"));
+    setHeaderData(12, Qt::Horizontal, tr("Features"));
 }
 
 DataModel::~DataModel()
@@ -28,6 +30,11 @@ DataModel::~DataModel()
 void DataModel::clear()
 {
     beginResetModel();
+
+    // delete nodes
+    while (!nodeList.isEmpty())
+         delete nodeList.takeFirst();
+
     nodeList.clear();
     nodeList.squeeze();
     endResetModel();
@@ -36,7 +43,7 @@ void DataModel::clear()
 bool DataModel::select()
 {
     clear();
-    m_query.prepare(QString("SELECT tpointer.`id`, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, tpointer.`note`, feature.`name` AS feature_name FROM tpointer "
+    m_query.prepare(QString("SELECT tpointer.`id`, corpus.`name` AS corpus_name, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, tpointer.`note`, feature.`name` AS feature_name FROM tpointer "
                   "LEFT JOIN storage ON tpointer.`storage`=storage.`id` "
                   "LEFT JOIN corpus ON storage.`corpus`=corpus.`id` "
                   "LEFT JOIN fund ON tpointer.`fund`=fund.`id` "
@@ -48,9 +55,9 @@ bool DataModel::select()
     if (m_query.exec()) {
         beginResetModel();
         while (m_query.next()) {
-            Node node;
+            Node *node = new Node();
             for (int i = 0; i < DataModel::ColumnsCount; ++i) {
-                node.append(m_query.value(i));
+                node->append(m_query.value(i));
             }
 
             nodeList.append(node);
@@ -58,25 +65,11 @@ bool DataModel::select()
         endResetModel();
 
         return true;
+    } else {
+        qDebug() << m_query.lastError().text();
     }
 
     return false;
-}
-
-void DataModel::setMetaField(const QModelIndex &index)
-{
-    QVariant id = index.siblingAtColumn(0).data();
-
-    QSqlQuery query(
-                "SELECT corpus.`name` FROM tpointer "
-                "LEFT JOIN storage ON  tpointer.`storage`=storage.`id` "
-                "LEFT JOIN corpus ON storage.`corpus`=corpus.`id` "
-                "WHERE tpointer.`id`=" + id.toString());
-
-    query.exec();
-    if(query.first()) {
-        meta.insert(DataModel::CorpusName, query.value(0));
-    }
 }
 
 int DataModel::columnCount(const QModelIndex&) const
@@ -101,16 +94,30 @@ int DataModel::count() const
 QVariant DataModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
-        QVariant value = nodeList.at(index.row()).at(index.column());
+        QVariant value = nodeList.at(index.row())->at(index.column());
 
         if (index.column() == DataModel::Floor && value.toInt() == 0) {
-            return QVariant(QCoreApplication::translate("DataModel", "Basement", nullptr));
+            return QVariant(tr("Basement"));
         }
 
         return value;
     }
 
     return QVariant();
+}
+
+bool DataModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!index.isValid() || role != Qt::EditRole) {
+        return false;
+    }
+
+    Node *node = nodeList.at(index.row());
+    node->replace(index.column(), value);
+
+    emit dataChanged(index, index);
+
+    return true;
 }
 
 bool DataModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int)
@@ -149,9 +156,13 @@ void DataModel::setFilter(const FilterStruct &fs)
 {
     m_filterStruct = fs;
     m_filter.clear();
-
+    // storage
+    if (!fs.corpus.isNull()) {
+        m_filter += QString(" storage.`corpus`=%1 ").arg(fs.corpus.toInt());
+    }
     // storage
     if (!fs.storage.isNull()) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
         m_filter += QString(" tpointer.`storage`=%1 ").arg(fs.storage.toInt());
     }
     // compartment

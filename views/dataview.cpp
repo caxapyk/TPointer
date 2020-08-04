@@ -7,6 +7,7 @@
 #include "dialogs/movenodedialog.h"
 #include "widgets/customcontextmenu.h"
 
+#include <QDebug>
 #include <QMessageBox>
 #include <QSettings>
 
@@ -135,8 +136,6 @@ void DataView::addItem()
 void DataView::editItem()
 {
     QModelIndex index = ui->tV_dataTable->currentIndex();
-    m_model->setMetaField(index);
-
     EditNodeDialog dialog(m_model, index.row());
 
     int res = dialog.exec();

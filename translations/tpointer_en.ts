@@ -4,7 +4,7 @@
 <context>
     <name>AddNodeDialog</name>
     <message>
-        <location filename="../dialogs/addnodedialog.cpp" line="10"/>
+        <location filename="../dialogs/addnodedialog.cpp" line="9"/>
         <source>Add record</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13,8 +13,8 @@
     <name>Application</name>
     <message>
         <location filename="../application.cpp" line="23"/>
-        <location filename="../application.cpp" line="82"/>
-        <location filename="../application.cpp" line="93"/>
+        <location filename="../application.cpp" line="90"/>
+        <location filename="../application.cpp" line="101"/>
         <source>Archival topographic pointer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -39,27 +39,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="82"/>
+        <location filename="../application.cpp" line="90"/>
         <source> v %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="83"/>
+        <location filename="../application.cpp" line="91"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="88"/>
+        <location filename="../application.cpp" line="96"/>
         <source>Application icons by </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="90"/>
+        <location filename="../application.cpp" line="98"/>
         <source>Copyright &amp;copy; 2020 Alexander Sakharuk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.h" line="22"/>
+        <location filename="../application.h" line="23"/>
         <source>Archival topographic pointer %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -131,67 +131,72 @@
 <context>
     <name>DataModel</name>
     <message>
-        <location filename="../models/datamodel.cpp" line="11"/>
+        <location filename="../models/datamodel.cpp" line="13"/>
         <source>Floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="10"/>
+        <location filename="../models/datamodel.cpp" line="12"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="9"/>
+        <location filename="../models/datamodel.cpp" line="10"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="12"/>
-        <source>Compartment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../models/datamodel.cpp" line="13"/>
-        <source>Shelving</source>
+        <location filename="../models/datamodel.cpp" line="11"/>
+        <source>Corpus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="14"/>
-        <source>Cupboard</source>
+        <source>Compartment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="15"/>
-        <source>Shelf</source>
+        <source>Shelving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="16"/>
-        <source>Fund</source>
+        <source>Cupboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="17"/>
-        <source>Inventory</source>
+        <source>Shelf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="18"/>
-        <source>Records</source>
+        <source>Fund</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="19"/>
-        <source>Note</source>
+        <source>Inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="20"/>
+        <source>Records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../models/datamodel.cpp" line="21"/>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../models/datamodel.cpp" line="22"/>
         <source>Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="91"/>
+        <location filename="../models/datamodel.cpp" line="100"/>
         <source>Basement</source>
         <translation type="unfinished"></translation>
     </message>
@@ -204,37 +209,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="87"/>
+        <location filename="../views/dataview.cpp" line="88"/>
         <source>Filter by notes...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="161"/>
+        <location filename="../views/dataview.cpp" line="163"/>
         <source>Delete record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="162"/>
+        <location filename="../views/dataview.cpp" line="164"/>
         <source>Are you shure that you want to delete %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="169"/>
+        <location filename="../views/dataview.cpp" line="171"/>
         <source>Fund list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="169"/>
+        <location filename="../views/dataview.cpp" line="171"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="210"/>
+        <location filename="../views/dataview.cpp" line="212"/>
         <source>Sort by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="219"/>
+        <location filename="../views/dataview.cpp" line="221"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
@@ -588,22 +593,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="85"/>
+        <location filename="../views/navigationview.cpp" line="86"/>
         <source>Fund filter...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="111"/>
+        <location filename="../views/navigationview.cpp" line="113"/>
         <source> [%1, Str. %2, Comp. %3, Sh. %4]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="114"/>
+        <location filename="../views/navigationview.cpp" line="116"/>
         <source>undefined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="130"/>
+        <location filename="../views/navigationview.cpp" line="132"/>
         <source> [Fund %1]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -611,7 +616,7 @@
 <context>
     <name>NoItemListModel</name>
     <message>
-        <location filename="../models/noitemlistmodel.cpp" line="22"/>
+        <location filename="../models/noitemlistmodel.cpp" line="25"/>
         <source>Undefined</source>
         <translation type="unfinished"></translation>
     </message>
@@ -634,78 +639,83 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="62"/>
-        <location filename="../dialogs/nodedialog.ui" line="86"/>
+        <location filename="../dialogs/nodedialog.ui" line="91"/>
+        <location filename="../dialogs/nodedialog.ui" line="101"/>
         <source>=0, if empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="69"/>
+        <location filename="../dialogs/nodedialog.ui" line="81"/>
         <source>Shelf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="76"/>
+        <location filename="../dialogs/nodedialog.ui" line="121"/>
         <source>Cupboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="93"/>
+        <location filename="../dialogs/nodedialog.ui" line="114"/>
         <source>Shelving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="100"/>
+        <location filename="../dialogs/nodedialog.ui" line="128"/>
         <source>Compartment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="113"/>
+        <location filename="../dialogs/nodedialog.ui" line="67"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="132"/>
+        <location filename="../dialogs/nodedialog.ui" line="74"/>
         <source>Floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="145"/>
+        <location filename="../dialogs/nodedialog.ui" line="135"/>
+        <source>Corpus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/nodedialog.ui" line="155"/>
         <source>Content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="151"/>
+        <location filename="../dialogs/nodedialog.ui" line="161"/>
         <source>Fund</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="185"/>
+        <location filename="../dialogs/nodedialog.ui" line="195"/>
         <source>Choose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="194"/>
+        <location filename="../dialogs/nodedialog.ui" line="204"/>
         <source>Inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="211"/>
+        <location filename="../dialogs/nodedialog.ui" line="221"/>
         <source>Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="228"/>
+        <location filename="../dialogs/nodedialog.ui" line="238"/>
         <source>Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="249"/>
+        <location filename="../dialogs/nodedialog.ui" line="259"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="255"/>
+        <location filename="../dialogs/nodedialog.ui" line="265"/>
         <source>Note</source>
         <translation type="unfinished"></translation>
     </message>

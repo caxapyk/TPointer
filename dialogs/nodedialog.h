@@ -2,10 +2,11 @@
 #define MAINFORMDIALOG_H
 
 #include "dialogs/fundlistdialog.h"
-#include "models/storageextendedmodel.h"
+#include "models/corpusmodel.h"
 #include "models/fundmodel.h"
 #include "models/featuremodel.h"
 #include "models/noitemlistmodel.h"
+#include "models/storagemodel.h"
 
 #include <QComboBox>
 #include <QDialog>
@@ -27,13 +28,15 @@ private:
     void restoreDialogState();
     void setupModels();
     void fillFloor(int index);
+    void fillStorage(int index);
     void selectFund();
 
 protected:
     Ui::NodeDialog *ui;
 
-    StorageExtendedModel *m_storageModel;
-    NoItemListModel *m_nILstorageModel;
+    CorpusModel *m_corpusModel;
+    NoItemListModel *m_nILcorpusModel;
+    StorageModel *m_storageModel;
     QStringListModel *m_floorModel;
     FundModel *m_fundModel;
     NoItemListModel *m_nILfundModel;
@@ -41,6 +44,8 @@ protected:
     NoItemListModel *m_nILfeatureModel;
 
     void closeEvent(QCloseEvent *event) override;
+    void virtual cancel() {};
+    void virtual save() {};
 };
 
 #endif // MAINFORMDIALOG_H

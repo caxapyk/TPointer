@@ -1,10 +1,13 @@
 #include "noitemlistmodel.h"
 
+#include <QDebug>
+
 NoItemListModel::NoItemListModel() : QAbstractListModel()
 {
 }
 NoItemListModel::~NoItemListModel()
 {
+
 }
 
 int NoItemListModel::rowCount(const QModelIndex&) const

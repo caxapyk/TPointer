@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Storage</source>
-        <translation>Архивохранилище №</translation>
+        <translation>Арх-ще №</translation>
     </message>
     <message>
         <source>Compartment</source>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Features</source>
-        <translation>Характеристика</translation>
+        <translation>Характ-ка</translation>
     </message>
     <message>
         <source>Basement</source>
@@ -161,6 +161,10 @@
     <message>
         <source>Id</source>
         <translation>ID</translation>
+    </message>
+    <message>
+        <source>Corpus</source>
+        <translation>Корпус</translation>
     </message>
 </context>
 <context>
@@ -202,7 +206,7 @@
     <name>EditNodeDialog</name>
     <message>
         <source>Edit record</source>
-        <translation type="unfinished">Править</translation>
+        <translation>Редактировать запись</translation>
     </message>
 </context>
 <context>
@@ -586,6 +590,10 @@
     <message>
         <source>Note</source>
         <translation>Примечание</translation>
+    </message>
+    <message>
+        <source>Corpus</source>
+        <translation>Корпус</translation>
     </message>
 </context>
 <context>

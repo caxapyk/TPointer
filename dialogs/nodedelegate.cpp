@@ -46,17 +46,7 @@ void NodeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) cons
         // to present the DisplayRole and not the EditRole which
         // is the id reference to the related model
 
-        QVariant v;
-
-        //  make corpus/storage column according to StoragEextendedModel;
-        if(index.column() == DataModel::Storage) {
-           const DataModel *model = qobject_cast<const DataModel*>(index.model());
-           v = QVariant(QString("%1/%2")
-                                 .arg(model->metaField().value(DataModel::CorpusName).toString())
-                                 .arg(index.data(Qt::DisplayRole).toString()));
-        } else {
-            v = index.data(Qt::DisplayRole);
-        }
+        QVariant v = index.data(Qt::DisplayRole);
 
         const QByteArray n = editor->metaObject()->userProperty().name();
         if (!n.isEmpty()) {

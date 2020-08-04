@@ -16,6 +16,9 @@ public:
 
     DataModel *dataModel() { return m_dataModel; };
 
+protected:
+    void save() override;
+
 private:
     DataModel *m_dataModel;
     QDataWidgetMapper *mapper;

@@ -7,8 +7,8 @@
 #include <QCommandLineOption>
 #include <QIcon>
 #include <QMessageBox>
-#include <QTranslator>
 #include <QStringList>
+#include <QLibraryInfo>
 
 Application* application = nullptr;
 
@@ -56,6 +56,8 @@ Application::~Application()
 {
     delete m_mainWindow;
     delete m_settings;
+    delete qtTranslator;
+    delete appTranslator;
 }
 
 void Application::initializeSettings()
@@ -70,10 +72,16 @@ void Application::initializeSettings()
 
 void Application::initializeLanguage()
 {
-    QTranslator* translator = new QTranslator(this);
+    qtTranslator = new QTranslator(this);
+    appTranslator = new QTranslator(this);
 
-    if(translator->load("tpointer_ru.qm", ":/translations/translations/")) {
-        installTranslator(translator);
+    if(qtTranslator->load("qt_" + QLocale::system().name(),
+             QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        installTranslator(qtTranslator);
+    }
+
+    if (appTranslator->load("tpointer_ru.qm", ":/translations/translations/")) {
+        installTranslator(appTranslator);
     }
 }
 

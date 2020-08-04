@@ -9,6 +9,7 @@
 class AddNodeDialog : public InsertNodeDialog
 {
     Q_OBJECT
+
 public:
     AddNodeDialog();
     void applyFilter(const FilterStruct &fs);

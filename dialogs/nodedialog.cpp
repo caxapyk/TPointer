@@ -14,16 +14,21 @@ NodeDialog::NodeDialog(QWidget *parent) :
 
     setupModels();
 
+    connect(ui->cB_corpus, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &NodeDialog::fillStorage);
     connect(ui->cB_storage, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &NodeDialog::fillFloor);
     connect(ui->pB_openFundList, &QPushButton::pressed, this, &NodeDialog::selectFund);
+
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &NodeDialog::save);
+    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &NodeDialog::cancel);
 }
 
 NodeDialog::~NodeDialog()
 {
     delete ui;
+    delete m_corpusModel;
+    delete m_nILcorpusModel;
     delete m_storageModel;
     delete m_floorModel;
-    delete m_nILstorageModel;
     delete m_fundModel;
     delete m_nILfundModel;
     delete m_featureModel;
@@ -39,12 +44,16 @@ void NodeDialog::restoreDialogState()
 
 void NodeDialog::setupModels()
 {
-    m_storageModel = new StorageExtendedModel;
-    m_storageModel->select();
-    m_nILstorageModel = new NoItemListModel;
-    m_nILstorageModel->setModel(m_storageModel);
-    m_nILstorageModel->setColumn(6);
-    ui->cB_storage->setModel(m_nILstorageModel);
+    m_corpusModel = new CorpusModel;
+    m_corpusModel->select();
+    m_nILcorpusModel = new NoItemListModel;
+    m_nILcorpusModel->setModel(m_corpusModel);
+    m_nILcorpusModel->setColumn(1);
+    ui->cB_corpus->setModel(m_nILcorpusModel);
+
+    m_storageModel = new StorageModel;
+    ui->cB_storage->setModel(m_storageModel);
+    ui->cB_storage->setModelColumn(3);
 
     m_floorModel = new QStringListModel;
     ui->cB_floor->setModel(m_floorModel);
@@ -64,9 +73,16 @@ void NodeDialog::setupModels()
     ui->cB_feature->setModel(m_nILfeatureModel);
 }
 
+void NodeDialog::fillStorage(int index)
+{
+    QModelIndex corpusModelIndex = m_corpusModel->index(index - 1, 0);
+    m_storageModel->setFilter("corpus=" + corpusModelIndex.data().toString());
+    m_storageModel->select();
+}
+
 void NodeDialog::fillFloor(int index)
 {
-    QModelIndex storageModelIndex = m_storageModel->index(index - 1, 5);
+    QModelIndex storageModelIndex = m_storageModel->index(index, 5);
 
     FloorsParser parser;
     QStringList floors = parser.process(storageModelIndex.data().toString());

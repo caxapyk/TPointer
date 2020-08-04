@@ -46,10 +46,16 @@
           <string>Location</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="5" column="3">
-           <widget class="QLineEdit" name="lE_shelf"/>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="lE_cupboard"/>
           </item>
-          <item row="0" column="0">
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lE_compartment"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="lE_shelving"/>
+          </item>
+          <item row="1" column="0">
            <widget class="QLabel" name="label">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -62,38 +68,21 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QLabel" name="label_11">
-            <property name="styleSheet">
-             <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
-            </property>
-            <property name="text">
-             <string>=0, if empty</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Shelving</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Compartment</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>Floor</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="6" column="2">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Shelf</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
            <widget class="QLabel" name="label_12">
             <property name="styleSheet">
              <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
@@ -103,33 +92,54 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1" colspan="2">
-           <widget class="QComboBox" name="cB_floor"/>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="lE_cupboard"/>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLabel" name="label_6">
+          <item row="3" column="2">
+           <widget class="QLabel" name="label_11">
+            <property name="styleSheet">
+             <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
+            </property>
             <property name="text">
-             <string>Shelf</string>
+             <string>=0, if empty</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lE_compartment"/>
+          <item row="5" column="1" colspan="2">
+           <widget class="QComboBox" name="cB_floor"/>
           </item>
-          <item row="5" column="0">
+          <item row="6" column="3">
+           <widget class="QLineEdit" name="lE_shelf"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Shelving</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>Cupboard</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lE_shelving"/>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Compartment</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Corpus</string>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1" colspan="3">
+           <widget class="QComboBox" name="cB_corpus"/>
+          </item>
+          <item row="1" column="1" colspan="2">
            <widget class="QComboBox" name="cB_storage">
             <property name="styleSheet">
              <string notr="true"/>

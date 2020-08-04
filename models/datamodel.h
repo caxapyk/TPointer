@@ -15,6 +15,7 @@ class DataModel : public QAbstractTableModel
 public:
     enum DataFields{
         Id,
+        Corpus,
         Storage,
         Floor,
         Compartment,
@@ -38,26 +39,23 @@ public:
     DataModel();
     ~DataModel();
     void clear();
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     int count() const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QString filter() const { return m_filter; };
     FilterStruct filterStruct() { return m_filterStruct; };
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     bool select();
-    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     void setFilter(const FilterStruct &filter);
+    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
     QSqlQuery query() const { return m_query; };
-
-
-    void setMetaField(const QModelIndex &index);
-    QMap<int, QVariant> metaField() const { return meta; };
 
 private:
     FilterStruct m_filterStruct;
 
-    QVector<Node> nodeList;
+    QVector<Node*> nodeList;
     QMap<int, QVariant> meta;
     QMap<int, QVariant> columnHeaders;
     QString m_filter;

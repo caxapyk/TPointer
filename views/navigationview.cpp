@@ -4,6 +4,7 @@
 #include "application.h"
 #include "widgets/customcontextmenu.h"
 
+#include <QDebug>
 #include <QMenu>
 #include <QMessageBox>
 #include <QSettings>
@@ -102,6 +103,7 @@ void NavigationView::hierarchyActivated(const QModelIndex &index)
     if (node->level == HierarchyModel::ShelvingLevel) {
 
         FilterStruct filter;
+        filter.corpus = node->parent->parent->parent->id;
         filter.storage = node->parent->parent->id;
         filter.compartment = node->parent->name;
         filter.shelving = node->name;

@@ -5,6 +5,7 @@
 
 #include <QApplication>
 #include <QIcon>
+#include <QTranslator>
 #include <QString>
 #include <QSettings>
 
@@ -38,8 +39,10 @@ private:
     void initializeSettings();
     void initializeLanguage();
 
-    QSettings* m_settings;
-    MainWindow* m_mainWindow;
+    QSettings *m_settings;
+    MainWindow *m_mainWindow;
+    QTranslator *qtTranslator;
+    QTranslator *appTranslator;
 };
 
 /**

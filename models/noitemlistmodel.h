@@ -11,6 +11,7 @@ public:
     NoItemListModel();
     ~NoItemListModel();
     int baseColumn() const { return m_col; };
+    void clear();
     QAbstractItemModel* baseModel() const { return m_model; };
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

@@ -4,6 +4,7 @@
 #include <QVariant>
 
 struct FilterStruct {
+    QVariant corpus;
     QVariant storage;
     QVariant compartment;
     QVariant shelving;
