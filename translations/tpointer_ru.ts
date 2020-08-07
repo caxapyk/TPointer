@@ -7,6 +7,10 @@
         <source>Add record</source>
         <translation>Добавить запись</translation>
     </message>
+    <message>
+        <source>Are you shure that you want to revert changes?</source>
+        <translation>Вы уверены, что хотите отменить изменения?</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>
@@ -36,19 +40,19 @@
     </message>
     <message>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Application icons by </source>
-        <translation type="unfinished"></translation>
+        <translation>Иконки приложения - </translation>
     </message>
     <message>
         <source>Copyright &amp;copy; 2020 Alexander Sakharuk</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;copy; 2020 Alexander Sakharuk</translation>
     </message>
     <message>
         <source>Archival topographic pointer %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Архивный топографический указатель %1</translation>
     </message>
 </context>
 <context>
@@ -208,6 +212,10 @@
         <source>Edit record</source>
         <translation>Редактировать запись</translation>
     </message>
+    <message>
+        <source>Are you shure that you want to revert changes?</source>
+        <translation>Вы уверены, что хотите отменить изменения?</translation>
+    </message>
 </context>
 <context>
     <name>FeatureModel</name>
@@ -217,7 +225,7 @@
     </message>
     <message>
         <source>Feature %1</source>
-        <translation>Характиристика %1</translation>
+        <translation>Характеристика %1</translation>
     </message>
 </context>
 <context>
@@ -228,7 +236,11 @@
     </message>
     <message>
         <source>\1 fl.</source>
-        <translation>\1 эт.</translation>
+        <translation type="vanished">\1 этаж</translation>
+    </message>
+    <message>
+        <source>\1 fl	ier</source>
+        <translation>\1 эт/я</translation>
     </message>
 </context>
 <context>
@@ -262,7 +274,7 @@
     <name>FundModel</name>
     <message>
         <source>New fund</source>
-        <translation>Новый фонд</translation>
+        <translation type="vanished">Новый фонд</translation>
     </message>
     <message>
         <source>Number</source>
@@ -271,6 +283,10 @@
     <message>
         <source>Name</source>
         <translation>Название фонда</translation>
+    </message>
+    <message>
+        <source>New fund %1</source>
+        <translation>Новый фонд %1</translation>
     </message>
 </context>
 <context>
@@ -323,7 +339,11 @@
     <name>InsertNodeDialog</name>
     <message>
         <source>Insert record</source>
-        <translation>Добавить запись</translation>
+        <translation>Создать запись</translation>
+    </message>
+    <message>
+        <source>Are you shure that you want to revert changes?</source>
+        <translation>Вы уверены, что хотите отменить изменения?</translation>
     </message>
 </context>
 <context>
@@ -553,7 +573,7 @@
     </message>
     <message>
         <source>Storage</source>
-        <translation>Архивохранилище №</translation>
+        <translation>Архивохранил. №</translation>
     </message>
     <message>
         <source>Floor</source>
@@ -569,7 +589,7 @@
     </message>
     <message>
         <source>Choose</source>
-        <translation>Выбор</translation>
+        <translation type="vanished">Выбор</translation>
     </message>
     <message>
         <source>Inventory</source>
@@ -594,6 +614,10 @@
     <message>
         <source>Corpus</source>
         <translation>Корпус</translation>
+    </message>
+    <message>
+        <source>Choose fund</source>
+        <translation>Выбор фонда</translation>
     </message>
 </context>
 <context>
@@ -695,7 +719,7 @@
     </message>
     <message>
         <source>Floors</source>
-        <translation>Этажей</translation>
+        <translation>Этажи</translation>
     </message>
     <message>
         <source>Storage number</source>

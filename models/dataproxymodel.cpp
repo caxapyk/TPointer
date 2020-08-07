@@ -1,3 +1,4 @@
+#include "datamodel.h"
 #include "dataproxymodel.h"
 #include "utils/fundsorter.h"
 
@@ -11,7 +12,7 @@ DataProxyModel::DataProxyModel() : QSortFilterProxyModel()
 bool DataProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
     // floor
-    if (source_left.column() == 2 && source_right.column() == 2) {
+    if (source_left.column() == DataModel::Floor && source_right.column() == DataModel::Floor) {
         // 'Basement' convert to int = 0
         if(source_left.data().toInt() == 0) {
             return false;
@@ -19,7 +20,7 @@ bool DataProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex 
             return source_left.data().toInt() > source_right.data().toInt();
         }
     // fund
-    } else if (source_left.column() == 7 && source_left.column() == 7) {
+    } else if (source_left.column() == DataModel::Fund && source_left.column() == DataModel::Fund) {
         FundSorter sorter;
         return sorter.lessThen(source_left.data().toString(), source_right.data().toString());
     }

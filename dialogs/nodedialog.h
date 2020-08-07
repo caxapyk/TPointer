@@ -11,6 +11,7 @@
 #include <QComboBox>
 #include <QDialog>
 #include <QStringListModel>
+#include <QValidator>
 
 namespace Ui {
 class NodeDialog;
@@ -25,12 +26,12 @@ public:
     ~NodeDialog();
 
 private:
-    void restoreDialogState();
-    void setupModels();
     void fillFloor(int index);
     void fillStorage(int index);
+    void restoreDialogState();
     void selectFund();
-
+    void setupModels();
+    void setupValidators();
 protected:
     Ui::NodeDialog *ui;
 
@@ -43,8 +44,13 @@ protected:
     FeatureModel *m_featureModel;
     NoItemListModel *m_nILfeatureModel;
 
+    QValidator *validatorCompartment;
+    QValidator *validatorCupboard;
+    QValidator *validatorShelving;
+
     void closeEvent(QCloseEvent *event) override;
     void virtual cancel() {};
+    void virtual revert() {};
     void virtual save() {};
 };
 

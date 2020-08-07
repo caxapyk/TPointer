@@ -12,6 +12,6 @@ FundModel::FundModel() : TableModel()
 }
 
 void FundModel::setDefaultRecord(int, QSqlRecord &record) {
-    record.setValue(1, tr("New fund"));
+    record.setValue(1, tr("New fund %1").arg(itemMaxNum(1, QRegExp("\\D+\\s\\D+\\d+"))));
     record.setGenerated(1, true);
 };

@@ -59,25 +59,11 @@ void DataView::initialize()
 
     m_tableController = new TableModelController;
 
-    /*
-    connect(ui->action_remove, &QAction::triggered, this, [=] {
-        removeItem(ui->tV_dataTable);
-    });
-    connect(ui->action_refresh, &QAction::triggered, m_tableController, [=] {
-        m_model->select();
-    });*/
-
-    m_buttonsControl = new ButtonsControl(
-                ButtonsControl::Add | ButtonsControl::Edit | ButtonsControl::Remove,
-                Qt::Horizontal);
+    m_buttonsControl = new ButtonsControl(ButtonsControl::Add, Qt::Horizontal);
 
     connect(m_buttonsControl, &ButtonsControl::addRequested, this, [=] {
         addItem();
     });
-
-    //m_buttonsControl->connectToMenu(ButtonsControl::Add, ui->action_new);
-    //m_buttonsControl->connectToMenu(ButtonsControl::Edit, ui->action_edit);
-    //m_buttonsControl->connectToMenu(ButtonsControl::Remove, ui->action_remove);
 
     m_buttonsControl->setMaximumSize(QSize(300, 50));
 
@@ -111,7 +97,9 @@ void DataView::loadData(const FilterStruct &filter)
     connect(ui->tV_dataTable, &QMenu::customContextMenuRequested, this, &DataView::showContextMenu, Qt::UniqueConnection);
 
     m_buttonsControl->assetView(ui->tV_dataTable);
-    m_buttonsControl->setEnabled(true, ButtonsControl::Add);
+
+    // disable add record on fund selected
+    m_buttonsControl->setEnabled(filter.fund.isNull(), ButtonsControl::Add);
     m_buttonsControl->setEnabled(true, ButtonsControl::Refresh);
 
     // enable filter widget
@@ -135,7 +123,7 @@ void DataView::addItem()
 
 void DataView::editItem()
 {
-    QModelIndex index = ui->tV_dataTable->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(ui->tV_dataTable->currentIndex());
     EditNodeDialog dialog(m_model, index.row());
 
     int res = dialog.exec();
@@ -178,8 +166,8 @@ void DataView::showMetaData(const QItemSelection &selected, const QItemSelection
     if (!selected.indexes().isEmpty()) {
         QModelIndex current = selected.indexes().at(0);
 
-        QString descr = current.sibling(current.row(), 10).data().toString();
-        QString feature = current.sibling(current.row(), 11).data().toString();
+        QString descr = current.sibling(current.row(), DataModel::Note).data().toString();
+        QString feature = current.sibling(current.row(), DataModel::Features).data().toString();
 
         QString t = descr + (descr.isNull() ? "" : "\n") + feature;
 
@@ -189,7 +177,7 @@ void DataView::showMetaData(const QItemSelection &selected, const QItemSelection
 
 void DataView::filterMainTable(const QString &text)
 {
-    m_proxyModel->setFilterKeyColumn(10);
+    m_proxyModel->setFilterKeyColumn(DataModel::Note);
     m_proxyModel->setFilterFixedString(text);
 }
 
@@ -203,6 +191,10 @@ void DataView::showContextMenu(const QPoint&)
     connect(&menu, &CustomContextMenu::editRequested, this, &DataView::editItem);
     connect(&menu, &CustomContextMenu::removeRequested, this, &DataView::removeItems);
 
+    // disable add record on fund selected
+    if(m_model->filterStruct().fund.isValid()) {
+        menu.action(CustomContextMenu::Add)->setDisabled(true);
+    }
 
     connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
         m_model->select();

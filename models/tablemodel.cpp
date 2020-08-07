@@ -58,11 +58,17 @@ void TableModel::setPositionColumn(int column)
     position_column = column;
 }
 
-int TableModel::itemMaxNum(int column) const
+int TableModel::itemMaxNum(int column, const QRegExp &contains) const
 {
     int max = 1;
     for(int i = 0; i < rowCount(); ++i) {
-        int num = index(i, column).data().toString().remove(QRegExp("\\D+")).toInt();
+        int num = 0;
+        QModelIndex v = index(i, column);
+
+        if (contains.isEmpty() || v.data().toString().contains(contains)) {
+            num = v.data().toString().remove(QRegExp("\\D+")).toInt();
+        }
+
         if (num >= max) {
             max = num + 1;
         }

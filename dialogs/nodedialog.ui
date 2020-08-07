@@ -7,13 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>420</width>
-    <height>480</height>
+    <height>525</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>420</width>
-    <height>480</height>
+    <height>525</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>420</width>
+    <height>525</height>
    </size>
   </property>
   <property name="baseSize">
@@ -46,14 +52,121 @@
           <string>Location</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="lE_cupboard"/>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Shelf</string>
+            </property>
+           </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lE_compartment"/>
+          <item row="1" column="1" colspan="4">
+           <widget class="QComboBox" name="cB_storage">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="4">
+           <widget class="QComboBox" name="cB_corpus"/>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QComboBox" name="cB_floor">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>140</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Shelving</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Cupboard</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <widget class="QLabel" name="label_12">
+            <property name="styleSheet">
+             <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
+            </property>
+            <property name="text">
+             <string>=0, if empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Corpus</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Compartment</string>
+            </property>
+           </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="lE_shelving"/>
+           <widget class="QLineEdit" name="lE_compartment">
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="maxLength">
+             <number>2</number>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Floor</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" colspan="2">
+           <widget class="QLineEdit" name="lE_shelving">
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="maxLength">
+             <number>3</number>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label">
@@ -68,31 +181,29 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Floor</string>
+          <item row="7" column="1" colspan="2">
+           <widget class="QLineEdit" name="lE_cupboard">
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="maxLength">
+             <number>2</number>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="6" column="2">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Shelf</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLabel" name="label_12">
-            <property name="styleSheet">
-             <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
-            </property>
-            <property name="text">
-             <string>=0, if empty</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
+          <item row="4" column="3">
            <widget class="QLabel" name="label_11">
             <property name="styleSheet">
              <string notr="true">color:gray;font-size:12px;font-style:italic;</string>
@@ -102,47 +213,13 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1" colspan="2">
-           <widget class="QComboBox" name="cB_floor"/>
-          </item>
-          <item row="6" column="3">
-           <widget class="QLineEdit" name="lE_shelf"/>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Shelving</string>
+          <item row="8" column="1" colspan="4">
+           <widget class="QLineEdit" name="lE_shelf">
+            <property name="maxLength">
+             <number>50</number>
             </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Cupboard</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Compartment</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Corpus</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="3">
-           <widget class="QComboBox" name="cB_corpus"/>
-          </item>
-          <item row="1" column="1" colspan="2">
-           <widget class="QComboBox" name="cB_storage">
-            <property name="styleSheet">
-             <string notr="true"/>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -185,14 +262,30 @@
             </item>
             <item>
              <widget class="QPushButton" name="pB_openFundList">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="maximumSize">
                <size>
-                <width>70</width>
-                <height>16777215</height>
+                <width>24</width>
+                <height>24</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Choose fund</string>
+              </property>
               <property name="text">
-               <string>Choose</string>
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/open-16.png</normaloff>:/icons/open-16.png</iconset>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -213,6 +306,12 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="maxLength">
+             <number>50</number>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="2" column="0">
@@ -229,6 +328,12 @@
               <width>16777215</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="maxLength">
+             <number>100</number>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -278,7 +383,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QTextEdit" name="tE_note"/>
+           <widget class="QPlainTextEdit" name="tE_note"/>
           </item>
          </layout>
         </widget>

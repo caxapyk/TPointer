@@ -6,6 +6,7 @@
 #include <QSqlRelationalTableModel>
 #include <QString>
 #include <QVariant>
+#include <QRegExp>
 
 enum SortDirection{SortUp,SortDown};
 
@@ -26,7 +27,7 @@ public slots:
     virtual void setDefaultRecord(int, QSqlRecord&) {};
 
 protected:
-    int itemMaxNum(int column) const;
+    int itemMaxNum(int column, const QRegExp &contains = QRegExp()) const;
 
 private:
     QModelIndex baseMove(SortDirection direction, int row, int column);

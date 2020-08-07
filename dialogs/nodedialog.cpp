@@ -12,12 +12,14 @@ NodeDialog::NodeDialog(QWidget *parent) :
     ui->setupUi(this);
     restoreDialogState();
 
+    setupValidators();
     setupModels();
 
     connect(ui->cB_corpus, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &NodeDialog::fillStorage);
     connect(ui->cB_storage, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &NodeDialog::fillFloor);
     connect(ui->pB_openFundList, &QPushButton::pressed, this, &NodeDialog::selectFund);
 
+    connect(ui->buttonBox->button(QDialogButtonBox::Reset), &QPushButton::pressed, this, &NodeDialog::revert);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &NodeDialog::save);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &NodeDialog::cancel);
 }
@@ -33,6 +35,9 @@ NodeDialog::~NodeDialog()
     delete m_nILfundModel;
     delete m_featureModel;
     delete m_nILfeatureModel;
+    delete validatorCompartment;
+    delete validatorCupboard;
+    delete validatorShelving;
 }
 
 void NodeDialog::restoreDialogState()
@@ -41,6 +46,17 @@ void NodeDialog::restoreDialogState()
     restoreGeometry(settings->value("NodeDialog/geometry").toByteArray());
 }
 
+void NodeDialog::setupValidators()
+{
+    validatorCompartment = new QIntValidator(1, 99);
+    ui->lE_compartment->setValidator(validatorCompartment);
+
+    validatorShelving = new QIntValidator(1, 999);
+    ui->lE_shelving->setValidator(validatorShelving);
+
+    validatorCupboard = new QIntValidator(1, 99);
+    ui->lE_cupboard->setValidator(validatorCupboard);
+}
 
 void NodeDialog::setupModels()
 {
@@ -78,14 +94,27 @@ void NodeDialog::fillStorage(int index)
     QModelIndex corpusModelIndex = m_corpusModel->index(index - 1, 0);
     m_storageModel->setFilter("corpus=" + corpusModelIndex.data().toString());
     m_storageModel->select();
+
+    ui->cB_storage->setEnabled((m_storageModel->rowCount() > 1));
+
+    // clear floors if empty
+    if(m_storageModel->rowCount() == 0) {
+        fillFloor(-1);
+    }
 }
 
 void NodeDialog::fillFloor(int index)
 {
     QModelIndex storageModelIndex = m_storageModel->index(index, 5);
+    QStringList floors;
 
-    FloorsParser parser;
-    QStringList floors = parser.process(storageModelIndex.data().toString());
+    if(storageModelIndex.isValid()) {
+        FloorsParser parser;
+        floors = parser.process(storageModelIndex.data().toString());
+
+        // floor - enable floor if count > 1
+        ui->cB_floor->setEnabled((floors.length() > 1));
+    }
 
     m_floorModel->setStringList(floors);
 }
@@ -104,6 +133,8 @@ void NodeDialog::selectFund()
                 if(m_fundModel->index(i, 0).data() == dialog.selectedPrimaryKey()) {
                     ui->cB_fund->setCurrentIndex(i + 1);
                     break;
+                } else {
+                    ui->cB_fund->setCurrentIndex(0);
                 }
          }
     }

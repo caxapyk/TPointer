@@ -4,8 +4,14 @@
 <context>
     <name>AddNodeDialog</name>
     <message>
-        <location filename="../dialogs/addnodedialog.cpp" line="9"/>
+        <location filename="../dialogs/addnodedialog.cpp" line="10"/>
+        <location filename="../dialogs/addnodedialog.cpp" line="52"/>
         <source>Add record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/addnodedialog.cpp" line="53"/>
+        <source>Are you shure that you want to revert changes?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -209,37 +215,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="88"/>
+        <location filename="../views/dataview.cpp" line="74"/>
         <source>Filter by notes...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="163"/>
+        <location filename="../views/dataview.cpp" line="151"/>
         <source>Delete record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="164"/>
+        <location filename="../views/dataview.cpp" line="152"/>
         <source>Are you shure that you want to delete %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="171"/>
+        <location filename="../views/dataview.cpp" line="159"/>
         <source>Fund list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="171"/>
+        <location filename="../views/dataview.cpp" line="159"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="212"/>
+        <location filename="../views/dataview.cpp" line="204"/>
         <source>Sort by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="221"/>
+        <location filename="../views/dataview.cpp" line="213"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
@@ -247,8 +253,14 @@
 <context>
     <name>EditNodeDialog</name>
     <message>
-        <location filename="../dialogs/editnodedialog.cpp" line="9"/>
+        <location filename="../dialogs/editnodedialog.cpp" line="10"/>
+        <location filename="../dialogs/editnodedialog.cpp" line="56"/>
         <source>Edit record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/editnodedialog.cpp" line="57"/>
+        <source>Are you shure that you want to revert changes?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -269,7 +281,7 @@
     </message>
     <message>
         <location filename="../utils/floorsparser.cpp" line="13"/>
-        <source>\1 fl.</source>
+        <source>\1 fl	ier</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -311,11 +323,6 @@
 <context>
     <name>FundModel</name>
     <message>
-        <location filename="../models/fundmodel.cpp" line="15"/>
-        <source>New fund</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../models/fundmodel.cpp" line="10"/>
         <source>Number</source>
         <translation type="unfinished"></translation>
@@ -323,6 +330,11 @@
     <message>
         <location filename="../models/fundmodel.cpp" line="11"/>
         <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../models/fundmodel.cpp" line="15"/>
+        <source>New fund %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -385,8 +397,14 @@
 <context>
     <name>InsertNodeDialog</name>
     <message>
-        <location filename="../dialogs/insertnodedialog.cpp" line="5"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="8"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="15"/>
         <source>Insert record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/insertnodedialog.cpp" line="16"/>
+        <source>Are you shure that you want to revert changes?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -624,98 +642,98 @@
 <context>
     <name>NodeDialog</name>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="26"/>
+        <location filename="../dialogs/nodedialog.ui" line="32"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="40"/>
+        <location filename="../dialogs/nodedialog.ui" line="46"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="46"/>
+        <location filename="../dialogs/nodedialog.ui" line="52"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="91"/>
-        <location filename="../dialogs/nodedialog.ui" line="101"/>
+        <location filename="../dialogs/nodedialog.ui" line="108"/>
+        <location filename="../dialogs/nodedialog.ui" line="212"/>
         <source>=0, if empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="81"/>
+        <location filename="../dialogs/nodedialog.ui" line="58"/>
         <source>Shelf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="121"/>
+        <location filename="../dialogs/nodedialog.ui" line="98"/>
         <source>Cupboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="114"/>
+        <location filename="../dialogs/nodedialog.ui" line="91"/>
         <source>Shelving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="128"/>
+        <location filename="../dialogs/nodedialog.ui" line="122"/>
         <source>Compartment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="67"/>
+        <location filename="../dialogs/nodedialog.ui" line="180"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="74"/>
+        <location filename="../dialogs/nodedialog.ui" line="148"/>
         <source>Floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="135"/>
+        <location filename="../dialogs/nodedialog.ui" line="115"/>
         <source>Corpus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="155"/>
+        <location filename="../dialogs/nodedialog.ui" line="232"/>
         <source>Content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="161"/>
+        <location filename="../dialogs/nodedialog.ui" line="238"/>
         <source>Fund</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="195"/>
-        <source>Choose</source>
+        <location filename="../dialogs/nodedialog.ui" line="278"/>
+        <source>Choose fund</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="204"/>
+        <location filename="../dialogs/nodedialog.ui" line="297"/>
         <source>Inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="221"/>
+        <location filename="../dialogs/nodedialog.ui" line="320"/>
         <source>Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="238"/>
+        <location filename="../dialogs/nodedialog.ui" line="343"/>
         <source>Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="259"/>
+        <location filename="../dialogs/nodedialog.ui" line="364"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="265"/>
+        <location filename="../dialogs/nodedialog.ui" line="370"/>
         <source>Note</source>
         <translation type="unfinished"></translation>
     </message>

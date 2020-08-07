@@ -223,6 +223,10 @@
        <property name="text">
         <string>Search</string>
        </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/icons/search-16.png</normaloff>:/icons/search-16.png</iconset>
+       </property>
       </widget>
      </item>
     </layout>

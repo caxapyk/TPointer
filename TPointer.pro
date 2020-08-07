@@ -32,7 +32,6 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     models/corpusmodel.cpp \
-    models/datafiltermodel.cpp \
     models/datamodel.cpp \
     models/dataproxymodel.cpp \
     models/featuremodel.cpp \
@@ -71,7 +70,6 @@ HEADERS += \
     dialogs/searchdialog.h \
     mainwindow.h \
     models/corpusmodel.h \
-    models/datafiltermodel.h \
     models/datamodel.h \
     models/dataproxymodel.h \
     models/featuremodel.h \

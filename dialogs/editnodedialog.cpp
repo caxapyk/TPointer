@@ -2,7 +2,8 @@
 #include "ui_nodedialog.h"
 #include "nodedelegate.h"
 
-#include <QtDebug>
+#include <QDebug>
+#include <QMessageBox>
 
 EditNodeDialog::EditNodeDialog(DataModel *model, int index) : NodeDialog()
 {
@@ -48,7 +49,25 @@ EditNodeDialog::~EditNodeDialog()
     delete mapper;
 }
 
+void EditNodeDialog::revert()
+{
+    int res = QMessageBox()
+            .critical(this,
+                      tr("Edit record"),
+                      tr("Are you shure that you want to revert changes?"),
+                      QMessageBox::No | QMessageBox::Yes);
+
+    if (res == QMessageBox::Yes) {
+        mapper->revert();
+    }
+}
+
 void EditNodeDialog::save()
 {
+    // set empty index before mapper sumbitted if current index = 0
+    if(ui->cB_feature->currentIndex() == 0) {
+        ui->cB_feature->setCurrentIndex(-1);
+    }
+
     mapper->submit();
 }

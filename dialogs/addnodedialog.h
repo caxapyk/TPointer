@@ -13,6 +13,10 @@ class AddNodeDialog : public InsertNodeDialog
 public:
     AddNodeDialog();
     void applyFilter(const FilterStruct &fs);
+
+protected:
+    void revert() override;
+    void save() override;
 };
 
 #endif // ADDNODEDIALOG_H

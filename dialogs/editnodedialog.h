@@ -17,6 +17,7 @@ public:
     DataModel *dataModel() { return m_dataModel; };
 
 protected:
+    void revert() override;
     void save() override;
 
 private:

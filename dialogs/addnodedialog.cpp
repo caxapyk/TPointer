@@ -3,6 +3,7 @@
 #include "ui_nodedialog.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 AddNodeDialog::AddNodeDialog() : InsertNodeDialog()
 {
@@ -32,10 +33,6 @@ void AddNodeDialog::applyFilter(const FilterStruct &fs)
             }
         }
     }
-    // floor - disable floor if count = 1
-    if (m_floorModel->rowCount() == 1) {
-        ui->cB_floor->setDisabled(true);
-    }
     // compartment
     if(fs.compartment.isValid()) {
         ui->lE_compartment->setText(fs.compartment.toString());
@@ -46,15 +43,28 @@ void AddNodeDialog::applyFilter(const FilterStruct &fs)
         ui->lE_shelving->setText(fs.shelving.toString());
         ui->lE_shelving->setDisabled(true);
     }
-    // fund
-    if(fs.fund.isValid()) {
-        for (int i = 0; i < m_nILfundModel->rowCount(); ++i) {
-            if(m_fundModel->index(i, 0).data() == fs.fund) {
-                ui->cB_fund->setCurrentIndex(i + 1);
-                ui->cB_fund->setDisabled(true);
-                ui->pB_openFundList->setDisabled(true);
-                break;
-            }
-        }
+}
+
+void AddNodeDialog::revert()
+{
+    int res = QMessageBox()
+            .critical(this,
+                      tr("Add record"),
+                      tr("Are you shure that you want to revert changes?"),
+                      QMessageBox::No | QMessageBox::Yes);
+
+    if (res == QMessageBox::Yes) {
+        ui->lE_cupboard->clear();
+        ui->lE_shelf->clear();
+        ui->cB_fund->setCurrentText(0);
+        ui->lE_inventory->clear();
+        ui->lE_records->clear();
+        ui->cB_feature->setCurrentIndex(0);
     }
 }
+
+void AddNodeDialog::save()
+{
+    // save
+}
+
