@@ -17,17 +17,17 @@ EditNodeDialog::EditNodeDialog(DataModel *model, int index) : NodeDialog()
     mapper->setModel(dataModel());
     mapper->setItemDelegate(new NodeDelegate());
 
-    mapper->addMapping(ui->cB_corpus, 1);
-    mapper->addMapping(ui->cB_storage, 2);
-    mapper->addMapping(ui->lE_compartment, 4);
-    mapper->addMapping(ui->lE_shelving, 5);
-    mapper->addMapping(ui->lE_cupboard, 6);
-    mapper->addMapping(ui->lE_shelf, 7);
-    mapper->addMapping(ui->cB_fund, 8);
-    mapper->addMapping(ui->lE_inventory, 9);
-    mapper->addMapping(ui->lE_records, 10);
-    mapper->addMapping(ui->tE_note, 11);
-    mapper->addMapping(ui->cB_feature, 12);
+    mapper->addMapping(ui->cB_corpus, DataModel::Corpus);
+    mapper->addMapping(ui->cB_storage, DataModel::Storage);
+    mapper->addMapping(ui->lE_compartment, DataModel::Compartment);
+    mapper->addMapping(ui->lE_shelving, DataModel::Shelving);
+    mapper->addMapping(ui->lE_cupboard, DataModel::Cupboard);
+    mapper->addMapping(ui->lE_shelf, DataModel::Shelf);
+    mapper->addMapping(ui->cB_fund, DataModel::Fund);
+    mapper->addMapping(ui->lE_inventory, DataModel::Inventory);
+    mapper->addMapping(ui->lE_records, DataModel::Records);
+    mapper->addMapping(ui->tE_note, DataModel::Note);
+    mapper->addMapping(ui->cB_feature, DataModel::Features);
 
     mapper->setCurrentIndex(index);
 

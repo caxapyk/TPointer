@@ -20,7 +20,7 @@ NodeDialog::NodeDialog(QWidget *parent) :
     connect(ui->pB_openFundList, &QPushButton::pressed, this, &NodeDialog::selectFund);
 
     connect(ui->buttonBox->button(QDialogButtonBox::Reset), &QPushButton::pressed, this, &NodeDialog::revert);
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &NodeDialog::save);
+    connect(ui->buttonBox->button(QDialogButtonBox::Save), &QPushButton::pressed, this, &NodeDialog::save);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &NodeDialog::cancel);
 }
 

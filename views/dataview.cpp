@@ -89,7 +89,7 @@ void DataView::loadData(const FilterStruct &filter)
 
     ui->tV_dataTable->setModel(m_proxyModel);
     ui->tV_dataTable->horizontalHeader()->setHidden(false);
-    ui->tV_dataTable->hideColumn(0);
+    ui->tV_dataTable->hideColumn(0); // hide id
 
     ui->tV_dataTable->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -111,7 +111,7 @@ void DataView::loadData(const FilterStruct &filter)
 
 void DataView::addItem()
 {
-    AddNodeDialog dialog;
+    AddNodeDialog dialog(m_model);
     dialog.applyFilter(m_model->filterStruct());
 
     int res = dialog.exec();
@@ -177,6 +177,7 @@ void DataView::showMetaData(const QItemSelection &selected, const QItemSelection
 
 void DataView::filterMainTable(const QString &text)
 {
+    m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     m_proxyModel->setFilterKeyColumn(DataModel::Note);
     m_proxyModel->setFilterFixedString(text);
 }

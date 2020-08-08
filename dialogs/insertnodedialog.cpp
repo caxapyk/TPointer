@@ -1,5 +1,6 @@
 #include "insertnodedialog.h"
 #include "ui_nodedialog.h"
+#include "models/datamodel.h"
 
 #include <QMessageBox>
 
@@ -31,5 +32,5 @@ void InsertNodeDialog::revert()
 
 void InsertNodeDialog::save()
 {
-    // save
+
 }

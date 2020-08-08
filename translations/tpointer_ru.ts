@@ -116,7 +116,7 @@
     <name>DataModel</name>
     <message>
         <source>Floor</source>
-        <translation>Этаж №</translation>
+        <translation>Эт. №</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -124,11 +124,11 @@
     </message>
     <message>
         <source>Compartment</source>
-        <translation>Помещение №</translation>
+        <translation>Пом. №</translation>
     </message>
     <message>
         <source>Shelving</source>
-        <translation>Стеллаж №</translation>
+        <translation>Стелл. №</translation>
     </message>
     <message>
         <source>Cupboard</source>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Note</source>
-        <translation>Примечание</translation>
+        <translation>Прим-ние</translation>
     </message>
     <message>
         <source>Features</source>
@@ -169,6 +169,10 @@
     <message>
         <source>Corpus</source>
         <translation>Корпус</translation>
+    </message>
+    <message>
+        <source>Num</source>
+        <translation>№ п/п</translation>
     </message>
 </context>
 <context>

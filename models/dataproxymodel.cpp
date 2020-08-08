@@ -2,11 +2,26 @@
 #include "dataproxymodel.h"
 #include "utils/fundsorter.h"
 
+#include <QColor>
 #include <QDebug>
 
 DataProxyModel::DataProxyModel() : QSortFilterProxyModel()
 {
 
+}
+
+QVariant DataProxyModel::data(const QModelIndex &index, int role) const
+{
+    return QSortFilterProxyModel::data(index, role);
+}
+
+QVariant DataProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+   if (role == Qt::DisplayRole && orientation == Qt::Vertical) {
+       return QVariant(section + 1);
+   }
+
+   return QSortFilterProxyModel::headerData(section, orientation, role);
 }
 
 bool DataProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const

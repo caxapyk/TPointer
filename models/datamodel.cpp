@@ -54,17 +54,20 @@ bool DataModel::select()
 
     if (m_query.exec()) {
         beginResetModel();
+
         while (m_query.next()) {
             Node *node = new Node();
+
             for (int i = 0; i < DataModel::ColumnsCount; ++i) {
-                node->append(m_query.value(i));
+                    node->append(m_query.value(i));
             }
 
             nodeList.append(node);
         }
-        endResetModel();
 
+        endResetModel();
         return true;
+
     } else {
         qDebug() << m_query.lastError().text();
     }
@@ -94,7 +97,9 @@ int DataModel::count() const
 QVariant DataModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
-        QVariant value = nodeList.at(index.row())->at(index.column());
+        Node *node = nodeList.at(index.row());
+
+        QVariant value = (node->at(index.column()).isValid()) ? node->at(index.column()) : QVariant();
 
         if (index.column() == DataModel::Floor && value.toInt() == 0) {
             return QVariant(tr("Basement"));
@@ -104,6 +109,116 @@ QVariant DataModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant();
+}
+
+bool DataModel::primaryInsert(QSqlRecord &record)
+{
+    QSqlQuery query;
+
+    QList<QString> f;
+    QList<QString> v;
+
+    for (int i = 0; i < record.count(); ++i) {
+        f.append(record.fieldName(i));
+        v.append("?");
+    }
+
+    QString q = QString("INSERT INTO tpointer (%1) VALUES (%2)")
+            .arg(QStringList(f).join(","))
+            .arg(QStringList(v).join(","));
+
+    query.prepare(q);
+
+    for (int i = 0; i < v.length(); ++i) {
+        QVariant value = (!record.value(i).toString().isEmpty()) ?record.value(i) : QVariant();
+        query.addBindValue(value);
+    }
+
+    if (query.exec()) {
+        appendLastInsertRecord(query.lastInsertId());
+    }
+
+    qDebug() << query.lastError().text();
+    return false;
+}
+
+bool DataModel::appendLastInsertRecord(QVariant id)
+{
+    QSqlQuery s_query;
+
+    s_query.prepare(QString("SELECT tpointer.`id`, corpus.`name` AS corpus_name, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, tpointer.`note`, feature.`name` AS feature_name FROM tpointer "
+                            "LEFT JOIN storage ON tpointer.`storage`=storage.`id` "
+                            "LEFT JOIN corpus ON storage.`corpus`=corpus.`id` "
+                            "LEFT JOIN fund ON tpointer.`fund`=fund.`id` "
+                            "LEFT JOIN feature ON tpointer.`feature`=feature.`id` "
+                            "WHERE tpointer.`id`=%1 "
+                            "ORDER BY storage.`name`, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`")
+                    .arg(id.toString()));
+
+    if (s_query.exec()) {
+        if(insertRows(rowCount(), 1)) {
+            s_query.first();
+
+            for (int i = 0; i < DataModel::ColumnsCount; ++i) {
+                qDebug() << s_query.value(i);
+                setData(index(rowCount() - 1, i), s_query.value(i));
+            }
+
+            return true;
+        }
+    }
+
+    qDebug() << s_query.lastError().text();
+    return false;
+}
+
+QSqlRecord DataModel::record()
+{
+    QSqlQuery query("SELECT * FROM tpointer WHERE id=-1;");
+
+    if (query.exec()) {
+        return query.record();
+    }
+
+    return QSqlRecord();
+}
+
+/*bool DataModel::setNode(Node &node)
+{
+    int row = rowCount();
+
+    // sql insert
+
+    if(insertRows(row, 1)) {
+        for(int i = 0; i < node.length(); ++i) {
+            if(!setData(index(row, i), node.at(i)))
+                return false;
+        }
+        return true;
+    }
+
+    return false;
+}*/
+
+bool DataModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    if (row < 0 || count <= 0 || row > rowCount() || parent.isValid())
+            return false;
+
+    beginInsertRows(parent, row, row + count - 1);
+
+    // new empty node
+    Node *node = new Node();
+
+    for(int i = 0; i < DataModel::ColumnsCount; ++i) {
+        node->append(QVariant());
+    }
+
+    nodeList.append(node);
+
+    endInsertRows();
+
+    return true;
 }
 
 bool DataModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -158,6 +273,7 @@ void DataModel::setFilter(const FilterStruct &fs)
     m_filter.clear();
     // storage
     if (!fs.corpus.isNull()) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
         m_filter += QString(" storage.`corpus`=%1 ").arg(fs.corpus.toInt());
     }
     // storage

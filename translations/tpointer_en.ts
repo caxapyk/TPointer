@@ -137,72 +137,77 @@
 <context>
     <name>DataModel</name>
     <message>
-        <location filename="../models/datamodel.cpp" line="13"/>
+        <location filename="../models/datamodel.cpp" line="14"/>
         <source>Floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="12"/>
+        <location filename="../models/datamodel.cpp" line="13"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="10"/>
-        <source>Id</source>
+        <source>Num</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../models/datamodel.cpp" line="11"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../models/datamodel.cpp" line="12"/>
         <source>Corpus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="14"/>
+        <location filename="../models/datamodel.cpp" line="15"/>
         <source>Compartment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="15"/>
+        <location filename="../models/datamodel.cpp" line="16"/>
         <source>Shelving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="16"/>
+        <location filename="../models/datamodel.cpp" line="17"/>
         <source>Cupboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="17"/>
+        <location filename="../models/datamodel.cpp" line="18"/>
         <source>Shelf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="18"/>
+        <location filename="../models/datamodel.cpp" line="19"/>
         <source>Fund</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="19"/>
+        <location filename="../models/datamodel.cpp" line="20"/>
         <source>Inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="20"/>
+        <location filename="../models/datamodel.cpp" line="21"/>
         <source>Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="21"/>
+        <location filename="../models/datamodel.cpp" line="22"/>
         <source>Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="22"/>
+        <location filename="../models/datamodel.cpp" line="23"/>
         <source>Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="100"/>
+        <location filename="../models/datamodel.cpp" line="108"/>
         <source>Basement</source>
         <translation type="unfinished"></translation>
     </message>
