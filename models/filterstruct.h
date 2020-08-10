@@ -9,6 +9,7 @@ struct FilterStruct {
     QVariant compartment;
     QVariant shelving;
     QVariant fund;
+    QVariant fund_name;
     bool fund_strict;
     QVariant feature;
 };

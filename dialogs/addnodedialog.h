@@ -2,9 +2,9 @@
 #define ADDNODEDIALOG_H
 
 #include "dialogs/insertnodedialog.h"
-#include "models/datamodel.h"
 #include "models/filterstruct.h"
 
+#include <QDataWidgetMapper>
 #include <QObject>
 
 class AddNodeDialog : public InsertNodeDialog
@@ -17,10 +17,6 @@ public:
 
 protected:
     void revert() override;
-    void save() override;
-
-private:
-    DataModel *m_dataModel;
 };
 
 #endif // ADDNODEDIALOG_H

@@ -149,14 +149,13 @@ void DataView::removeItems()
     int res = QMessageBox()
             .critical(this,
                       tr("Delete record"),
-                      tr("Are you shure that you want to delete %1 items?").arg(1/*view->selectionModel()->selectedRows().length()*/),
+                      tr("Are you shure that you want to delete %1 items?").arg(ui->tV_dataTable->selectionModel()->selectedRows().length()),
                       QMessageBox::No | QMessageBox::Yes);
 
     if (res == QMessageBox::Yes) {
-        if(true) {
-            application->mainWindow()->updateTotal();
-        } else {
-            QMessageBox::warning(this, tr("Fund list"), tr("Could not remove item"), QMessageBox::Ok);
+        QModelIndexList indexes = ui->tV_dataTable->selectionModel()->selectedRows();
+        if (!m_proxyModel->removeRows(indexes.at(0).row(), indexes.length())) {
+            QMessageBox::warning(this, tr("Record list"), tr("Could not remove item"), QMessageBox::Ok);
         }
     }
 }

@@ -47,8 +47,8 @@ SearchDialog::~SearchDialog()
 void SearchDialog::clear()
 {
     ui->cB_storage->setCurrentIndex(0);
-    ui->lE_compartment->setText(QString());
-    ui->lE_shelving->setText(QString());
+    ui->sB_compartment->setText(QString());
+    ui->sB_shelving->setText(QString());
     ui->lE_fund->setText(QString());
     ui->cB_strict->setChecked(false);
     ui->cB_feature->setCurrentIndex(0);
@@ -61,10 +61,10 @@ void SearchDialog::search()
                     storage_model->index(
                         ui->cB_storage->currentIndex()-1, 0)) : QVariant();
 
-    fs.compartment = (ui->lE_compartment->text().length() > 0) ? QVariant(ui->lE_compartment->text()) : QVariant();
-    fs.shelving = (ui->lE_shelving->text().length() > 0) ? QVariant(ui->lE_shelving->text()) : QVariant();
+    fs.compartment = (ui->sB_compartment->text().length() > 0) ? QVariant(ui->sB_compartment->text()) : QVariant();
+    fs.shelving = (ui->sB_shelving->text().length() > 0) ? QVariant(ui->sB_shelving->text()) : QVariant();
 
-    fs.fund = (ui->lE_fund->text().length() > 0) ? QVariant(ui->lE_fund->text()): QVariant();
+    fs.fund_name = (ui->lE_fund->text().length() > 0) ? QVariant(ui->lE_fund->text()): QVariant();
     fs.fund_strict = ui->cB_strict->isChecked();
 
     fs.feature = (ui->cB_feature->currentIndex() > 0) ?

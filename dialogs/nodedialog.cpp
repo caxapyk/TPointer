@@ -12,11 +12,14 @@ NodeDialog::NodeDialog(QWidget *parent) :
     ui->setupUi(this);
     restoreDialogState();
 
-    setupValidators();
     setupModels();
+
+    validatorCupboard = new QIntValidator(1, 99);
+    ui->lE_cupboard->setValidator(validatorCupboard);
 
     connect(ui->cB_corpus, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &NodeDialog::fillStorage);
     connect(ui->cB_storage, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &NodeDialog::fillFloor);
+    connect(ui->cB_storage, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &NodeDialog::fillCompartment);
     connect(ui->pB_openFundList, &QPushButton::pressed, this, &NodeDialog::selectFund);
 
     connect(ui->buttonBox->button(QDialogButtonBox::Reset), &QPushButton::pressed, this, &NodeDialog::revert);
@@ -35,27 +38,13 @@ NodeDialog::~NodeDialog()
     delete m_nILfundModel;
     delete m_featureModel;
     delete m_nILfeatureModel;
-    delete validatorCompartment;
     delete validatorCupboard;
-    delete validatorShelving;
 }
 
 void NodeDialog::restoreDialogState()
 {
     QSettings* settings = application->applicationSettings();
     restoreGeometry(settings->value("NodeDialog/geometry").toByteArray());
-}
-
-void NodeDialog::setupValidators()
-{
-    validatorCompartment = new QIntValidator(1, 99);
-    ui->lE_compartment->setValidator(validatorCompartment);
-
-    validatorShelving = new QIntValidator(1, 999);
-    ui->lE_shelving->setValidator(validatorShelving);
-
-    validatorCupboard = new QIntValidator(1, 99);
-    ui->lE_cupboard->setValidator(validatorCupboard);
 }
 
 void NodeDialog::setupModels()
@@ -117,6 +106,19 @@ void NodeDialog::fillFloor(int index)
     }
 
     m_floorModel->setStringList(floors);
+}
+
+void NodeDialog::fillCompartment(int index)
+{
+    QModelIndex storageModelIndex = m_storageModel->index(index, 4);
+
+    if(storageModelIndex.isValid()) {
+        // enable field once
+        ui->sB_compartment->setEnabled(true);
+
+        // setup max value
+        ui->sB_compartment->setMaximum(storageModelIndex.data().toInt());
+    }
 }
 
 void NodeDialog::selectFund()

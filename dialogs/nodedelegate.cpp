@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QSpinBox>
 #include <QPlainTextEdit>
 
 #include <QtCore/qmetaobject.h>
@@ -24,6 +25,10 @@ QWidget *NodeDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
     case DataModel::Features:
         editor = new QComboBox(parent);
         break;
+    case DataModel::Compartment:
+    case DataModel::Shelving:
+        editor = new QSpinBox(parent);
+        break;
     case DataModel::Note:
         editor = new QPlainTextEdit(parent);
         break;
@@ -42,7 +47,9 @@ void NodeDelegate::setEditorData(QWidget *editor, const QModelIndex &index) cons
 
     if (qobject_cast<QComboBox *>(editor)
             || qobject_cast<QLineEdit*>(editor)
+            || qobject_cast<QSpinBox*>(editor)
             || qobject_cast<QPlainTextEdit*>(editor)) {
+
         // Taken from QItemDelegate::setEditorData() as we need
         // to present the DisplayRole and not the EditRole which
         // is the id reference to the related model

@@ -83,7 +83,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="lE_shelving"/>
+       <widget class="QLineEdit" name="sB_shelving"/>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_2">
@@ -110,7 +110,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lE_compartment"/>
+       <widget class="QLineEdit" name="sB_compartment"/>
       </item>
      </layout>
     </widget>

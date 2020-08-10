@@ -24,7 +24,6 @@ public:
     explicit DataView(QWidget *parent = nullptr);
     ~DataView();
 
-
     void restoreViewState() override;
     void saveViewState() override;
 

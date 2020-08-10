@@ -113,6 +113,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::insertNode()
 {
     InsertNodeDialog dialog;
+    DataModel model;
+
+    dialog.setDataModel(&model);
+
     int res = dialog.exec();
 
     if (res == QDialog::Accepted) {

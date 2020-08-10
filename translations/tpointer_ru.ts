@@ -172,7 +172,7 @@
     </message>
     <message>
         <source>Num</source>
-        <translation>№ п/п</translation>
+        <translation type="vanished">№ п/п</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>Fund list</source>
-        <translation>Список фондов</translation>
+        <translation type="vanished">Список фондов</translation>
     </message>
     <message>
         <source>Could not remove item</source>
@@ -209,6 +209,10 @@
         <source>Move</source>
         <translation>Перемещение</translation>
     </message>
+    <message>
+        <source>Record list</source>
+        <translation>Записи</translation>
+    </message>
 </context>
 <context>
     <name>EditNodeDialog</name>
@@ -219,6 +223,14 @@
     <message>
         <source>Are you shure that you want to revert changes?</source>
         <translation>Вы уверены, что хотите отменить изменения?</translation>
+    </message>
+    <message>
+        <source>Add record</source>
+        <translation>Добавить запись</translation>
+    </message>
+    <message>
+        <source>Fill all required fields!</source>
+        <translation>Заполните все обязательные поля!</translation>
     </message>
 </context>
 <context>
@@ -348,6 +360,14 @@
     <message>
         <source>Are you shure that you want to revert changes?</source>
         <translation>Вы уверены, что хотите отменить изменения?</translation>
+    </message>
+    <message>
+        <source>Add record</source>
+        <translation>Добавить запись</translation>
+    </message>
+    <message>
+        <source>Fill all required fields!</source>
+        <translation>Заполните все обязательные поля!</translation>
     </message>
 </context>
 <context>
@@ -577,11 +597,11 @@
     </message>
     <message>
         <source>Storage</source>
-        <translation>Архивохранил. №</translation>
+        <translation type="vanished">Архивохранил. №</translation>
     </message>
     <message>
         <source>Floor</source>
-        <translation>Этаж №</translation>
+        <translation type="vanished">Этаж №</translation>
     </message>
     <message>
         <source>Content</source>
@@ -589,7 +609,7 @@
     </message>
     <message>
         <source>Fund</source>
-        <translation>Фонд №</translation>
+        <translation type="vanished">Фонд №</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -617,11 +637,31 @@
     </message>
     <message>
         <source>Corpus</source>
-        <translation>Корпус</translation>
+        <translation type="vanished">Корпус</translation>
     </message>
     <message>
         <source>Choose fund</source>
         <translation>Выбор фонда</translation>
+    </message>
+    <message>
+        <source>Corpus&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
+        <translation>Корпус №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+    </message>
+    <message>
+        <source>Floor&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
+        <translation>Этаж №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+    </message>
+    <message>
+        <source>Storage&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
+        <translation>Архивохранил. №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+    </message>
+    <message>
+        <source>Fund&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
+        <translation>Фонд №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;span style=&quot;color:gray;font-size:12px;font-style:italic;&quot;&gt;Required fields are marked (&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;)&lt;/span&gt;</source>
+        <translation>&lt;span style=&quot;color:gray;font-size:12px;font-style:italic;&quot;&gt;Обязательные поля помечены звездочкой (&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;)&lt;/span&gt;</translation>
     </message>
 </context>
 <context>

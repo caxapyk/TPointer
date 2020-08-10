@@ -50,7 +50,7 @@ bool DataModel::select()
                   "LEFT JOIN feature ON tpointer.`feature`=feature.`id` "
                   "%1"
                   "ORDER BY storage.`name`, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`")
-              .arg(!filter().isNull() ? "WHERE " + filter() : ""));
+              .arg(!filter().isNull() ? "WHERE" + filter() : QString()));
 
     if (m_query.exec()) {
         beginResetModel();
@@ -66,7 +66,9 @@ bool DataModel::select()
         }
 
         endResetModel();
+
         return true;
+
 
     } else {
         qDebug() << m_query.lastError().text();
@@ -111,12 +113,12 @@ QVariant DataModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool DataModel::primaryInsert(QSqlRecord &record)
+QVariant DataModel::primaryInsert(QSqlRecord &record)
 {
     QSqlQuery query;
 
-    QList<QString> f;
-    QList<QString> v;
+    QList<QString> f; // fields
+    QList<QString> v; // values
 
     for (int i = 0; i < record.count(); ++i) {
         f.append(record.fieldName(i));
@@ -130,45 +132,44 @@ bool DataModel::primaryInsert(QSqlRecord &record)
     query.prepare(q);
 
     for (int i = 0; i < v.length(); ++i) {
-        QVariant value = (!record.value(i).toString().isEmpty()) ?record.value(i) : QVariant();
+        QVariant value = (!record.value(i).toString().isEmpty()) ? record.value(i) : QVariant();
         query.addBindValue(value);
     }
 
     if (query.exec()) {
-        appendLastInsertRecord(query.lastInsertId());
+        return query.lastInsertId();
     }
 
     qDebug() << query.lastError().text();
-    return false;
+    return QVariant();
 }
 
-bool DataModel::appendLastInsertRecord(QVariant id)
+bool DataModel::primaryUpdate(QSqlRecord &record)
 {
-    QSqlQuery s_query;
+    QSqlQuery query;
 
-    s_query.prepare(QString("SELECT tpointer.`id`, corpus.`name` AS corpus_name, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, tpointer.`note`, feature.`name` AS feature_name FROM tpointer "
-                            "LEFT JOIN storage ON tpointer.`storage`=storage.`id` "
-                            "LEFT JOIN corpus ON storage.`corpus`=corpus.`id` "
-                            "LEFT JOIN fund ON tpointer.`fund`=fund.`id` "
-                            "LEFT JOIN feature ON tpointer.`feature`=feature.`id` "
-                            "WHERE tpointer.`id`=%1 "
-                            "ORDER BY storage.`name`, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`")
-                    .arg(id.toString()));
+    QList<QString> fs;  // field=value
 
-    if (s_query.exec()) {
-        if(insertRows(rowCount(), 1)) {
-            s_query.first();
-
-            for (int i = 0; i < DataModel::ColumnsCount; ++i) {
-                qDebug() << s_query.value(i);
-                setData(index(rowCount() - 1, i), s_query.value(i));
-            }
-
-            return true;
-        }
+    for (int i = 0; i < record.count(); ++i) {
+        fs.append(QString("%1=?").arg(record.fieldName(i)));
     }
 
-    qDebug() << s_query.lastError().text();
+    QString q = QString("UPDATE tpointer SET %1 WHERE id=%2")
+            .arg(QStringList(fs).join(","))
+            .arg(record.value("id").toString());
+
+    query.prepare(q);
+
+    for (int i = 0; i < record.count(); ++i) {
+        QVariant value = (!record.value(i).toString().isEmpty()) ? record.value(i) : QVariant();
+        query.addBindValue(value);
+    }
+
+    if (query.exec()) {
+        return true;
+    }
+
+    qDebug() << query.lastError().text();
     return false;
 }
 
@@ -183,11 +184,9 @@ QSqlRecord DataModel::record()
     return QSqlRecord();
 }
 
-/*bool DataModel::setNode(Node &node)
+bool DataModel::setNode(Node &node)
 {
     int row = rowCount();
-
-    // sql insert
 
     if(insertRows(row, 1)) {
         for(int i = 0; i < node.length(); ++i) {
@@ -198,7 +197,34 @@ QSqlRecord DataModel::record()
     }
 
     return false;
-}*/
+}
+
+bool DataModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    QSqlQuery r_query;
+    QList<QString> ids;
+
+    // fill ids to list
+    for(int i = row; i < ( row + count ); ++i) {
+        ids.append(index(i, DataModel::Id).data().toString());
+    }
+
+    r_query.prepare(
+                QString("DELETE FROM tpointer WHERE id IN (%1)")
+                .arg(ids.join(",")));
+
+    if (r_query.exec()) {
+        beginRemoveRows(parent, row, row + count - 1);
+        nodeList.remove(row, count);
+        endRemoveRows();
+
+        return true;
+    }
+
+    qDebug() << r_query.lastError().text();
+
+    return false;
+}
 
 bool DataModel::insertRows(int row, int count, const QModelIndex &parent)
 {
@@ -298,6 +324,14 @@ void DataModel::setFilter(const FilterStruct &fs)
     } else if (!fs.fund.isNull() && !fs.fund_strict) {
         if (!m_filter.isNull()) m_filter += QString("AND");
         m_filter += QString(" fund LIKE '%%1%' ").arg(fs.fund.toString());
+    }
+    // fund_name
+    if (!fs.fund_name.isNull() && fs.fund_strict) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
+        m_filter += QString(" fund.`number`='%1' ").arg(fs.fund_name.toString());
+    } else if (!fs.fund_name.isNull() && !fs.fund_strict) {
+        if (!m_filter.isNull()) m_filter += QString("AND");
+        m_filter += QString(" fund.`number` LIKE '%%1%' ").arg(fs.fund_name.toString());
     }
     // feature
     if (!fs.feature.isNull()) {

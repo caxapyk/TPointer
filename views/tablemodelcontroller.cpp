@@ -38,46 +38,38 @@ bool TableModelController::createItem(QAbstractItemView *v)
 
 bool TableModelController::removeItem(QAbstractItemView *v)
 {
-    QModelIndexList indexes = v->selectionModel()->selectedRows();
+    QModelIndex index = v->currentIndex();
 
-    if(!indexes.isEmpty()) {
+       if(index.isValid()) {
         TableModel *model = qobject_cast<TableModel*> (v->model());
 
-        if(!model) { // check model is QSortFilterProxyModel
+        if(model) {
+            if (model->removeRows(index.row(), 1)) {
+                model->select();
+                v->setCurrentIndex(v->model()->index(index.row() - 1, index.column()));
+                return true;
+            } else {
+                model->select();
+                v->setCurrentIndex(QModelIndex());
+                return false;
+            }
+
+        } else {
+            // check model is QSortFilterProxyModel
             QSortFilterProxyModel *m_proxy = qobject_cast<QSortFilterProxyModel*> (v->model());
             if (m_proxy) {
                 model = qobject_cast<TableModel*> (m_proxy->sourceModel());
-                if(model) {
-                    for (int i=0; i<indexes.length();++i) {
-                        if (!model->removeRows(m_proxy->mapToSource(indexes.at(i)).row(), 1)) {
-                           return false;
-                        }
-                    }
-
-                    v->selectionModel()->clearSelection();
+                if (model && m_proxy->removeRows(index.row(), 1)) {
                     model->select();
-
+                    v->setCurrentIndex(v->model()->index(index.row() - 1, index.column()));
                     return true;
                 }
+            } else {
+                model->select();
+                v->setCurrentIndex(QModelIndex());
+                return false;
             }
-        } else {
-            for (int i=0; i<indexes.length();++i) {
-                if (!model->removeRows(indexes.at(i).row(), 1)) {
-                   return false;
-                }
-            }
-
-            v->selectionModel()->clearSelection();
-            model->select();
-
-            return true;
         }
-
-        model->select();
-        // select previous item
-        v->selectionModel()->select(model->index(
-                                        indexes.at(0).row()-1, indexes.at(0).column()),
-                                    QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
     }
 
     return false;
