@@ -37,42 +37,68 @@ void InsertNodeDialog::save()
         QSqlRecord record = dataModel()->record();
         record.remove(0);
 
-        record.setValue("floor",  ui->cB_floor->currentText().remove(QRegExp("\\D+")));
-        record.setValue("storage", m_storageModel->index(ui->cB_storage->currentIndex(), 0).data().toString());
+        record.setValue("floor",  QVariant(ui->cB_floor->currentText().remove(QRegExp("\\D+"))));
+        record.setGenerated("floor", true);
+
+        record.setValue("storage", m_storageModel->index(ui->cB_storage->currentIndex(), 0).data());
+        record.setGenerated("storage", true);
+
         record.setValue("compartment", QVariant(ui->sB_compartment->value()));
+        record.setGenerated("compartment", true);
+
         record.setValue("shelving",  QVariant(ui->sB_shelving->value()));
-        record.setValue("cupboard", ui->lE_cupboard->text());
-        record.setValue("shelf", ui->lE_shelf->text());
-        record.setValue("fund", m_fundModel->index(ui->cB_fund->currentIndex() -1, 0).data().toString());
-        record.setValue("inventory", ui->lE_inventory->text());
-        record.setValue("records", ui->lE_records->text());
-        record.setValue("note", ui->tE_note->toPlainText());
-        record.setValue("feature", m_featureModel->index(ui->cB_feature->currentIndex() -1, 0).data().toString());
+        record.setGenerated("shelving", true);
+
+        record.setValue("cupboard", QVariant(ui->lE_cupboard->text()));
+        record.setGenerated("cupboard", true);
+
+        record.setValue("shelf", QVariant(ui->lE_shelf->text()));
+        record.setGenerated("shelf", true);
+
+        record.setValue("fund", m_fundModel->index(ui->cB_fund->currentIndex() -1, 0).data());
+        record.setGenerated("fund", true);
+
+        record.setValue("inventory", QVariant(ui->lE_inventory->text()));
+        record.setGenerated("inventory", true);
+
+        record.setValue("records", QVariant(ui->lE_records->text()));
+        record.setGenerated("records", true);
+
+        record.setValue("note", QVariant(ui->tE_note->toPlainText()));
+        record.setGenerated("note", true);
+
+        record.setValue("feature", m_featureModel->index(ui->cB_feature->currentIndex() -1, 0).data());
+        record.setGenerated("feature", true);
 
         QVariant res = dataModel()->primaryInsert(record);
 
-        if(res.isValid()) {
+        if(res.isValid() && m_dataModel->insertRows(m_dataModel->rowCount(), 1)) {
             // set empty index before mapper sumbitted if current index = 0
             if(ui->cB_feature->currentIndex() == 0) {
                 ui->cB_feature->setCurrentIndex(-1);
             }
 
-            DataModel::Node node;
-            node.append(res);
-            node.append(QVariant(ui->cB_corpus->currentText()));
-            node.append(QVariant(ui->cB_storage->currentText()));
-            node.append(QVariant(ui->cB_floor->currentText().remove(QRegExp("\\D+"))));
-            node.append(QVariant(ui->sB_compartment->text()));
-            node.append(QVariant(ui->sB_shelving->text()));
-            node.append(QVariant(ui->lE_cupboard->text()));
-            node.append(QVariant(ui->lE_shelf->text()));
-            node.append(QVariant(ui->cB_fund->currentText()));
-            node.append(QVariant(ui->lE_inventory->text()));
-            node.append(QVariant(ui->lE_records->text()));
-            node.append(QVariant(ui->tE_note->toPlainText()));
-            node.append(QVariant(ui->cB_feature->currentText()));
+            int row = m_dataModel->rowCount() - 1;
 
-            dataModel()->setNode(node);
+            m_dataModel->setData(m_dataModel->index(row, 0), res);
+            m_dataModel->setData(m_dataModel->index(row, 1), QVariant(ui->cB_corpus->currentText()));
+            m_dataModel->setData(m_dataModel->index(row, 2), QVariant(ui->cB_storage->currentText()));
+            m_dataModel->setData(m_dataModel->index(row, 3), QVariant(ui->cB_floor->currentText().remove(QRegExp("\\D+"))));
+            m_dataModel->setData(m_dataModel->index(row, 4), QVariant(ui->sB_compartment->text()));
+            m_dataModel->setData(m_dataModel->index(row, 5), QVariant(ui->sB_shelving->text()));
+            m_dataModel->setData(m_dataModel->index(row, 6), QVariant(ui->lE_cupboard->text()));
+            m_dataModel->setData(m_dataModel->index(row, 7), QVariant(ui->lE_shelf->text()));
+            m_dataModel->setData(m_dataModel->index(row, 8), QVariant(ui->cB_fund->currentText()));
+            m_dataModel->setData(m_dataModel->index(row, 9), QVariant(ui->lE_inventory->text()));
+            m_dataModel->setData(m_dataModel->index(row, 10), QVariant(ui->lE_records->text()));
+            m_dataModel->setData(m_dataModel->index(row, 11), QVariant(ui->tE_note->toPlainText()));
+            m_dataModel->setData(m_dataModel->index(row, 12), QVariant(ui->cB_feature->currentText()));
+        } else {
+            QMessageBox()
+                    .critical(this,
+                              tr("Add record"),
+                              tr("Can not add record!"),
+                              QMessageBox::Ok);
         }
 
     } else {

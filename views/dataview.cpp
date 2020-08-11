@@ -6,9 +6,13 @@
 #include "dialogs/editnodedialog.h"
 #include "dialogs/movenodedialog.h"
 #include "widgets/customcontextmenu.h"
+#include "utils/tableprinter.h"
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QPainter>
+#include <QPrinter>
+#include <QPrintDialog>
 #include <QSettings>
 
 DataView::DataView(QWidget *parent) :
@@ -107,6 +111,7 @@ void DataView::loadData(const FilterStruct &filter)
     m_itemFilter->clear(); // clear every time model has changed
 
     application->mainWindow()->setDisplayRows(m_model->rowCount());
+    application->mainWindow()->setPrintEnaled(true);
 }
 
 void DataView::addItem()
@@ -136,11 +141,15 @@ void DataView::editItem()
 void DataView::moveItems()
 {
     MoveNodeDialog dialog;
+    QModelIndexList indexes = ui->tV_dataTable->selectionModel()->selectedRows();
+
+    dialog.setDataModel(m_model);
+    dialog.setIndexes(indexes);
 
     int res = dialog.exec();
 
     if (res == QDialog::Accepted) {
-        // do something
+        m_model->select();
     }
 }
 
@@ -198,6 +207,7 @@ void DataView::showContextMenu(const QPoint&)
 
     connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
         m_model->select();
+        ui->pTE_Desc->clear();
     });
 
     /* default sort action */
@@ -224,3 +234,27 @@ void DataView::showContextMenu(const QPoint&)
     delete moveAction;
 }
 
+void DataView::print()
+{
+    QPrinter printer;
+    QPrintDialog printDialog(&printer);
+
+    if (printDialog.exec() == QDialog::Accepted) {
+        // printer setup
+        QPainter painter;
+        painter.begin(&printer);
+
+        TablePrinter tablePrinter(&painter, &printer);
+        tablePrinter.setPageMargin(30, 30, 30, 30);
+        tablePrinter.setCellMargin(5, 5, 5, 5);
+
+        QVector<int> columnStretch = QVector<int>() << 0 << 0 << 0 << 0 << 0 << 0 << 1 << 1 << 1 << 1 << 1 << 2 << 2;
+        QVector<QString> headers = QVector<QString>() << "" << "" << "" << "" << "" << "" << tr("Cupboard") << tr("Shelf") << tr("Fund") << tr("Inventory") << tr("Records") << tr("Note") << tr("Features");
+
+        if(!tablePrinter.printTable(m_model, columnStretch, headers)) {
+            qDebug() << tablePrinter.lastError();
+        }
+
+        painter.end();
+    }
+}

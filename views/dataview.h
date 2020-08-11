@@ -41,6 +41,9 @@ private:
 
     void initialize() override;
 
+public slots:
+    void print();
+
 private slots:
     void addItem();
     void editItem();

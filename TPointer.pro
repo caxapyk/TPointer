@@ -1,4 +1,4 @@
-QT       += core gui sql
+QT       += core gui sql printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -46,6 +46,7 @@ SOURCES += \
     models/tablemodel.cpp \
     utils/floorsparser.cpp \
     utils/fundsorter.cpp \
+    utils/tableprinter.cpp \
     views/dataview.cpp \
     views/navigationview.cpp \
     views/tablemodelcontroller.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     models/tablemodel.h \
     utils/floorsparser.h \
     utils/fundsorter.h \
+    utils/tableprinter.h \
     views/dataview.h \
     views/navigationview.h \
     views/tablemodelcontroller.h \

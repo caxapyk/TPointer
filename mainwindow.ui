@@ -54,6 +54,7 @@
      <addaction name="action_f16"/>
     </widget>
     <addaction name="action_new"/>
+    <addaction name="action_print"/>
     <addaction name="menu_export"/>
     <addaction name="separator"/>
     <addaction name="action_exit"/>
@@ -172,6 +173,17 @@
   <action name="action_fundList">
    <property name="text">
     <string>Fund list</string>
+   </property>
+  </action>
+  <action name="action_print">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

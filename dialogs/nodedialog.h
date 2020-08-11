@@ -32,7 +32,7 @@ private:
     void restoreDialogState();
     void selectFund();
     void setupModels();
-    void setupValidators();
+
 protected:
     Ui::NodeDialog *ui;
 

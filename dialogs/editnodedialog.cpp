@@ -64,38 +64,57 @@ void EditNodeDialog::revert()
 
 void EditNodeDialog::save()
 {
-    if (ui->cB_fund->currentIndex() > 0)    {
-        QSqlRecord record = m_dataModel->record();
+    QSqlRecord record = dataModel()->record();
 
-        record.setValue("id",  m_dataModel->index(mapper->currentIndex(), DataModel::Id).data());
-        record.setValue("floor",  ui->cB_floor->currentText().remove(QRegExp("\\D+")));
-        record.setValue("storage", m_storageModel->index(ui->cB_storage->currentIndex(), 0).data().toString());
-        record.setValue("compartment", QVariant(ui->sB_compartment->value()));
-        record.setValue("shelving",  QVariant(ui->sB_shelving->value()));
-        record.setValue("cupboard", ui->lE_cupboard->text());
-        record.setValue("shelf", ui->lE_shelf->text());
-        record.setValue("fund", m_fundModel->index(ui->cB_fund->currentIndex() -1, 0).data().toString());
-        record.setValue("inventory", ui->lE_inventory->text());
-        record.setValue("records", ui->lE_records->text());
-        record.setValue("note", ui->tE_note->toPlainText());
-        record.setValue("feature", m_featureModel->index(ui->cB_feature->currentIndex() -1, 0).data().toString());
+    record.setValue("id",  dataModel()->index(mapper->currentIndex(), DataModel::Id).data());
 
-        QVariant res = m_dataModel->primaryUpdate(record);
+    record.setValue("floor",  QVariant(ui->cB_floor->currentText().remove(QRegExp("\\D+"))));
+    record.setGenerated("floor", true);
 
-        if(res.isValid()) {
-            // set empty index before mapper sumbitted if current index = 0
-            if(ui->cB_feature->currentIndex() == 0) {
-                ui->cB_feature->setCurrentIndex(-1);
-            }
+    record.setValue("storage", m_storageModel->index(ui->cB_storage->currentIndex(), 0).data());
+    record.setGenerated("storage", true);
 
-            mapper->submit();
+    record.setValue("compartment", QVariant(ui->sB_compartment->value()));
+    record.setGenerated("compartment", true);
+
+    record.setValue("shelving",  QVariant(ui->sB_shelving->value()));
+    record.setGenerated("shelving", true);
+
+    record.setValue("cupboard", QVariant(ui->lE_cupboard->text()));
+    record.setGenerated("cupboard", true);
+
+    record.setValue("shelf", QVariant(ui->lE_shelf->text()));
+    record.setGenerated("shelf", true);
+
+    record.setValue("fund", m_fundModel->index(ui->cB_fund->currentIndex() -1, 0).data());
+    record.setGenerated("fund", true);
+
+    record.setValue("inventory", QVariant(ui->lE_inventory->text()));
+    record.setGenerated("inventory", true);
+
+    record.setValue("records", QVariant(ui->lE_records->text()));
+    record.setGenerated("records", true);
+
+    record.setValue("note", QVariant(ui->tE_note->toPlainText()));
+    record.setGenerated("note", true);
+
+    record.setValue("feature", m_featureModel->index(ui->cB_feature->currentIndex() -1, 0).data());
+    record.setGenerated("feature", true);
+
+    bool res = dataModel()->primaryUpdate(record);
+
+    if(res) {
+        // set empty index before mapper sumbitted if current index = 0
+        if(ui->cB_feature->currentIndex() == 0) {
+            ui->cB_feature->setCurrentIndex(-1);
         }
 
-    } else {
+        mapper->submit();
+    }  else {
         QMessageBox()
                 .critical(this,
-                          tr("Add record"),
-                          tr("Fill all required fields!"),
+                          tr("Edit record"),
+                          tr("Can not edit record!"),
                           QMessageBox::Ok);
     }
 }

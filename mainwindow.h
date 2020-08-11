@@ -35,6 +35,7 @@ public:
     DataView* dataView() { return m_dataView; };
     NavigationView* navView() { return m_navView; };
     void setDisplayRows(int count);
+    void setPrintEnaled(bool v);
     void updateTotal();
 
 private:
@@ -55,9 +56,10 @@ private:
 private slots:
     void insertNode();
     void openFundList();
-    void openParam();
-    void openSearch();
     void openMainForm();
+    void openParam();
+    void openPrint();
+    void openSearch();
     void search(const FilterStruct &filter);
 
 protected:

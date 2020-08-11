@@ -202,7 +202,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="105"/>
+        <location filename="../models/datamodel.cpp" line="107"/>
         <source>Basement</source>
         <translation type="unfinished"></translation>
     </message>
@@ -215,38 +215,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="74"/>
+        <location filename="../views/dataview.cpp" line="78"/>
         <source>Filter by notes...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="151"/>
+        <location filename="../views/dataview.cpp" line="160"/>
         <source>Delete record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="152"/>
+        <location filename="../views/dataview.cpp" line="161"/>
         <source>Are you shure that you want to delete %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="158"/>
+        <location filename="../views/dataview.cpp" line="167"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="158"/>
+        <location filename="../views/dataview.cpp" line="167"/>
         <source>Record list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="204"/>
+        <location filename="../views/dataview.cpp" line="214"/>
         <source>Sort by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="213"/>
+        <location filename="../views/dataview.cpp" line="223"/>
         <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="252"/>
+        <source>Cupboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="252"/>
+        <source>Shelf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="252"/>
+        <source>Fund</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="252"/>
+        <source>Inventory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="252"/>
+        <source>Records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="252"/>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="252"/>
+        <source>Features</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -255,6 +290,7 @@
     <message>
         <location filename="../dialogs/editnodedialog.cpp" line="10"/>
         <location filename="../dialogs/editnodedialog.cpp" line="56"/>
+        <location filename="../dialogs/editnodedialog.cpp" line="116"/>
         <source>Edit record</source>
         <translation type="unfinished"></translation>
     </message>
@@ -264,13 +300,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/editnodedialog.cpp" line="97"/>
-        <source>Add record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/editnodedialog.cpp" line="98"/>
-        <source>Fill all required fields!</source>
+        <location filename="../dialogs/editnodedialog.cpp" line="117"/>
+        <source>Can not edit record!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -418,12 +449,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/insertnodedialog.cpp" line="81"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="99"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="107"/>
         <source>Add record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/insertnodedialog.cpp" line="82"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="100"/>
+        <source>Can not add record!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/insertnodedialog.cpp" line="108"/>
         <source>Fill all required fields!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -459,127 +496,137 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="63"/>
+        <location filename="../mainwindow.ui" line="64"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="69"/>
+        <location filename="../mainwindow.ui" line="70"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="77"/>
+        <location filename="../mainwindow.ui" line="78"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="94"/>
+        <location filename="../mainwindow.ui" line="95"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="97"/>
+        <location filename="../mainwindow.ui" line="98"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="102"/>
+        <location filename="../mainwindow.ui" line="103"/>
         <source>Spreadsheet (.csv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="107"/>
+        <location filename="../mainwindow.ui" line="108"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="110"/>
+        <location filename="../mainwindow.ui" line="111"/>
         <source>Ctrl+Shift+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="115"/>
+        <location filename="../mainwindow.ui" line="116"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="120"/>
+        <location filename="../mainwindow.ui" line="121"/>
         <source>Form F15 (.xlsx)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="125"/>
+        <location filename="../mainwindow.ui" line="126"/>
         <source>Form F16 (.xlsx)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="134"/>
+        <location filename="../mainwindow.ui" line="135"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="145"/>
+        <location filename="../mainwindow.ui" line="146"/>
         <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="150"/>
+        <location filename="../mainwindow.ui" line="151"/>
         <source>Edit record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="153"/>
+        <location filename="../mainwindow.ui" line="154"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="158"/>
+        <location filename="../mainwindow.ui" line="159"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="161"/>
+        <location filename="../mainwindow.ui" line="162"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="166"/>
+        <location filename="../mainwindow.ui" line="167"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="169"/>
+        <location filename="../mainwindow.ui" line="170"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="174"/>
+        <location filename="../mainwindow.ui" line="175"/>
         <source>Fund list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="64"/>
+        <location filename="../mainwindow.ui" line="183"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="186"/>
+        <source>Ctrl+P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="66"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="79"/>
+        <location filename="../mainwindow.cpp" line="81"/>
         <source>| Total rows: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="93"/>
+        <location filename="../mainwindow.cpp" line="95"/>
         <source>Showing rows: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="71"/>
+        <location filename="../mainwindow.cpp" line="73"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="86"/>
+        <location filename="../mainwindow.cpp" line="88"/>
         <source> [Search]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -597,8 +644,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.ui" line="48"/>
+        <location filename="../dialogs/movenodedialog.ui" line="82"/>
         <source>Shelving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/movenodedialog.ui" line="126"/>
+        <source>Corpus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -607,19 +659,29 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.ui" line="68"/>
+        <location filename="../dialogs/movenodedialog.ui" line="119"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.ui" line="81"/>
-        <location filename="../dialogs/movenodedialog.ui" line="108"/>
+        <location filename="../dialogs/movenodedialog.ui" line="72"/>
+        <location filename="../dialogs/movenodedialog.ui" line="106"/>
         <source>=0, if empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.ui" line="91"/>
+        <location filename="../dialogs/movenodedialog.ui" line="96"/>
         <source>Floor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/movenodedialog.cpp" line="119"/>
+        <source>Move record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/movenodedialog.cpp" line="120"/>
+        <source>Can not move record!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

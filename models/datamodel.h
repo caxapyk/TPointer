@@ -56,7 +56,6 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     void setFilter(const FilterStruct &filter);
     bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
-    bool setNode(Node &node);
     QSqlQuery query() const { return m_query; };
 
 private:

@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include <QSplitter>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -24,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // MainWindow actions
     connect(ui->action_new, &QAction::triggered, this, &MainWindow::insertNode);
+    connect(ui->action_print, &QAction::triggered, this, &MainWindow::openPrint);
     connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
     connect(ui->action_about, &QAction::triggered, application, &Application::about);
     connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearch);
@@ -165,6 +167,16 @@ void MainWindow::openSearch()
     search_dialog->activateWindow();
 
     connect(search_dialog, &SearchDialog::searched, this, &MainWindow::search);
+}
+
+void MainWindow::openPrint()
+{
+    m_dataView->print();
+}
+
+void MainWindow::setPrintEnaled(bool v)
+{
+    ui->action_print->setEnabled(v);
 }
 
 

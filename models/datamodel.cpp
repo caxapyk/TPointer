@@ -121,8 +121,10 @@ QVariant DataModel::primaryInsert(QSqlRecord &record)
     QList<QString> v; // values
 
     for (int i = 0; i < record.count(); ++i) {
-        f.append(record.fieldName(i));
-        v.append("?");
+        if (record.isGenerated(i)) {
+            f.append(record.fieldName(i));
+            v.append("?");
+        }
     }
 
     QString q = QString("INSERT INTO tpointer (%1) VALUES (%2)")
@@ -132,15 +134,18 @@ QVariant DataModel::primaryInsert(QSqlRecord &record)
     query.prepare(q);
 
     for (int i = 0; i < v.length(); ++i) {
-        QVariant value = (!record.value(i).toString().isEmpty()) ? record.value(i) : QVariant();
-        query.addBindValue(value);
+        if (record.isGenerated(i)) {
+            QVariant value = (!record.value(i).toString().isEmpty()) ? record.value(i) : QVariant();
+            query.addBindValue(value);
+        }
     }
 
     if (query.exec()) {
         return query.lastInsertId();
     }
 
-    qDebug() << query.lastError().text();
+    qDebug() << query.lastError().text() << " in query " << query.lastQuery();
+
     return QVariant();
 }
 
@@ -151,7 +156,8 @@ bool DataModel::primaryUpdate(QSqlRecord &record)
     QList<QString> fs;  // field=value
 
     for (int i = 0; i < record.count(); ++i) {
-        fs.append(QString("%1=?").arg(record.fieldName(i)));
+        if (record.isGenerated(i))
+            fs.append(QString("%1=?").arg(record.fieldName(i)));
     }
 
     QString q = QString("UPDATE tpointer SET %1 WHERE id=%2")
@@ -161,15 +167,18 @@ bool DataModel::primaryUpdate(QSqlRecord &record)
     query.prepare(q);
 
     for (int i = 0; i < record.count(); ++i) {
-        QVariant value = (!record.value(i).toString().isEmpty()) ? record.value(i) : QVariant();
-        query.addBindValue(value);
+        if (record.isGenerated(i)) {
+            QVariant value = (!record.value(i).toString().isEmpty()) ? record.value(i) : QVariant();
+            query.addBindValue(value);
+        }
     }
 
     if (query.exec()) {
         return true;
     }
 
-    qDebug() << query.lastError().text();
+    qDebug() << query.lastError().text() << " in query " << query.lastQuery();
+
     return false;
 }
 
@@ -178,25 +187,16 @@ QSqlRecord DataModel::record()
     QSqlQuery query("SELECT * FROM tpointer WHERE id=-1;");
 
     if (query.exec()) {
-        return query.record();
+        QSqlRecord record = query.record();
+
+        for(int i = 0; i < record.count(); ++i) {
+            record.setGenerated(i, false);
+        }
+
+        return record;
     }
 
     return QSqlRecord();
-}
-
-bool DataModel::setNode(Node &node)
-{
-    int row = rowCount();
-
-    if(insertRows(row, 1)) {
-        for(int i = 0; i < node.length(); ++i) {
-            if(!setData(index(row, i), node.at(i)))
-                return false;
-        }
-        return true;
-    }
-
-    return false;
 }
 
 bool DataModel::removeRows(int row, int count, const QModelIndex &parent)

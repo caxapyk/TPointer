@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Could not remove item</source>
-        <translation>Не удалось удалить запись</translation>
+        <translation>Не удалось удалить запись/записи!</translation>
     </message>
     <message>
         <source>Sort by default</source>
@@ -212,6 +212,34 @@
     <message>
         <source>Record list</source>
         <translation>Записи</translation>
+    </message>
+    <message>
+        <source>Cupboard</source>
+        <translation>Шкаф №</translation>
+    </message>
+    <message>
+        <source>Shelf</source>
+        <translation>Полка №</translation>
+    </message>
+    <message>
+        <source>Fund</source>
+        <translation>Фонд №</translation>
+    </message>
+    <message>
+        <source>Inventory</source>
+        <translation>Опись №</translation>
+    </message>
+    <message>
+        <source>Records</source>
+        <translation>Ед. хр. с № по №</translation>
+    </message>
+    <message>
+        <source>Note</source>
+        <translation>Прим-ние</translation>
+    </message>
+    <message>
+        <source>Features</source>
+        <translation>Характ-ка</translation>
     </message>
 </context>
 <context>
@@ -226,11 +254,15 @@
     </message>
     <message>
         <source>Add record</source>
-        <translation>Добавить запись</translation>
+        <translation type="vanished">Добавить запись</translation>
     </message>
     <message>
         <source>Fill all required fields!</source>
-        <translation>Заполните все обязательные поля!</translation>
+        <translation type="vanished">Заполните все обязательные поля!</translation>
+    </message>
+    <message>
+        <source>Can not edit record!</source>
+        <translation>Не удалось сохранить запись!</translation>
     </message>
 </context>
 <context>
@@ -369,6 +401,10 @@
         <source>Fill all required fields!</source>
         <translation>Заполните все обязательные поля!</translation>
     </message>
+    <message>
+        <source>Can not add record!</source>
+        <translation>Не удалось добавить запись!</translation>
+    </message>
 </context>
 <context>
     <name>ItemFilter</name>
@@ -495,6 +531,14 @@
         <source>Showing rows: %1</source>
         <translation>Показано записей: %1</translation>
     </message>
+    <message>
+        <source>Print</source>
+        <translation>Печать</translation>
+    </message>
+    <message>
+        <source>Ctrl+P</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>MoveNodeDialog</name>
@@ -520,11 +564,23 @@
     </message>
     <message>
         <source>=0, if empty</source>
-        <translation>=0, если пусто</translation>
+        <translation>=0, если не указано</translation>
     </message>
     <message>
         <source>Floor</source>
         <translation>Этаж №</translation>
+    </message>
+    <message>
+        <source>Corpus</source>
+        <translation>Корпус</translation>
+    </message>
+    <message>
+        <source>Move record</source>
+        <translation>Перемещение записи</translation>
+    </message>
+    <message>
+        <source>Can not move record!</source>
+        <translation>Не удалось переместить запись/записи!</translation>
     </message>
 </context>
 <context>
@@ -577,7 +633,7 @@
     </message>
     <message>
         <source>=0, if empty</source>
-        <translation>=0, если пусто</translation>
+        <translation>=0, если не указано</translation>
     </message>
     <message>
         <source>Shelf</source>
@@ -747,7 +803,7 @@
     </message>
     <message>
         <source>=0, if empty</source>
-        <translation>=0, если пусто</translation>
+        <translation>=0, если не указано</translation>
     </message>
 </context>
 <context>

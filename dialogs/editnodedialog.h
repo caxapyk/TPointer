@@ -15,6 +15,7 @@ public:
     ~EditNodeDialog();
 
     DataModel *dataModel() { return m_dataModel; };
+    void setDataModel(DataModel *model) { m_dataModel = model; };
 
 protected:
     void revert() override;
@@ -23,8 +24,6 @@ protected:
 private:
     DataModel *m_dataModel;
     QDataWidgetMapper *mapper;
-
-    void setDataModel(DataModel *model) { m_dataModel = model; };
 };
 
 #endif // EDITNODEDIALOG_H
