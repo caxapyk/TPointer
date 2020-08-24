@@ -38,6 +38,13 @@ bool DataProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex 
     } else if (source_left.column() == DataModel::Fund && source_left.column() == DataModel::Fund) {
         FundSorter sorter;
         return sorter.lessThen(source_left.data().toString(), source_right.data().toString());
+    // inventory, records
+    } else if ((source_left.column() == DataModel::Inventory && source_left.column() == DataModel::Inventory)
+               || (source_left.column() == DataModel::Records && source_left.column() == DataModel::Records)) {
+        QString left = source_left.data().toString().remove(QRegExp("\\D+"));
+        QString right = source_right.data().toString().remove(QRegExp("\\D+"));
+
+        return left.toInt() > right.toInt();
     }
 
     return QSortFilterProxyModel::lessThan(source_left, source_right);

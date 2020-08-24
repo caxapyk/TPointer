@@ -111,7 +111,7 @@ void DataView::loadData(const FilterStruct &filter)
     m_itemFilter->clear(); // clear every time model has changed
 
     application->mainWindow()->setDisplayRows(m_model->rowCount());
-    application->mainWindow()->setPrintEnaled(true);
+    application->mainWindow()->dataLoaded();
 }
 
 void DataView::addItem()

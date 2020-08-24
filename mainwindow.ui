@@ -49,12 +49,19 @@
       <string>Export</string>
      </property>
      <addaction name="action_csv"/>
-     <addaction name="separator"/>
-     <addaction name="action_f15"/>
-     <addaction name="action_f16"/>
+    </widget>
+    <widget class="QMenu" name="menuPrint">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Print</string>
+     </property>
+     <addaction name="action_form15"/>
+     <addaction name="action_form16"/>
     </widget>
     <addaction name="action_new"/>
-    <addaction name="action_print"/>
+    <addaction name="menuPrint"/>
     <addaction name="menu_export"/>
     <addaction name="separator"/>
     <addaction name="action_exit"/>
@@ -99,6 +106,9 @@
    </property>
   </action>
   <action name="action_csv">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Spreadsheet (.csv)</string>
    </property>
@@ -175,15 +185,27 @@
     <string>Fund list</string>
    </property>
   </action>
-  <action name="action_print">
+  <action name="action_pdf">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Print</string>
+    <string>Export to PDF (.pdf)</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
+  </action>
+  <action name="actionForms">
+   <property name="text">
+    <string>Forms</string>
+   </property>
+  </action>
+  <action name="action_form15">
+   <property name="text">
+    <string>Form F-15</string>
+   </property>
+  </action>
+  <action name="action_form16">
+   <property name="text">
+    <string>Form F-16</string>
    </property>
   </action>
  </widget>

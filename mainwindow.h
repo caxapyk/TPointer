@@ -2,17 +2,9 @@
 #define MAINWINDOW_H
 
 #include "dialogs/searchdialog.h"
-//#include "models/maintablemodel.h"
-//#include "models/maintableproxymodel.h"
-//#include "models/hierarchymodel.h"
-//#include "models/fundtreemodel.h"
-//#include "models/fundproxymodel.h"
 #include "models/searchmodel.h"
 #include "views/dataview.h"
 #include "views/navigationview.h"
-//#include "views/tablemodelcontroller.h"
-//#include "widgets/itemfilter.h"
-//#include "widgets/buttonscontrol.h"
 
 #include <QCloseEvent>
 #include <QLabel>
@@ -35,8 +27,9 @@ public:
     DataView* dataView() { return m_dataView; };
     NavigationView* navView() { return m_navView; };
     void setDisplayRows(int count);
-    void setPrintEnaled(bool v);
     void updateTotal();
+
+    void dataLoaded();
 
 private:
     Ui::MainWindow *ui;
@@ -55,6 +48,8 @@ private:
 
 private slots:
     void insertNode();
+    void openExportCsv();
+    void openExportPdf();
     void openFundList();
     void openMainForm();
     void openParam();

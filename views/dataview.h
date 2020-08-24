@@ -28,6 +28,7 @@ public:
     void saveViewState() override;
 
     void loadData(const FilterStruct &filter);
+    DataModel *model() { return m_model; };
 
 private:
     Ui::DataView *ui;

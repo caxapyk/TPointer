@@ -1,4 +1,4 @@
-QT       += core gui sql printsupport
+QT       += core gui sql printsupport webenginewidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -46,6 +46,7 @@ SOURCES += \
     models/tablemodel.cpp \
     utils/floorsparser.cpp \
     utils/fundsorter.cpp \
+    utils/tablemodeltohtml.cpp \
     utils/tableprinter.cpp \
     views/dataview.cpp \
     views/navigationview.cpp \
@@ -86,6 +87,7 @@ HEADERS += \
     models/tablemodel.h \
     utils/floorsparser.h \
     utils/fundsorter.h \
+    utils/tablemodeltohtml.h \
     utils/tableprinter.h \
     views/dataview.h \
     views/navigationview.h \
@@ -114,7 +116,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    tmp/table.html
 
 RESOURCES += \
     resources.qrc

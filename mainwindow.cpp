@@ -7,10 +7,13 @@
 #include "models/hierarchymodel.h"
 #include "models/searchmodel.h"
 #include "widgets/customcontextmenu.h"
+#include "utils/tablemodeltohtml.h"
 
 #include <QDebug>
 #include <QMessageBox>
 #include <QSplitter>
+#include <QFileDialog>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -25,7 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // MainWindow actions
     connect(ui->action_new, &QAction::triggered, this, &MainWindow::insertNode);
-    connect(ui->action_print, &QAction::triggered, this, &MainWindow::openPrint);
+    connect(ui->action_csv, &QAction::triggered, this, &MainWindow::openExportCsv);
+    connect(ui->action_form15, &QAction::triggered, this, &MainWindow::openExportPdf);
     connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
     connect(ui->action_about, &QAction::triggered, application, &Application::about);
     connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearch);
@@ -90,9 +94,17 @@ void MainWindow::search(const FilterStruct &filter)
     navView()->resetCurrentIndexes();
 }
 
+
+void MainWindow::dataLoaded()
+{
+    ui->menuPrint->setEnabled(true);
+    ui->action_csv->setEnabled(true);
+    ui->action_pdf->setEnabled(true);
+}
+
 void MainWindow::setDisplayRows(int count)
 {
-     ui->statusbar->showMessage(tr("Showing rows: %1").arg(count));
+     ui->statusbar->showMessage(tr("Showing rows: %1").arg(count), 3600000);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -111,6 +123,27 @@ void MainWindow::closeEvent(QCloseEvent *event)
 /* *
  * Dialogs
  * */
+
+void MainWindow::openExportCsv()
+{
+    QFileDialog dialog;
+    QString output_file_location = dialog.getSaveFileName(this, tr("Save File"),
+                                                          tr("untitled.csv"),
+                                                          tr("Spreadsheets (*.csv)"));
+}
+
+void MainWindow::openExportPdf()
+{
+    QFileDialog dialog;
+    QString file_location = dialog.getSaveFileName(this, tr("Save File"),
+                                                          tr("untitled.pdf"),
+                                                          tr("PDF (*.pdf)"));
+
+    TableModelToHtml *h = new TableModelToHtml(file_location, "tmp/table.html", m_dataView->model());
+    ui->verticalLayout->addWidget(h->printHtmlView);
+
+    h->save();
+}
 
 void MainWindow::insertNode()
 {
@@ -172,11 +205,6 @@ void MainWindow::openSearch()
 void MainWindow::openPrint()
 {
     m_dataView->print();
-}
-
-void MainWindow::setPrintEnaled(bool v)
-{
-    ui->action_print->setEnabled(v);
 }
 
 
