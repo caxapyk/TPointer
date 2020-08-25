@@ -43,7 +43,8 @@ private:
     void initialize() override;
 
 public slots:
-    void print();
+    void printF15();
+    void printF16();
 
 private slots:
     void addItem();

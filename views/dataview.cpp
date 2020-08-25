@@ -6,7 +6,7 @@
 #include "dialogs/editnodedialog.h"
 #include "dialogs/movenodedialog.h"
 #include "widgets/customcontextmenu.h"
-#include "utils/tableprinter.h"
+#include "utils/templatehtml.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -234,27 +234,27 @@ void DataView::showContextMenu(const QPoint&)
     delete moveAction;
 }
 
-void DataView::print()
+void DataView::printF15()
 {
-    QPrinter printer;
-    QPrintDialog printDialog(&printer);
+    QMap<QString, QVariant> vars;
+    TemplateHtml th("tmp/f15");
 
-    if (printDialog.exec() == QDialog::Accepted) {
-        // printer setup
-        QPainter painter;
-        painter.begin(&printer);
+    vars.insert("[[shelving]]", m_model->filterStruct().shelving);
+    vars.insert("[[corpus]]", m_model->filterStruct().corpus);
+    //vars.insert("[[floor]]", m_model->filterStruct());
+    vars.insert("[[rows]]", th.makeTableRows(m_model, QVector<int>() << 6 << 7 << 8 << 9 << 10 << 11));
+    th.setVars(vars);
 
-        TablePrinter tablePrinter(&painter, &printer);
-        tablePrinter.setPageMargin(30, 30, 30, 30);
-        tablePrinter.setCellMargin(5, 5, 5, 5);
+    th.print();
+}
 
-        QVector<int> columnStretch = QVector<int>() << 0 << 0 << 0 << 0 << 0 << 0 << 1 << 1 << 1 << 1 << 1 << 2 << 2;
-        QVector<QString> headers = QVector<QString>() << "" << "" << "" << "" << "" << "" << tr("Cupboard") << tr("Shelf") << tr("Fund") << tr("Inventory") << tr("Records") << tr("Note") << tr("Features");
+void DataView::printF16()
+{
+    QMap<QString, QVariant> vars;
+    TemplateHtml th("tmp/f16");
 
-        if(!tablePrinter.printTable(m_model, columnStretch, headers)) {
-            qDebug() << tablePrinter.lastError();
-        }
+    vars.insert("[[rows]]", th.makeTableRows(m_model, QVector<int>() << 6 << 7 << 8 << 9 << 10 << 11));
+    th.setVars(vars);
 
-        painter.end();
-    }
+    th.print();
 }

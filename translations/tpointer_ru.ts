@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Could not remove item</source>
-        <translation>Не удалось удалить запись/записи!</translation>
+        <translation>Не удалось удалить запись/записи</translation>
     </message>
     <message>
         <source>Sort by default</source>
@@ -536,8 +536,20 @@
         <translation>Печать</translation>
     </message>
     <message>
-        <source>Ctrl+P</source>
-        <translation></translation>
+        <source>Export to PDF (.pdf)</source>
+        <translation>Экспорт в PDF (.pdf)</translation>
+    </message>
+    <message>
+        <source>Forms</source>
+        <translation>Формы</translation>
+    </message>
+    <message>
+        <source>Form F-15</source>
+        <translation>Форма Ф-15 (постеллаж.)</translation>
+    </message>
+    <message>
+        <source>Form F-16</source>
+        <translation>Форма Ф-16 (пофонд.)</translation>
     </message>
 </context>
 <context>

@@ -7,14 +7,10 @@
 #include "models/hierarchymodel.h"
 #include "models/searchmodel.h"
 #include "widgets/customcontextmenu.h"
-#include "utils/tablemodeltohtml.h"
 
 #include <QDebug>
 #include <QMessageBox>
 #include <QSplitter>
-#include <QFileDialog>
-
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
     // MainWindow actions
     connect(ui->action_new, &QAction::triggered, this, &MainWindow::insertNode);
     connect(ui->action_csv, &QAction::triggered, this, &MainWindow::openExportCsv);
-    connect(ui->action_form15, &QAction::triggered, this, &MainWindow::openExportPdf);
+    connect(ui->action_form15, &QAction::triggered, m_dataView, &DataView::printF15);
+    connect(ui->action_form16, &QAction::triggered, m_dataView, &DataView::printF16);
     connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
     connect(ui->action_about, &QAction::triggered, application, &Application::about);
     connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearch);
@@ -126,23 +123,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::openExportCsv()
 {
-    QFileDialog dialog;
-    QString output_file_location = dialog.getSaveFileName(this, tr("Save File"),
-                                                          tr("untitled.csv"),
-                                                          tr("Spreadsheets (*.csv)"));
-}
-
-void MainWindow::openExportPdf()
-{
-    QFileDialog dialog;
-    QString file_location = dialog.getSaveFileName(this, tr("Save File"),
-                                                          tr("untitled.pdf"),
-                                                          tr("PDF (*.pdf)"));
-
-    TableModelToHtml *h = new TableModelToHtml(file_location, "tmp/table.html", m_dataView->model());
-    ui->verticalLayout->addWidget(h->printHtmlView);
-
-    h->save();
+    //QFileDialog dialog;
+    //QString output_file_location = dialog.getSaveFileName(this, tr("Save File"),
+    //                                                      tr("untitled.csv"),
+    //                                                      tr("Spreadsheets (*.csv)"));
 }
 
 void MainWindow::insertNode()
@@ -201,10 +185,4 @@ void MainWindow::openSearch()
 
     connect(search_dialog, &SearchDialog::searched, this, &MainWindow::search);
 }
-
-void MainWindow::openPrint()
-{
-    m_dataView->print();
-}
-
 

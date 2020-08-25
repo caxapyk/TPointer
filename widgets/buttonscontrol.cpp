@@ -122,7 +122,7 @@ void ButtonsControl::assetView(QAbstractItemView *view)
     connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ButtonsControl::selectionChanged);
 }
 
-void ButtonsControl::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+void ButtonsControl::selectionChanged(const QItemSelection &selected, const QItemSelection&)
 {
     /* clear if selected is empty
      * needed to fix disabled buttons on deselection

@@ -49,11 +49,9 @@ private:
 private slots:
     void insertNode();
     void openExportCsv();
-    void openExportPdf();
     void openFundList();
     void openMainForm();
     void openParam();
-    void openPrint();
     void openSearch();
     void search(const FilterStruct &filter);
 

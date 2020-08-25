@@ -115,9 +115,9 @@ void NavigationView::hierarchyActivated(const QModelIndex &index)
                        .arg(node->parent->parent->name.toString())
                        .arg(!node->parent->name.isNull() ? node->parent->name.toString() : tr("undefined"))
                        .arg(node->name.toString()));
-
-        ui->tV_funds->setCurrentIndex(QModelIndex());
     }
+
+    ui->tV_funds->setCurrentIndex(QModelIndex());
 }
 
 void NavigationView::fundActivated(const QModelIndex &index)
