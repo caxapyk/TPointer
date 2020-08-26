@@ -116,35 +116,35 @@
     <name>DataModel</name>
     <message>
         <source>Floor</source>
-        <translation>Эт. №</translation>
+        <translation>Этаж</translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation>Арх-ще №</translation>
+        <translation type="unfinished">Архивохранил.</translation>
     </message>
     <message>
         <source>Compartment</source>
-        <translation>Пом. №</translation>
+        <translation>Помещение</translation>
     </message>
     <message>
         <source>Shelving</source>
-        <translation>Стелл. №</translation>
+        <translation>Стеллаж</translation>
     </message>
     <message>
         <source>Cupboard</source>
-        <translation>Шкаф №</translation>
+        <translation>Шкаф</translation>
     </message>
     <message>
         <source>Shelf</source>
-        <translation>Полка №</translation>
+        <translation>Полка</translation>
     </message>
     <message>
         <source>Fund</source>
-        <translation>Фонд №</translation>
+        <translation>Фонд</translation>
     </message>
     <message>
         <source>Inventory</source>
-        <translation>Опись №</translation>
+        <translation>Опись</translation>
     </message>
     <message>
         <source>Records</source>
@@ -152,15 +152,15 @@
     </message>
     <message>
         <source>Note</source>
-        <translation>Прим-ние</translation>
+        <translation>Примечание</translation>
     </message>
     <message>
         <source>Features</source>
-        <translation>Характ-ка</translation>
+        <translation>Характеристика</translation>
     </message>
     <message>
         <source>Basement</source>
-        <translation>Подвал</translation>
+        <translation>П</translation>
     </message>
     <message>
         <source>Id</source>
@@ -215,31 +215,39 @@
     </message>
     <message>
         <source>Cupboard</source>
-        <translation>Шкаф №</translation>
+        <translation type="vanished">Шкаф №</translation>
     </message>
     <message>
         <source>Shelf</source>
-        <translation>Полка №</translation>
+        <translation type="vanished">Полка №</translation>
     </message>
     <message>
         <source>Fund</source>
-        <translation>Фонд №</translation>
+        <translation type="vanished">Фонд №</translation>
     </message>
     <message>
         <source>Inventory</source>
-        <translation>Опись №</translation>
+        <translation type="vanished">Опись №</translation>
     </message>
     <message>
         <source>Records</source>
-        <translation>Ед. хр. с № по №</translation>
+        <translation type="vanished">Ед. хр. с № по №</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation>Прим-ние</translation>
+        <translation type="vanished">Прим-ние</translation>
     </message>
     <message>
         <source>Features</source>
-        <translation>Характ-ка</translation>
+        <translation type="vanished">Характ-ка</translation>
+    </message>
+    <message>
+        <source>Print</source>
+        <translation>Печать</translation>
+    </message>
+    <message>
+        <source>Could not print. List is empty!</source>
+        <translation>Не удалось отправить на печать. Список пуст!</translation>
     </message>
 </context>
 <context>
@@ -611,11 +619,19 @@
     </message>
     <message>
         <source>undefined</source>
-        <translation>Не указано</translation>
+        <translation type="vanished">Не указано</translation>
     </message>
     <message>
         <source> [Fund %1]</source>
         <translation> [Фонд №%1]</translation>
+    </message>
+    <message>
+        <source>All funds</source>
+        <translation>Все фонды</translation>
+    </message>
+    <message>
+        <source>Current funds</source>
+        <translation>Текущие фонды</translation>
     </message>
 </context>
 <context>

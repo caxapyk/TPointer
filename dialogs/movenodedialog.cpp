@@ -49,7 +49,6 @@ void MoveNodeDialog::setupModels()
 
 void MoveNodeDialog::fillStorage(int index)
 {
-    qDebug() << "here!";
     QModelIndex corpusModelIndex = m_corpusModel->index(index, 0);
     m_storageModel->setFilter("corpus=" + corpusModelIndex.data().toString());
     m_storageModel->select();

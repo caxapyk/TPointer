@@ -27,7 +27,9 @@ NavigationView::~NavigationView()
     delete ui;
     delete m_hierarchy_model;
     delete m_fund_model;
+    delete m_fundc_model;
     delete m_fund_proxymodel;
+    delete m_fundc_proxymodel;
     delete fund_filter;
 }
 
@@ -68,18 +70,27 @@ void NavigationView::initialize()
     connect(ui->tV_hierarchy, &QTreeView::clicked, this, &NavigationView::hierarchyActivated);
     connect(ui->tV_hierarchy, &QMenu::customContextMenuRequested, this, &NavigationView::showHContextMenu);
 
-     /* FundModel */
+     /* FundsModel */
     m_fund_model = new FundTreeModel;
+    m_fundc_model = new FundTreeModel;
+
     m_fund_model->select();
+    m_fundc_model->select();
 
     m_fund_proxymodel = new FundProxyModel;
     m_fund_proxymodel->setSourceModel(m_fund_model);
+    m_fundc_proxymodel = new FundProxyModel;
+    m_fundc_proxymodel->setSourceModel(m_fundc_model);
 
     ui->tV_funds->setModel(m_fund_proxymodel);
     ui->tV_funds->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->tV_fundsCurr->setModel(m_fundc_proxymodel);
+    ui->tV_fundsCurr->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(ui->tV_funds, &QTreeView::clicked, this, &NavigationView::fundActivated);
     connect(ui->tV_funds, &QMenu::customContextMenuRequested, this, &NavigationView::showFContextMenu);
+    connect(ui->tV_fundsCurr, &QTreeView::clicked, this, &NavigationView::fundActivated);
+    connect(ui->tV_fundsCurr, &QMenu::customContextMenuRequested, this, &NavigationView::showFContextMenu);
 
     // fund filter
     fund_filter = new ItemFilter;
@@ -88,6 +99,10 @@ void NavigationView::initialize()
     ui->vL_funds->addWidget(fund_filter);
 
     connect(fund_filter, &ItemFilter::filtered, this, &NavigationView::filterFunds);
+
+    // fund tabs
+    connect(ui->tW_funds, &QTabWidget::currentChanged, this, &NavigationView::fundTabChanged);
+
 }
 
 void NavigationView::resetCurrentIndexes()
@@ -113,11 +128,21 @@ void NavigationView::hierarchyActivated(const QModelIndex &index)
                        + tr(" [%1, Str. %2, Comp. %3, Sh. %4]")
                        .arg(node->parent->parent->parent->name.toString())
                        .arg(node->parent->parent->name.toString())
-                       .arg(!node->parent->name.isNull() ? node->parent->name.toString() : tr("undefined"))
+                       .arg(node->parent->name.toString())
                        .arg(node->name.toString()));
     }
 
     ui->tV_funds->setCurrentIndex(QModelIndex());
+}
+
+void NavigationView::fundTabChanged(int index)
+{
+    switch (index) {
+    case 0:
+        break;
+    case 1:
+        break;
+    }
 }
 
 void NavigationView::fundActivated(const QModelIndex &index)
@@ -138,10 +163,16 @@ void NavigationView::fundActivated(const QModelIndex &index)
 
 void NavigationView::filterFunds(const QString &text)
 {
-    m_fund_proxymodel->setRecursiveFilteringEnabled(true);
-    m_fund_proxymodel->setFilterKeyColumn(0);
+    if (text.length() > 0) {
+        QSortFilterProxyModel *m = (ui->tW_funds->currentIndex() > 0) ? m_fundc_proxymodel: m_fund_proxymodel;
+        m->setRecursiveFilteringEnabled(true);
+        m->setFilterKeyColumn(0);
 
-    m_fund_proxymodel->setFilterFixedString(text);
+        m->setFilterFixedString(text);
+    } else {
+        m_fund_proxymodel->setFilterFixedString(text);
+        m_fundc_proxymodel->setFilterFixedString(text);
+    }
 }
 
 void NavigationView::showHContextMenu(const QPoint&)
@@ -155,11 +186,15 @@ void NavigationView::showHContextMenu(const QPoint&)
     menu.exec(QCursor().pos());
 }
 
-void NavigationView::showFContextMenu(const QPoint&)
+void NavigationView::showFContextMenu(const QPoint &point)
 {
     CustomContextMenu menu(CustomContextMenu::Refresh);
     connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
-        m_fund_model->select();
+        if(ui->tV_funds->indexAt(point).isValid()) {
+            m_fund_model->select();
+        } else if(ui->tV_fundsCurr->indexAt(point).isValid()) {
+            m_fundc_model->select();
+        }
     });
 
     menu.exec(QCursor().pos());

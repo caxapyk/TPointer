@@ -27,7 +27,7 @@ TemplateHtml::TemplateHtml(const QString &path, QObject *parent) : QObject(paren
     }
 }
 
-QString TemplateHtml::makeTableRows(DataModel *model, const QVector<int> &columns)
+QString TemplateHtml::makeTableRows(QAbstractItemModel *model, const QVector<int> &columns)
 {
     QString t;
     for(int i = 0; i < model->rowCount(); ++i) {
@@ -52,7 +52,7 @@ void TemplateHtml::setVars(const QMap<QString, QVariant> &vars)
 
 void TemplateHtml::print()
 {
-    QPrinter printer(QPrinter::HighResolution);
+    QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPageMargins(5, 5, 5, 5, QPrinter::Millimeter);
 

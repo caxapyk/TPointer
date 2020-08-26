@@ -12,6 +12,7 @@ class FundModel : public TableModel
 
 public:
     FundModel();
+    static QString getFundName(const QString &num);
 
 public slots:
     void setDefaultRecord(int, QSqlRecord&) override;

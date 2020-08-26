@@ -5,6 +5,7 @@
 #include "dialogs/addnodedialog.h"
 #include "dialogs/editnodedialog.h"
 #include "dialogs/movenodedialog.h"
+#include "models/fundmodel.h"
 #include "widgets/customcontextmenu.h"
 #include "utils/templatehtml.h"
 
@@ -236,25 +237,44 @@ void DataView::showContextMenu(const QPoint&)
 
 void DataView::printF15()
 {
-    QMap<QString, QVariant> vars;
-    TemplateHtml th("tmp/f15");
+    if(m_proxyModel->rowCount() > 0) {
+        QMap<QString, QVariant> vars;
+        TemplateHtml th("tmp/f15");
 
-    vars.insert("[[shelving]]", m_model->filterStruct().shelving);
-    vars.insert("[[corpus]]", m_model->filterStruct().corpus);
-    //vars.insert("[[floor]]", m_model->filterStruct());
-    vars.insert("[[rows]]", th.makeTableRows(m_model, QVector<int>() << 6 << 7 << 8 << 9 << 10 << 11));
-    th.setVars(vars);
+        vars.insert("[[shelving]]", m_proxyModel->index(0, 5).data());
+        vars.insert("[[corpus]]", m_proxyModel->index(0, 1).data());
+        vars.insert("[[floor]]",  m_proxyModel->index(0, 3).data());
+        vars.insert("[[storage]]",  m_proxyModel->index(0, 2).data());
+        vars.insert("[[compartment]]",  m_proxyModel->index(0, 4).data());
+        vars.insert("[[rows]]", th.makeTableRows(m_proxyModel, QVector<int>() << 6 << 7 << 8 << 9 << 10 << 11));
+        th.setVars(vars);
 
-    th.print();
+        th.print();
+    } else {
+        QMessageBox::warning(this, tr("Print"), tr("Could not print. List is empty!"), QMessageBox::Ok);
+    }
 }
 
 void DataView::printF16()
 {
-    QMap<QString, QVariant> vars;
-    TemplateHtml th("tmp/f16");
+    if(m_model->rowCount() > 0) {
+        QMap<QString, QVariant> vars;
+        TemplateHtml th("tmp/f16");
 
-    vars.insert("[[rows]]", th.makeTableRows(m_model, QVector<int>() << 6 << 7 << 8 << 9 << 10 << 11));
-    th.setVars(vars);
+        for(int i = 0; i < m_proxyModel->rowCount(); ++i) {
+        }
 
-    th.print();
+        vars.insert("[[fundname]]", FundModel::getFundName(m_model->index(0, 8).data().toString()));
+        vars.insert("[[fund]]", m_model->index(0, 8).data());
+        vars.insert("[[corpus]]", m_model->index(0, 1).data());
+        vars.insert("[[floor]]",  m_model->index(0, 3).data());
+        vars.insert("[[storage]]",  m_model->index(0, 2).data());
+        vars.insert("[[compartment]]",  m_model->index(0, 4).data());
+        vars.insert("[[rows]]", th.makeTableRows(m_model, QVector<int>() << 9 << 10 << 5 << 6 << 7 << 11));
+        th.setVars(vars);
+
+        th.print();
+    } else {
+        QMessageBox::warning(this, tr("Print"), tr("Could not print. List is empty!"), QMessageBox::Ok);
+    }
 }

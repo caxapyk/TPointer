@@ -22,6 +22,7 @@ public:
     QIcon icon() const{ return m_icon; };
     QString basename() { return QString(tr("Archival topographic pointer %1").arg(version().toString())); };
     MainWindow *mainWindow() { return m_mainWindow; };
+
     QString server_address;
 
     const QString m_orgName = "caxapyk";

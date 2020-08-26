@@ -250,38 +250,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="253"/>
-        <source>Cupboard</source>
+        <location filename="../views/dataview.cpp" line="254"/>
+        <location filename="../views/dataview.cpp" line="278"/>
+        <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="253"/>
-        <source>Shelf</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../views/dataview.cpp" line="253"/>
-        <source>Fund</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../views/dataview.cpp" line="253"/>
-        <source>Inventory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../views/dataview.cpp" line="253"/>
-        <source>Records</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../views/dataview.cpp" line="253"/>
-        <source>Note</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../views/dataview.cpp" line="253"/>
-        <source>Features</source>
+        <location filename="../views/dataview.cpp" line="254"/>
+        <location filename="../views/dataview.cpp" line="278"/>
+        <source>Could not print. List is empty!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -690,12 +667,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.cpp" line="119"/>
+        <location filename="../dialogs/movenodedialog.cpp" line="118"/>
         <source>Move record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.cpp" line="120"/>
+        <location filename="../dialogs/movenodedialog.cpp" line="119"/>
         <source>Can not move record!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -708,6 +685,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../views/navigationview.ui" line="79"/>
+        <source>All funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/navigationview.ui" line="115"/>
+        <source>Current funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../views/navigationview.cpp" line="86"/>
         <source>Fund filter...</source>
         <translation type="unfinished"></translation>
@@ -715,11 +702,6 @@
     <message>
         <location filename="../views/navigationview.cpp" line="113"/>
         <source> [%1, Str. %2, Comp. %3, Sh. %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../views/navigationview.cpp" line="116"/>
-        <source>undefined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

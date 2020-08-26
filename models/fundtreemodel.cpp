@@ -9,6 +9,7 @@
 FundTreeModel::FundTreeModel() : QStandardItemModel()
 {
     setColumnCount(1);
+    setHeaderData(0, Qt::Horizontal, tr("Funds (0)"));
 }
 
 FundTreeModel::~FundTreeModel()

@@ -66,13 +66,75 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="vL_funds">
        <item>
-        <widget class="QTreeView" name="tV_funds">
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
+        <widget class="QTabWidget" name="tW_funds">
+         <property name="currentIndex">
+          <number>0</number>
          </property>
-         <property name="sortingEnabled">
-          <bool>true</bool>
-         </property>
+         <widget class="QWidget" name="tab_allFund">
+          <attribute name="icon">
+           <iconset resource="../resources.qrc">
+            <normaloff>:/icons/documents-16.png</normaloff>:/icons/documents-16.png</iconset>
+          </attribute>
+          <attribute name="title">
+           <string>All funds</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QTreeView" name="tV_funds">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="sortingEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_currentFund">
+          <attribute name="icon">
+           <iconset resource="../resources.qrc">
+            <normaloff>:/icons/documents-16.png</normaloff>:/icons/documents-16.png</iconset>
+          </attribute>
+          <attribute name="title">
+           <string>Current funds</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QTreeView" name="tV_fundsCurr"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -81,6 +143,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
