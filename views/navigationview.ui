@@ -70,45 +70,6 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tab_allFund">
-          <attribute name="icon">
-           <iconset resource="../resources.qrc">
-            <normaloff>:/icons/documents-16.png</normaloff>:/icons/documents-16.png</iconset>
-          </attribute>
-          <attribute name="title">
-           <string>All funds</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QTreeView" name="tV_funds">
-             <property name="editTriggers">
-              <set>QAbstractItemView::NoEditTriggers</set>
-             </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
-             </property>
-             <attribute name="headerVisible">
-              <bool>true</bool>
-             </attribute>
-            </widget>
-           </item>
-          </layout>
-         </widget>
          <widget class="QWidget" name="tab_currentFund">
           <attribute name="icon">
            <iconset resource="../resources.qrc">
@@ -140,6 +101,42 @@
              </property>
              <property name="showDropIndicator" stdset="0">
               <bool>true</bool>
+             </property>
+             <property name="sortingEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_allFund">
+          <attribute name="icon">
+           <iconset resource="../resources.qrc">
+            <normaloff>:/icons/documents-16.png</normaloff>:/icons/documents-16.png</iconset>
+          </attribute>
+          <attribute name="title">
+           <string>All funds</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QTreeView" name="tV_funds">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
              </property>
              <property name="sortingEnabled">
               <bool>true</bool>
