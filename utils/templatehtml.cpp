@@ -52,7 +52,7 @@ void TemplateHtml::setVars(const QMap<QString, QVariant> &vars)
 
 void TemplateHtml::print()
 {
-    QPrinter printer(QPrinter::PrinterResolution);
+    QPrinter printer(QPrinter::ScreenResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPageMargins(5, 5, 5, 5, QPrinter::Millimeter);
 

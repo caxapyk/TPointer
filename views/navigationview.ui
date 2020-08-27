@@ -102,6 +102,9 @@
              <property name="sortingEnabled">
               <bool>true</bool>
              </property>
+             <attribute name="headerVisible">
+              <bool>true</bool>
+             </attribute>
             </widget>
            </item>
           </layout>
@@ -131,7 +134,17 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QTreeView" name="tV_fundsCurr"/>
+            <widget class="QTreeView" name="tV_fundsCurr">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="showDropIndicator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="sortingEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

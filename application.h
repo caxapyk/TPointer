@@ -27,7 +27,7 @@ public:
 
     const QString m_orgName = "caxapyk";
     const QString m_appName = "TPointer";
-    const QVariant m_version = "2.0";
+    const QVariant m_version = QVariant(QString::number(APP_VERSION, 'f', 1));
     const QIcon m_icon = QIcon(":/icons/icon.png");
 
 public slots:

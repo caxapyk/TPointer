@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Архивохранил.</translation>
+        <translation>Архивохранил</translation>
     </message>
     <message>
         <source>Compartment</source>
@@ -249,6 +249,18 @@
         <source>Could not print. List is empty!</source>
         <translation>Не удалось отправить на печать. Список пуст!</translation>
     </message>
+    <message>
+        <source>Export CSV</source>
+        <translation>Экспорт в CSV</translation>
+    </message>
+    <message>
+        <source>untitled.csv</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Spreadsheets (*.csv)</source>
+        <translation>Электронные таблицы (.csv)</translation>
+    </message>
 </context>
 <context>
     <name>EditNodeDialog</name>
@@ -365,7 +377,15 @@
     </message>
     <message>
         <source>Funds (%1)</source>
-        <translation>Фонды (%1)</translation>
+        <translation type="vanished">Фонды (%1)</translation>
+    </message>
+    <message>
+        <source>Funds (0)</source>
+        <translation type="vanished">Фонды (0)</translation>
+    </message>
+    <message>
+        <source>Funds</source>
+        <translation>Фонды</translation>
     </message>
 </context>
 <context>
@@ -632,6 +652,38 @@
     <message>
         <source>Current funds</source>
         <translation>Текущие фонды</translation>
+    </message>
+    <message>
+        <source>: All</source>
+        <translation type="vanished">: Все</translation>
+    </message>
+    <message>
+        <source>: %1, %2</source>
+        <translation type="vanished">: %1, %2</translation>
+    </message>
+    <message>
+        <source> (%1)</source>
+        <translation> (%1)</translation>
+    </message>
+    <message>
+        <source>Current funds (%1)</source>
+        <translation>Текущие фонды (%1)</translation>
+    </message>
+    <message>
+        <source>Funds: %1, %2</source>
+        <translation>Фонды: %1, %2</translation>
+    </message>
+    <message>
+        <source>Funds: %1, %2 (comp. %3)</source>
+        <translation type="vanished">Фонды: %1, %2 (пом. %3)</translation>
+    </message>
+    <message>
+        <source>All funds (%1)</source>
+        <translation>Все фонды (%1)</translation>
+    </message>
+    <message>
+        <source>Funds: %1, %2 (%3)</source>
+        <translation>Фонды: %1, %2 (%3)</translation>
     </message>
 </context>
 <context>

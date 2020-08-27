@@ -8,6 +8,7 @@
 #include "models/dataproxymodel.h"
 #include "widgets/itemfilter.h"
 #include "widgets/buttonscontrol.h"
+#include "utils/templatehtml.h"
 
 #include <QWidget>
 #include <QAbstractItemView>
@@ -41,10 +42,12 @@ private:
     TableModelController *m_tableController;
 
     void initialize() override;
+    void printF(TemplateHtml &templ, QMap<QString, QVariant> vars);
 
 public slots:
     void printF15();
     void printF16();
+    void exportCsv();
 
 private slots:
     void addItem();

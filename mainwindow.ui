@@ -52,7 +52,7 @@
     </widget>
     <widget class="QMenu" name="menuPrint">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="title">
       <string>Print</string>
@@ -199,11 +199,17 @@
    </property>
   </action>
   <action name="action_form15">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Form F-15</string>
    </property>
   </action>
   <action name="action_form16">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Form F-16</string>
    </property>

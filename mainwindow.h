@@ -29,7 +29,9 @@ public:
     void setDisplayRows(int count);
     void updateTotal();
 
-    void dataLoaded();
+    void setExportCsvEnabled(bool e);
+    void setPrintF15Enabled(bool e);
+    void setPrintF16Enabled(bool e);
 
 private:
     Ui::MainWindow *ui;
@@ -48,7 +50,6 @@ private:
 
 private slots:
     void insertNode();
-    void openExportCsv();
     void openFundList();
     void openMainForm();
     void openParam();

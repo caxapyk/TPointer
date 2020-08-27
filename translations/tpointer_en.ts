@@ -230,35 +230,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="168"/>
+        <location filename="../views/dataview.cpp" line="170"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="168"/>
+        <location filename="../views/dataview.cpp" line="170"/>
         <source>Record list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="215"/>
+        <location filename="../views/dataview.cpp" line="217"/>
         <source>Sort by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="224"/>
+        <location filename="../views/dataview.cpp" line="226"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="254"/>
-        <location filename="../views/dataview.cpp" line="278"/>
+        <location filename="../views/dataview.cpp" line="257"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="254"/>
-        <location filename="../views/dataview.cpp" line="278"/>
+        <location filename="../views/dataview.cpp" line="257"/>
         <source>Could not print. List is empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="305"/>
+        <source>Export CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="305"/>
+        <source>untitled.csv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/dataview.cpp" line="305"/>
+        <source>Spreadsheets (*.csv)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -359,6 +372,11 @@
 <context>
     <name>FundTreeModel</name>
     <message>
+        <location filename="../models/fundtreemodel.cpp" line="11"/>
+        <source>Funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../models/fundtreemodel.cpp" line="31"/>
         <source>Pre-Soviet period funds</source>
         <translation type="unfinished"></translation>
@@ -376,11 +394,6 @@
     <message>
         <location filename="../models/fundtreemodel.cpp" line="40"/>
         <source>Others funds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../models/fundtreemodel.cpp" line="64"/>
-        <source>Funds (%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -583,12 +596,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="203"/>
+        <location filename="../mainwindow.ui" line="206"/>
         <source>Form F-15</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="208"/>
+        <location filename="../mainwindow.ui" line="214"/>
         <source>Form F-16</source>
         <translation type="unfinished"></translation>
     </message>
@@ -598,27 +611,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="67"/>
+        <location filename="../mainwindow.cpp" line="68"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="82"/>
+        <location filename="../mainwindow.cpp" line="81"/>
         <source>| Total rows: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="104"/>
+        <location filename="../mainwindow.cpp" line="112"/>
         <source>Showing rows: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="74"/>
+        <location filename="../mainwindow.cpp" line="75"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="89"/>
+        <location filename="../mainwindow.cpp" line="88"/>
         <source> [Search]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -690,23 +703,50 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.ui" line="115"/>
+        <location filename="../views/navigationview.ui" line="118"/>
         <source>Current funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="86"/>
+        <location filename="../views/navigationview.cpp" line="97"/>
         <source>Fund filter...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="113"/>
+        <location filename="../views/navigationview.cpp" line="78"/>
+        <source> (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/navigationview.cpp" line="121"/>
+        <location filename="../views/navigationview.cpp" line="131"/>
+        <location filename="../views/navigationview.cpp" line="235"/>
+        <source>Current funds (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/navigationview.cpp" line="124"/>
+        <source>Funds: %1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/navigationview.cpp" line="134"/>
+        <source>Funds: %1, %2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/navigationview.cpp" line="147"/>
         <source> [%1, Str. %2, Comp. %3, Sh. %4]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="132"/>
+        <location filename="../views/navigationview.cpp" line="188"/>
         <source> [Fund %1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../views/navigationview.cpp" line="231"/>
+        <source>All funds (%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

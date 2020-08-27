@@ -2,7 +2,7 @@ QT       += core gui sql printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++11 file_copies
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -114,9 +114,19 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    tmp/table.css \
-    tmp/table.html
-
 RESOURCES += \
     resources.qrc
+
+COPIES += \
+    templates
+
+VERSION=2.0
+DEFINES += APP_VERSION=$$VERSION
+
+templates.files = $$files(tmp/*.*)
+templates.path = $$OUT_PWD/tmp
+
+QMAKE_TARGET_COMPANY = Alexander Sakharuk
+QMAKE_TARGET_PRODUCT = Archival topographic pointer
+QMAKE_TARGET_DESCRIPTION = Archival topographic pointer
+QMAKE_TARGET_COPYRIGHT = (c) Alexander Sakharuk

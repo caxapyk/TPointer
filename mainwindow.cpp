@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle(windowTitle() + " " + application->version().toString());
 
     initialize();
     restoreAppState();
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // MainWindow actions
     connect(ui->action_new, &QAction::triggered, this, &MainWindow::insertNode);
-    connect(ui->action_csv, &QAction::triggered, this, &MainWindow::openExportCsv);
+    connect(ui->action_csv, &QAction::triggered, m_dataView, &DataView::exportCsv);
     connect(ui->action_form15, &QAction::triggered, m_dataView, &DataView::printF15);
     connect(ui->action_form16, &QAction::triggered, m_dataView, &DataView::printF16);
     connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
@@ -77,8 +78,6 @@ void MainWindow::setupStatusBar()
 void MainWindow::updateTotal()
 {
     DataModel model;
-    model.select();
-
     lb_total->setText(tr("| Total rows: %1").arg(model.count()));
 }
 
@@ -89,14 +88,23 @@ void MainWindow::search(const FilterStruct &filter)
                    + tr(" [Search]"));
 
     navView()->resetCurrentIndexes();
+    setPrintF15Enabled(false);
+    setPrintF16Enabled(false);
 }
 
-
-void MainWindow::dataLoaded()
+void MainWindow::setExportCsvEnabled(bool e)
 {
-    ui->menuPrint->setEnabled(true);
-    ui->action_csv->setEnabled(true);
-    ui->action_pdf->setEnabled(true);
+    ui->action_csv->setEnabled(e);
+}
+
+void MainWindow::setPrintF15Enabled(bool e)
+{
+    ui->action_form15->setEnabled(e);
+}
+
+void MainWindow::setPrintF16Enabled(bool e)
+{
+    ui->action_form16->setEnabled(e);
 }
 
 void MainWindow::setDisplayRows(int count)
@@ -121,14 +129,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
  * Dialogs
  * */
 
-void MainWindow::openExportCsv()
-{
-    //QFileDialog dialog;
-    //QString output_file_location = dialog.getSaveFileName(this, tr("Save File"),
-    //                                                      tr("untitled.csv"),
-    //                                                      tr("Spreadsheets (*.csv)"));
-}
-
 void MainWindow::insertNode()
 {
     InsertNodeDialog dialog;
@@ -139,7 +139,7 @@ void MainWindow::insertNode()
     int res = dialog.exec();
 
     if (res == QDialog::Accepted) {
-        // do something
+        updateTotal();
     }
 }
 

@@ -67,15 +67,15 @@ void NavigationView::initialize()
 
     ui->tV_hierarchy->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(ui->tV_hierarchy, &QTreeView::clicked, this, &NavigationView::hierarchyActivated);
+    connect(ui->tV_hierarchy, &QTreeView::doubleClicked, this, &NavigationView::hierarchyActivated);
     connect(ui->tV_hierarchy, &QMenu::customContextMenuRequested, this, &NavigationView::showHContextMenu);
 
-     /* FundsModel */
+     /* Fund models */
     m_fund_model = new FundTreeModel;
     m_fundc_model = new FundTreeModel;
 
     m_fund_model->select();
-    m_fundc_model->select();
+    ui->tW_funds->setTabText(0, ui->tW_funds->tabText(0) + tr(" (%1)").arg(m_fund_model->sourceModel()->rowCount()));
 
     m_fund_proxymodel = new FundProxyModel;
     m_fund_proxymodel->setSourceModel(m_fund_model);
@@ -87,9 +87,9 @@ void NavigationView::initialize()
     ui->tV_fundsCurr->setModel(m_fundc_proxymodel);
     ui->tV_fundsCurr->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(ui->tV_funds, &QTreeView::clicked, this, &NavigationView::fundActivated);
+    connect(ui->tV_funds, &QTreeView::doubleClicked, this, &NavigationView::fundActivated);
     connect(ui->tV_funds, &QMenu::customContextMenuRequested, this, &NavigationView::showFContextMenu);
-    connect(ui->tV_fundsCurr, &QTreeView::clicked, this, &NavigationView::fundActivated);
+    connect(ui->tV_fundsCurr, &QTreeView::doubleClicked, this, &NavigationView::fundActivated);
     connect(ui->tV_fundsCurr, &QMenu::customContextMenuRequested, this, &NavigationView::showFContextMenu);
 
     // fund filter
@@ -115,8 +115,27 @@ void NavigationView::hierarchyActivated(const QModelIndex &index)
 {
     const HierarchyModel::HierarchyNode *node = static_cast<const HierarchyModel::HierarchyNode*>(index.internalPointer());
 
-    if (node->level == HierarchyModel::ShelvingLevel) {
+    if (node->level == HierarchyModel::StorageLevel) {
+        m_fundc_model->setFilterByStorageCompartment(node->id);
+        m_fundc_model->select();
+        ui->tW_funds->setTabText(1, tr("Current funds (%1)").arg(m_fundc_model->sourceModel()->rowCount()));
 
+        m_fundc_model->setHeaderData(0, Qt::Horizontal,
+                                     tr("Funds: %1, %2")
+                                     .arg(node->parent->name.toString()) // corpus
+                                     .arg(node->name.toString())); // storage
+
+    } else if (node->level == HierarchyModel::CompartmentLevel) {
+        m_fundc_model->setFilterByStorageCompartment(node->parent->id, node->name);
+        m_fundc_model->select();
+        ui->tW_funds->setTabText(1, tr("Current funds (%1)").arg(m_fundc_model->sourceModel()->rowCount()));
+
+        m_fundc_model->setHeaderData(0, Qt::Horizontal,
+                                     tr("Funds: %1, %2 (%3)")
+                                     .arg(node->parent->parent->name.toString()) // corpus
+                                     .arg(node->parent->name.toString()) // storage
+                                     .arg(node->name.toString())); // compartment
+    } else if (node->level == HierarchyModel::ShelvingLevel) {
         FilterStruct filter;
         filter.corpus = node->parent->parent->parent->id;
         filter.storage = node->parent->parent->id;
@@ -130,6 +149,9 @@ void NavigationView::hierarchyActivated(const QModelIndex &index)
                        .arg(node->parent->parent->name.toString())
                        .arg(node->parent->name.toString())
                        .arg(node->name.toString()));
+
+        application->mainWindow()->setPrintF15Enabled(true);
+        application->mainWindow()->setPrintF16Enabled(false);
     }
 
     ui->tV_funds->setCurrentIndex(QModelIndex());
@@ -149,6 +171,15 @@ void NavigationView::fundActivated(const QModelIndex &index)
 {
     if (index.parent().isValid()) {
         FilterStruct filter;
+
+        // filter by storage(and compartment) only in second tab
+        if(ui->tW_funds->currentIndex() > 0) {
+            filter.storage = m_fundc_model->getStorage();
+            filter.compartment = m_fundc_model->getCompartment();
+            application->mainWindow()->setPrintF16Enabled(true);
+        } else {
+            application->mainWindow()->setPrintF16Enabled(false);
+        }
         filter.fund = index.data(Qt::UserRole + 1);
         filter.fund_strict = true;
 
@@ -157,6 +188,11 @@ void NavigationView::fundActivated(const QModelIndex &index)
                        + tr(" [Fund %1]")
                        .arg(index.data().toString()));
 
+        application->mainWindow()->setPrintF15Enabled(false);
+    }
+
+    // clear hierarchy selection if fund selected from `all funds` list
+    if(ui->tW_funds->currentIndex() == 0) {
         ui->tV_hierarchy->setCurrentIndex(QModelIndex());
     }
 }
@@ -186,14 +222,18 @@ void NavigationView::showHContextMenu(const QPoint&)
     menu.exec(QCursor().pos());
 }
 
-void NavigationView::showFContextMenu(const QPoint &point)
+void NavigationView::showFContextMenu(const QPoint&)
 {
     CustomContextMenu menu(CustomContextMenu::Refresh);
     connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
-        if(ui->tV_funds->indexAt(point).isValid()) {
+        if(ui->tW_funds->currentIndex() == 0) {
             m_fund_model->select();
-        } else if(ui->tV_fundsCurr->indexAt(point).isValid()) {
+            ui->tW_funds->setTabText(0, tr("All funds (%1)").arg(m_fund_model->sourceModel()->rowCount()));
+        } else {
+            if(m_fundc_model->sourceModel()->rowCount() > 0) {
             m_fundc_model->select();
+            ui->tW_funds->setTabText(1, tr("Current funds (%1)").arg(m_fundc_model->sourceModel()->rowCount()));
+            }
         }
     });
 

@@ -1,5 +1,4 @@
 #include "fundtreemodel.h"
-#include "fundmodel.h"
 
 #include <QRegExp>
 #include <QStandardItem>
@@ -9,11 +8,16 @@
 FundTreeModel::FundTreeModel() : QStandardItemModel()
 {
     setColumnCount(1);
-    setHeaderData(0, Qt::Horizontal, tr("Funds (0)"));
+    setHeaderData(0, Qt::Horizontal, tr("Funds"));
+
+    m_model = new FundModel;
+
+    initialize();
 }
 
 FundTreeModel::~FundTreeModel()
 {
+    delete m_model;
     delete f_pre_soviet;
     delete f_soviet;
     delete f_consignment;
@@ -22,13 +26,8 @@ FundTreeModel::~FundTreeModel()
     clear();
 }
 
-void FundTreeModel::select()
+void FundTreeModel::initialize()
 {
-    clear();
-
-    FundModel model;
-    model.select();
-
     f_pre_soviet = new QStandardItem(tr("Pre-Soviet period funds"));
     setItem(0, 0, f_pre_soviet);
 
@@ -40,17 +39,27 @@ void FundTreeModel::select()
 
     f_others = new QStandardItem(tr("Others funds"));
     setItem(3, 0, f_others);
+}
 
-    for (int i=0; i<model.rowCount(); ++i) {
-        QStandardItem *item = new QStandardItem(model.record(i).value(1).toString());
+void FundTreeModel::select()
+{
+    QVariant col0Header = headerData(0, Qt::Horizontal);
 
-        QVariant id = model.record(i).value(0);
-        QVariant value = model.record(i).value(1);
+    clear();
+    initialize();
+
+    m_model->select();
+
+    for (int i=0; i<m_model->rowCount(); ++i) {
+        QStandardItem *item = new QStandardItem(m_model->record(i).value(1).toString());
+
+        QVariant id = m_model->record(i).value(0);
+        QVariant value = m_model->record(i).value(1);
 
         if(value.toString().contains(QRegExp("^\\d+$"))) {
             f_pre_soviet->appendRow(item);
             item->setData(id);
-        } else if(value.toString().contains(QRegExp("[Р|P]+"))) {// russian|english
+        } else if(value.toString().contains(QRegExp("[Р|P]+"))) { // russian|english
             f_soviet->appendRow(item);
             item->setData(id);
         } else if(value.toString().contains(QRegExp("П+"))) {
@@ -62,7 +71,19 @@ void FundTreeModel::select()
         }
     }
 
-    setHeaderData(0, Qt::Horizontal, tr("Funds (%1)").arg(model.rowCount()));
+    setHeaderData(0, Qt::Horizontal, col0Header);
+}
+
+void FundTreeModel::setFilterByStorageCompartment(const QVariant &storage, const QVariant &comp)
+{
+    QString filter = QString("fund.`id` IN (SELECT fund.`id` FROM fund LEFT JOIN tpointer on tpointer.`fund`=fund.`id` WHERE tpointer.`storage`=%1 %2)")
+            .arg(storage.toString())
+            .arg((comp.isNull()) ? "" : QString(" AND tpointer.`compartment`=%1").arg(comp.toString()));
+
+    m_model->setFilter(filter);
+
+    storageId = storage;
+    compart = comp;
 }
 
 QVariant FundTreeModel::data(const QModelIndex &index, int role) const

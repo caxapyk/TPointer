@@ -7,9 +7,9 @@
 #include "dialogs/movenodedialog.h"
 #include "models/fundmodel.h"
 #include "widgets/customcontextmenu.h"
-#include "utils/templatehtml.h"
 
 #include <QDebug>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QPainter>
 #include <QPrinter>
@@ -112,7 +112,7 @@ void DataView::loadData(const FilterStruct &filter)
     m_itemFilter->clear(); // clear every time model has changed
 
     application->mainWindow()->setDisplayRows(m_model->rowCount());
-    application->mainWindow()->dataLoaded();
+    application->mainWindow()->setExportCsvEnabled(true);
 }
 
 void DataView::addItem()
@@ -123,7 +123,7 @@ void DataView::addItem()
     int res = dialog.exec();
 
     if (res == QDialog::Accepted) {
-        // do something
+        application->mainWindow()->updateTotal();
     }
 }
 
@@ -164,7 +164,9 @@ void DataView::removeItems()
 
     if (res == QMessageBox::Yes) {
         QModelIndexList indexes = ui->tV_dataTable->selectionModel()->selectedRows();
-        if (!m_proxyModel->removeRows(indexes.at(0).row(), indexes.length())) {
+        if (m_proxyModel->removeRows(indexes.at(0).row(), indexes.length())) {
+            application->mainWindow()->updateTotal();
+        } else {
             QMessageBox::warning(this, tr("Record list"), tr("Could not remove item"), QMessageBox::Ok);
         }
     }
@@ -235,46 +237,103 @@ void DataView::showContextMenu(const QPoint&)
     delete moveAction;
 }
 
-void DataView::printF15()
+void DataView::printF(TemplateHtml &templ, QMap<QString, QVariant> vars)
 {
     if(m_proxyModel->rowCount() > 0) {
-        QMap<QString, QVariant> vars;
-        TemplateHtml th("tmp/f15");
+        // floors
+        QStringList floors;
+        for(int i = 0; i < m_proxyModel->rowCount(); ++i) {
+            QString floor = m_proxyModel->index(i, 3).data().toString();
+            if(!floors.contains(floor)) {
+                floors.append(floor);
+            }
+        }
 
-        vars.insert("[[shelving]]", m_proxyModel->index(0, 5).data());
-        vars.insert("[[corpus]]", m_proxyModel->index(0, 1).data());
-        vars.insert("[[floor]]",  m_proxyModel->index(0, 3).data());
-        vars.insert("[[storage]]",  m_proxyModel->index(0, 2).data());
-        vars.insert("[[compartment]]",  m_proxyModel->index(0, 4).data());
-        vars.insert("[[rows]]", th.makeTableRows(m_proxyModel, QVector<int>() << 6 << 7 << 8 << 9 << 10 << 11));
-        th.setVars(vars);
+        vars.insert("[[floor]]",  floors.join(","));
 
-        th.print();
+        templ.setVars(vars);
+        templ.print();
     } else {
         QMessageBox::warning(this, tr("Print"), tr("Could not print. List is empty!"), QMessageBox::Ok);
     }
 }
 
+void DataView::printF15()
+{
+    QMap<QString, QVariant> vars;
+    TemplateHtml th("tmp/f15");
+
+    vars.insert("[[shelving]]", m_proxyModel->index(0, 5).data());
+    vars.insert("[[corpus]]", m_proxyModel->index(0, 1).data());
+    vars.insert("[[storage]]",  m_proxyModel->index(0, 2).data());
+    vars.insert("[[compartment]]",  m_proxyModel->index(0, 4).data());
+
+    vars.insert("[[rows]]", th.makeTableRows(m_proxyModel, QVector<int>() << 6 << 7 << 8 << 9 << 10 << 11));
+
+    printF(th, vars);
+}
+
 void DataView::printF16()
 {
-    if(m_model->rowCount() > 0) {
-        QMap<QString, QVariant> vars;
-        TemplateHtml th("tmp/f16");
+    QMap<QString, QVariant> vars;
+    TemplateHtml th("tmp/f16");
 
-        for(int i = 0; i < m_proxyModel->rowCount(); ++i) {
+    vars.insert("[[fundname]]", FundModel::getFundName(m_model->index(0, 8).data().toString()));
+    vars.insert("[[fund]]", m_model->index(0, 8).data());
+    vars.insert("[[corpus]]", m_model->index(0, 1).data());
+    vars.insert("[[storage]]",  m_model->index(0, 2).data());
+
+    // check if rows in the same compartment, otherwise make empty var
+    QVariant comp = m_proxyModel->index(0, 4).data();
+    int cc = 0;
+    for(int i = 0; i < m_proxyModel->rowCount(); ++i) {
+        if(comp != m_proxyModel->index(i, 4).data()) {
+            ++cc;
+            break;
+        }
+    }
+    vars.insert("[[compartment]]",  cc == 0 ? m_proxyModel->index(0, 4).data() : "");
+
+    vars.insert("[[rows]]", th.makeTableRows(m_model, QVector<int>() << 9 << 10 << 5 << 6 << 7 << 11));
+
+    printF(th, vars);
+}
+
+void DataView::exportCsv()
+{
+    QFileDialog dialog;
+    QString location = dialog.getSaveFileName(this, tr("Export CSV"), tr("untitled.csv"), tr("Spreadsheets (*.csv)"));
+
+    QFile file(location);
+
+    if(file.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(&file);
+
+        /* header */
+        QStringList header;
+        for(int i = 0; i < m_proxyModel->columnCount(); ++i)
+        {
+            header<< m_proxyModel->headerData(i, Qt::Horizontal).toString();
+        }
+        stream << header.join(";") + "\n";
+
+        /* rows */
+        QStringList row;
+        for(int i = 0; i < m_proxyModel->rowCount(); ++i)
+        {
+            row.clear();
+            for(int column = 0; column < m_proxyModel->columnCount(); ++column )
+            {
+                QString value = m_proxyModel->index(i, column).data().toString();
+                value.replace(";", ",");
+                value.replace("\"", "'");
+
+                row << value;
+            }
+            stream << row.join(";") + "\n";
         }
 
-        vars.insert("[[fundname]]", FundModel::getFundName(m_model->index(0, 8).data().toString()));
-        vars.insert("[[fund]]", m_model->index(0, 8).data());
-        vars.insert("[[corpus]]", m_model->index(0, 1).data());
-        vars.insert("[[floor]]",  m_model->index(0, 3).data());
-        vars.insert("[[storage]]",  m_model->index(0, 2).data());
-        vars.insert("[[compartment]]",  m_model->index(0, 4).data());
-        vars.insert("[[rows]]", th.makeTableRows(m_model, QVector<int>() << 9 << 10 << 5 << 6 << 7 << 11));
-        th.setVars(vars);
-
-        th.print();
-    } else {
-        QMessageBox::warning(this, tr("Print"), tr("Could not print. List is empty!"), QMessageBox::Ok);
+        file.close();
     }
 }
