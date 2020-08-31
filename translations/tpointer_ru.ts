@@ -781,23 +781,39 @@
     </message>
     <message>
         <source>Corpus&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation>Корпус №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+        <translation type="vanished">Корпус №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
     </message>
     <message>
         <source>Floor&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation>Этаж №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+        <translation type="vanished">Этаж №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
     </message>
     <message>
         <source>Storage&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation>Архивохранил. №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+        <translation type="vanished">Архивохранил. №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
     </message>
     <message>
         <source>Fund&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation>Фонд №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
+        <translation type="vanished">Фонд №&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</translation>
     </message>
     <message>
         <source>&lt;span style=&quot;color:gray;font-size:12px;font-style:italic;&quot;&gt;Required fields are marked (&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;)&lt;/span&gt;</source>
-        <translation>&lt;span style=&quot;color:gray;font-size:12px;font-style:italic;&quot;&gt;Обязательные поля помечены звездочкой (&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;)&lt;/span&gt;</translation>
+        <translation type="vanished">&lt;span style=&quot;color:gray;font-size:12px;font-style:italic;&quot;&gt;Обязательные поля помечены звездочкой (&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;)&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <source>Corpus&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation>Корпус&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <source>Floor&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation>Этаж&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <source>Storage&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation>Архивохранил.&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <source>Fund&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation>Фонд&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</translation>
     </message>
 </context>
 <context>

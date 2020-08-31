@@ -698,12 +698,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.ui" line="79"/>
+        <location filename="../views/navigationview.ui" line="118"/>
         <source>All funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.ui" line="118"/>
+        <location filename="../views/navigationview.ui" line="79"/>
         <source>Current funds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -720,7 +720,7 @@
     <message>
         <location filename="../views/navigationview.cpp" line="121"/>
         <location filename="../views/navigationview.cpp" line="131"/>
-        <location filename="../views/navigationview.cpp" line="235"/>
+        <location filename="../views/navigationview.cpp" line="231"/>
         <source>Current funds (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -740,12 +740,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="188"/>
+        <location filename="../views/navigationview.cpp" line="187"/>
         <source> [Fund %1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/navigationview.cpp" line="231"/>
+        <location filename="../views/navigationview.cpp" line="235"/>
         <source>All funds (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -761,103 +761,98 @@
 <context>
     <name>NodeDialog</name>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="32"/>
+        <location filename="../dialogs/nodedialog.ui" line="38"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="46"/>
+        <location filename="../dialogs/nodedialog.ui" line="52"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="59"/>
+        <location filename="../dialogs/nodedialog.ui" line="58"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="85"/>
-        <source>Corpus&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/nodedialog.ui" line="92"/>
-        <source>Floor&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/nodedialog.ui" line="102"/>
-        <location filename="../dialogs/nodedialog.ui" line="164"/>
+        <location filename="../dialogs/nodedialog.ui" line="101"/>
+        <location filename="../dialogs/nodedialog.ui" line="163"/>
         <source>=0, if empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="141"/>
+        <location filename="../dialogs/nodedialog.ui" line="140"/>
         <source>Shelf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="154"/>
-        <source>Storage&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/nodedialog.ui" line="191"/>
+        <location filename="../dialogs/nodedialog.ui" line="190"/>
         <source>Cupboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="217"/>
-        <source>Fund&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/nodedialog.ui" line="184"/>
+        <location filename="../dialogs/nodedialog.ui" line="183"/>
         <source>Shelving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="52"/>
-        <source>&lt;span style=&quot;color:gray;font-size:12px;font-style:italic;&quot;&gt;Required fields are marked (&lt;sup style=&quot;color:red;&quot;&gt;*&lt;/sup&gt;)&lt;/span&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/nodedialog.ui" line="65"/>
+        <location filename="../dialogs/nodedialog.ui" line="64"/>
         <source>Compartment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="211"/>
+        <location filename="../dialogs/nodedialog.ui" line="84"/>
+        <source>Corpus&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/nodedialog.ui" line="91"/>
+        <source>Floor&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/nodedialog.ui" line="153"/>
+        <source>Storage&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/nodedialog.ui" line="210"/>
         <source>Content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="257"/>
+        <location filename="../dialogs/nodedialog.ui" line="216"/>
+        <source>Fund&lt;span style=&quot;color:red;&quot;&gt;*&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/nodedialog.ui" line="256"/>
         <source>Choose fund</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="276"/>
+        <location filename="../dialogs/nodedialog.ui" line="275"/>
         <source>Inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="299"/>
+        <location filename="../dialogs/nodedialog.ui" line="298"/>
         <source>Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="322"/>
+        <location filename="../dialogs/nodedialog.ui" line="321"/>
         <source>Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="343"/>
+        <location filename="../dialogs/nodedialog.ui" line="342"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="349"/>
+        <location filename="../dialogs/nodedialog.ui" line="348"/>
         <source>Note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -925,48 +920,48 @@
 <context>
     <name>SearchDialog</name>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="26"/>
-        <location filename="../dialogs/searchdialog.ui" line="224"/>
+        <location filename="../dialogs/searchdialog.ui" line="32"/>
+        <location filename="../dialogs/searchdialog.ui" line="230"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="51"/>
+        <location filename="../dialogs/searchdialog.ui" line="57"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="61"/>
+        <location filename="../dialogs/searchdialog.ui" line="67"/>
         <source>Compartment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="68"/>
+        <location filename="../dialogs/searchdialog.ui" line="74"/>
         <source>Shelving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="110"/>
+        <location filename="../dialogs/searchdialog.ui" line="116"/>
         <source>=0, if empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="135"/>
+        <location filename="../dialogs/searchdialog.ui" line="141"/>
         <source>Fund №</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="158"/>
+        <location filename="../dialogs/searchdialog.ui" line="164"/>
         <source>Strict compliance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="183"/>
+        <location filename="../dialogs/searchdialog.ui" line="189"/>
         <source>Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/searchdialog.ui" line="211"/>
+        <location filename="../dialogs/searchdialog.ui" line="217"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
