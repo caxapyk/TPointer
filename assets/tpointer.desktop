@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=2.0
+Type=Application
+Name=Архивный топографический указатель 2.0
+Comment=
+Exec=TPointer.sh -h localhost -d tpointer -u tpointer -p password
+Icon=icon.ico
+Path=
+Terminal=false
+StartupNotify=false
