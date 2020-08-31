@@ -118,7 +118,9 @@ RESOURCES += \
     resources.qrc
 
 COPIES += \
-    templates
+    templates \
+    assets \
+    libs
 
 VERSION=2.0
 DEFINES += APP_VERSION=$$VERSION
@@ -126,7 +128,16 @@ DEFINES += APP_VERSION=$$VERSION
 templates.files = $$files(tmp/*.*)
 templates.path = $$OUT_PWD/tmp
 
+assets.files = $$files(assets/*.*)
+assets.path = $$OUT_PWD
+
+libs.files = $$files(libs/*.*)
+libs.path = $$OUT_PWD
+
 QMAKE_TARGET_COMPANY = Alexander Sakharuk
 QMAKE_TARGET_PRODUCT = Archival topographic pointer
 QMAKE_TARGET_DESCRIPTION = Archival topographic pointer
 QMAKE_TARGET_COPYRIGHT = (c) Alexander Sakharuk
+
+DISTFILES += \
+    assets/TPointer.sh
