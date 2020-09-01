@@ -142,4 +142,5 @@ QMAKE_TARGET_COPYRIGHT = (c) Alexander Sakharuk
 DISTFILES += \
     assets/LICENSE \
     assets/TPointer.bat \
-    assets/TPointer.sh
+    assets/TPointer.sh \
+    sync_v1.sh

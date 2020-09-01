@@ -16,11 +16,6 @@ FundTreeModel::FundTreeModel() : QStandardItemModel()
 FundTreeModel::~FundTreeModel()
 {
     delete m_model;
-    delete f_pre_soviet;
-    delete f_soviet;
-    delete f_consignment;
-    delete f_others;
-
     clear();
 }
 
