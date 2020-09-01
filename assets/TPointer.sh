@@ -17,4 +17,4 @@ dirname=$PWD/$dirname
 fi
 LD_LIBRARY_PATH=$dirname
 export LD_LIBRARY_PATH
-$dirname/$appname "-h ${server} -d ${db} -u ${user} -p ${password} $@"
+$dirname/$appname -h ${server} -d ${db} -u ${user} -p ${password} $@
