@@ -30,6 +30,7 @@ public:
 
     void loadData(const FilterStruct &filter);
     DataModel *model() { return m_model; };
+    void clearView();
 
 private:
     Ui::DataView *ui;

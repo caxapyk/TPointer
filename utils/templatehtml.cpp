@@ -14,6 +14,7 @@ TemplateHtml::TemplateHtml(const QString &path, QObject *parent) : QObject(paren
 
     if (tmpl.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream tmpl_stream(&tmpl);
+        tmpl_stream.setCodec("UTF-8");
         m_html = tmpl_stream.readAll();
 
         tmpl.close();
@@ -21,6 +22,7 @@ TemplateHtml::TemplateHtml(const QString &path, QObject *parent) : QObject(paren
 
     if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stylesheet_stream(&stylesheet);
+        stylesheet_stream.setCodec("UTF-8");
         m_stylesheet = stylesheet_stream.readAll();
 
         stylesheet.close();

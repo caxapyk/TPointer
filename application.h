@@ -22,6 +22,7 @@ public:
     QIcon icon() const{ return m_icon; };
     QString basename() { return QString(tr("Archival topographic pointer %1").arg(version().toString())); };
     MainWindow *mainWindow() { return m_mainWindow; };
+    void connect();
 
     QString server_address;
 
@@ -39,9 +40,10 @@ private:
      */
     void initializeSettings();
     void initializeLanguage();
+    void initMainWindow();
 
-    QSettings *m_settings;
-    MainWindow *m_mainWindow;
+    QSettings *m_settings = nullptr;
+    MainWindow *m_mainWindow = nullptr;
     QTranslator *qtTranslator;
     QTranslator *appTranslator;
 };

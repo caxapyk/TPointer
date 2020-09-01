@@ -11,8 +11,6 @@ FundTreeModel::FundTreeModel() : QStandardItemModel()
     setHeaderData(0, Qt::Horizontal, tr("Funds"));
 
     m_model = new FundModel;
-
-    initialize();
 }
 
 FundTreeModel::~FundTreeModel()

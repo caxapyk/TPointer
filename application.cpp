@@ -6,9 +6,10 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QIcon>
+#include <QLibraryInfo>
 #include <QMessageBox>
 #include <QStringList>
-#include <QLibraryInfo>
+#include <QTimer>
 
 Application* application = nullptr;
 
@@ -19,6 +20,25 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
     initializeSettings();
     initializeLanguage();
 
+    QTimer::singleShot(0, this, &Application::connect);
+}
+
+Application::~Application()
+{
+    delete m_mainWindow;
+    delete m_settings;
+    delete qtTranslator;
+    delete appTranslator;
+}
+
+void Application::initMainWindow()
+{
+    m_mainWindow = new MainWindow;
+    m_mainWindow->show();
+}
+
+void Application::connect()
+{
     QCommandLineParser parser;
     parser.setApplicationDescription(tr("Archival topographic pointer"));
     parser.addVersionOption();
@@ -43,21 +63,12 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
                      parser.value(usernameOption),
                      parser.value(passwordOption));
 
-        m_mainWindow = new MainWindow;
-        m_mainWindow->show();
-
+        initMainWindow();
     } catch (ConnectionExeption e) {
         qCritical() << QString(e.p);
-        exit(EXIT_FAILURE);
+        QMessageBox::critical(nullptr, tr("Database connection"), tr("Could not connect to database"));
+        QCoreApplication::exit(EXIT_FAILURE);
     }
-}
-
-Application::~Application()
-{
-    delete m_mainWindow;
-    delete m_settings;
-    delete qtTranslator;
-    delete appTranslator;
 }
 
 void Application::initializeSettings()

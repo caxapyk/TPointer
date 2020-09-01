@@ -26,12 +26,12 @@ public:
 
     DataView* dataView() { return m_dataView; };
     NavigationView* navView() { return m_navView; };
-    void setDisplayRows(int count);
-    void updateTotal();
 
     void setExportCsvEnabled(bool e);
     void setPrintF15Enabled(bool e);
     void setPrintF16Enabled(bool e);
+    void setDisplayRows(int count);
+    void updateTotal();
 
 private:
     Ui::MainWindow *ui;
@@ -44,8 +44,9 @@ private:
 
     SearchDialog *search_dialog = nullptr;
 
-    void restoreAppState();
+
     void initialize();
+    void restoreAppState();
     void setupStatusBar();
 
 private slots:

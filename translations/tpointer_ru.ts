@@ -54,6 +54,14 @@
         <source>Archival topographic pointer %1</source>
         <translation>Архивный топографический указатель %1</translation>
     </message>
+    <message>
+        <source>Database connection</source>
+        <translation>Database connection</translation>
+    </message>
+    <message>
+        <source>Could not connect to database</source>
+        <translation>Не удалось соединиться с базой данных</translation>
+    </message>
 </context>
 <context>
     <name>ButtonsControl</name>

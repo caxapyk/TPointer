@@ -216,6 +216,13 @@ void NavigationView::showHContextMenu(const QPoint&)
     connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
         m_hierarchy_model->select();
         ui->tV_hierarchy->expandToDepth(0);
+
+        // clear current funds
+        m_fundc_model->clear();
+        ui->tW_funds->setTabText(0, tr("Current funds"));
+
+        // clear DataView
+        application->mainWindow()->dataView()->clearView();
     });
 
     menu.exec(QCursor().pos());

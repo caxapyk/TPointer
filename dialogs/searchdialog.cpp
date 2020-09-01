@@ -72,6 +72,8 @@ void SearchDialog::search()
                     feature_model->index(
                         ui->cB_feature->currentIndex()-1,0)) : QVariant();
 
+    fs.isSearch = true;
+
     emit searched(fs);
 }
 

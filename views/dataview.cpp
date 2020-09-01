@@ -103,8 +103,9 @@ void DataView::loadData(const FilterStruct &filter)
 
     m_buttonsControl->assetView(ui->tV_dataTable);
 
-    // disable add record on fund selected
-    m_buttonsControl->setEnabled(filter.fund.isNull(), ButtonsControl::Add);
+    // disable add record on fund selected or searched
+
+    m_buttonsControl->setEnabled((!filter.isSearch) ? filter.fund.isNull() : false, ButtonsControl::Add);
     m_buttonsControl->setEnabled(true, ButtonsControl::Refresh);
 
     // enable filter widget
@@ -113,6 +114,15 @@ void DataView::loadData(const FilterStruct &filter)
 
     application->mainWindow()->setDisplayRows(m_model->rowCount());
     application->mainWindow()->setExportCsvEnabled(true);
+}
+
+void DataView::clearView()
+{
+    QSortFilterProxyModel model;
+    ui->tV_dataTable->setModel(&model);
+
+    m_buttonsControl->setEnabled(false, ButtonsControl::Add);
+    m_buttonsControl->setEnabled(false, ButtonsControl::Refresh);
 }
 
 void DataView::addItem()
@@ -203,8 +213,8 @@ void DataView::showContextMenu(const QPoint&)
     connect(&menu, &CustomContextMenu::editRequested, this, &DataView::editItem);
     connect(&menu, &CustomContextMenu::removeRequested, this, &DataView::removeItems);
 
-    // disable add record on fund selected
-    if(m_model->filterStruct().fund.isValid()) {
+    // disable add record on fund selected or searched
+    if(m_model->filterStruct().isSearch || m_model->filterStruct().fund.isValid()) {
         menu.action(CustomContextMenu::Add)->setDisabled(true);
     }
 

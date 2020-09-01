@@ -24,10 +24,10 @@ private:
 
     FundModel *m_model;
 
-    QStandardItem *f_pre_soviet;
-    QStandardItem *f_soviet;
-    QStandardItem *f_consignment;
-    QStandardItem *f_others;
+    QStandardItem *f_pre_soviet = nullptr;
+    QStandardItem *f_soviet = nullptr;
+    QStandardItem *f_consignment = nullptr;
+    QStandardItem *f_others = nullptr;
 
     QVariant storageId;
     QVariant compart;
