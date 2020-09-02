@@ -20,6 +20,7 @@ SOURCES += \
     connection.cpp \
     dialogs/addnodedialog.cpp \
     dialogs/editnodedialog.cpp \
+    dialogs/featuresdialog.cpp \
     dialogs/fundlistdialog.cpp \
     dialogs/insertnodedialog.cpp \
     dialogs/intdelegate.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
     dialogs/nodedialog.cpp \
     dialogs/paramdialog.cpp \
     dialogs/searchdialog.cpp \
+    dialogs/syncdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     models/corpusmodel.cpp \
@@ -60,6 +62,7 @@ HEADERS += \
     connection.h \
     dialogs/addnodedialog.h \
     dialogs/editnodedialog.h \
+    dialogs/featuresdialog.h \
     dialogs/fundlistdialog.h \
     dialogs/insertnodedialog.h \
     dialogs/intdelegate.h \
@@ -69,6 +72,7 @@ HEADERS += \
     dialogs/nodedialog.h \
     dialogs/paramdialog.h \
     dialogs/searchdialog.h \
+    dialogs/syncdialog.h \
     mainwindow.h \
     models/corpusmodel.h \
     models/datamodel.h \
@@ -96,11 +100,13 @@ HEADERS += \
     widgets/itemfilter.h
 
 FORMS += \
+    dialogs/featuresdialog.ui \
     dialogs/fundlistdialog.ui \
     dialogs/movenodedialog.ui \
     dialogs/nodedialog.ui \
     dialogs/paramdialog.ui \
     dialogs/searchdialog.ui \
+    dialogs/syncdialog.ui \
     mainwindow.ui \
     views/dataview.ui \
     views/navigationview.ui

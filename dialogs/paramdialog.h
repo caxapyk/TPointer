@@ -1,8 +1,8 @@
 #ifndef PARAMDIALOG_H
 #define PARAMDIALOG_H
 
-#include "views/tablemodelcontroller.h"
 #include "models/tablemodel.h"
+#include "views/tablemodelcontroller.h"
 #include "widgets/buttonscontrol.h"
 
 namespace Ui {
@@ -21,17 +21,15 @@ private:
     void setupControls();
     void setupModels();
     void loadCorpuses();
-    void loadFeatures();
+
     void loadStorages(QVariant id);
 
     Ui::ParamDialog *ui;
     TableModel *m_corpus_model;
     TableModel *m_storage_model;
-    TableModel *m_feature_model;
 
     ButtonsControl *cp_controls;
     ButtonsControl *st_controls;
-    ButtonsControl *ft_controls;
 
     TableModelController *controller;
 

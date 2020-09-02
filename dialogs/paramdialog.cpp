@@ -4,7 +4,6 @@
 #include "intlistdelegate.h"
 #include "models/corpusmodel.h"
 #include "models/storagemodel.h"
-#include "models/featuremodel.h"
 
 #include <QDebug>
 #include <QModelIndexList>
@@ -23,7 +22,6 @@ ParamDialog::ParamDialog(QWidget *parent) :
     setupControls();
 
     loadCorpuses();
-    loadFeatures();
 
     /* triggers for placement tab */
 
@@ -37,15 +35,7 @@ ParamDialog::ParamDialog(QWidget *parent) :
     connect(st_controls, &ButtonsControl::addRequested, this,  &ParamDialog::createItem);
     connect(st_controls, &ButtonsControl::removeRequested, this,  &ParamDialog::removeItem);
     connect(st_controls, &ButtonsControl::upRequested, this,  &ParamDialog::moveUp);
-    connect(st_controls, &ButtonsControl::downRequested, this,  &ParamDialog::moveDown);
-
-    /* triggers for other tab */
-
-    // features
-    connect(ft_controls, &ButtonsControl::addRequested, this,  &ParamDialog::createItem);
-    connect(ft_controls, &ButtonsControl::removeRequested, this,  &ParamDialog::removeItem);
-    connect(ft_controls, &ButtonsControl::upRequested, this,  &ParamDialog::moveUp);
-    connect(ft_controls, &ButtonsControl::downRequested, this,  &ParamDialog::moveDown);
+    connect(st_controls, &ButtonsControl::downRequested, this,  &ParamDialog::moveDown);    
 }
 
 ParamDialog::~ParamDialog()
@@ -53,12 +43,8 @@ ParamDialog::~ParamDialog()
     delete ui;
     delete m_corpus_model;
     delete m_storage_model;
-    delete m_feature_model;
-
     delete cp_controls;
     delete st_controls;
-    delete ft_controls;
-
     delete controller;
 }
 
@@ -70,19 +56,16 @@ void ParamDialog::setupControls()
     st_controls = new ButtonsControl(
                 ButtonsControl::Add | ButtonsControl::Remove | ButtonsControl::Up | ButtonsControl::Down);
 
-    ft_controls = new ButtonsControl(
-                ButtonsControl::Add | ButtonsControl::Remove | ButtonsControl::Up | ButtonsControl::Down);
+
 
     ui->gB_corpuses->layout()->addWidget(cp_controls);
     ui->gB_storages->layout()->addWidget(st_controls);
-    ui->gB_features->layout()->addWidget(ft_controls);
 }
 
 void ParamDialog::setupModels()
 {
     m_corpus_model = new CorpusModel;
     m_storage_model = new StorageModel;
-    m_feature_model = new FeatureModel;
 }
 
 void ParamDialog::loadCorpuses() {
@@ -136,22 +119,6 @@ void ParamDialog::loadStorages(QVariant id)
         st_controls->assetView(ui->tV_storages);
         st_controls->setEnabled(true, ButtonsControl::Add);
     }
-}
-
-void ParamDialog::loadFeatures() {
-    m_feature_model->select();
-
-    m_feature_model->setHeaderData(2, Qt::Horizontal, tr("Name"));
-
-    ui->tV_features->setModel(m_feature_model);
-
-    ui->tV_features->hideColumn(0);
-    ui->tV_features->hideColumn(1);
-
-    ui->tV_features->setColumnWidth(2, 200);
-
-    ft_controls->assetView(ui->tV_features);
-    ft_controls->setEnabled(true, ButtonsControl::Add);
 }
 
 void ParamDialog::createItem(QAbstractItemView *view)

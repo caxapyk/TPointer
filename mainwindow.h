@@ -32,6 +32,7 @@ public:
     void setPrintF16Enabled(bool e);
     void setDisplayRows(int count);
     void updateTotal();
+    QAction* getMenuAction(const QString &name);
 
 private:
     Ui::MainWindow *ui;
@@ -48,13 +49,16 @@ private:
     void initialize();
     void restoreAppState();
     void setupStatusBar();
+    void setupToolBar();
 
 private slots:
     void insertNode();
+    void openFeatures();
     void openFundList();
     void openMainForm();
     void openParam();
     void openSearch();
+    void openSync();
     void search(const FilterStruct &filter);
 
 protected:

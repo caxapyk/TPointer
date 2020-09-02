@@ -92,8 +92,12 @@ int DataModel::count() const
     QSqlQuery query("SELECT COUNT(id) from tpointer");
     query.exec();
 
-    query.first();
-    return query.value(0).toInt();
+    if(query.size() > 0) {
+        query.first();
+        return query.value(0).toInt();
+    }
+
+    return 0;
 }
 
 QVariant DataModel::data(const QModelIndex &index, int role) const

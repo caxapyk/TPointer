@@ -76,23 +76,47 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="separator"/>
-    <addaction name="separator"/>
     <addaction name="action_search"/>
+    <addaction name="separator"/>
+    <addaction name="action_mAdd"/>
+    <addaction name="action_mEdit"/>
+    <addaction name="action_mRemove"/>
+    <addaction name="separator"/>
+    <addaction name="action_mRefresh"/>
    </widget>
    <widget class="QMenu" name="menu_service">
     <property name="title">
      <string>Service</string>
     </property>
-    <addaction name="action_fundList"/>
+    <addaction name="action_sync"/>
+    <addaction name="separator"/>
     <addaction name="action_param"/>
+   </widget>
+   <widget class="QMenu" name="menu_references">
+    <property name="title">
+     <string>References</string>
+    </property>
+    <addaction name="action_fundList"/>
+    <addaction name="action_features"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_edit"/>
+   <addaction name="menu_references"/>
    <addaction name="menu_service"/>
    <addaction name="menu_help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
   <action name="action_new">
    <property name="icon">
     <iconset resource="resources.qrc">
@@ -151,7 +175,7 @@
     <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
-  <action name="action_param">
+  <action name="action_param2">
    <property name="text">
     <string>Parameters</string>
    </property>
@@ -180,7 +204,7 @@
     <string>F5</string>
    </property>
   </action>
-  <action name="action_fundList">
+  <action name="action_fundList_2">
    <property name="text">
     <string>Fund list</string>
    </property>
@@ -212,6 +236,78 @@
    </property>
    <property name="text">
     <string>Form F-16</string>
+   </property>
+  </action>
+  <action name="action_fundList">
+   <property name="text">
+    <string>Fund list</string>
+   </property>
+  </action>
+  <action name="action_features">
+   <property name="text">
+    <string>Features</string>
+   </property>
+  </action>
+  <action name="action_sync">
+   <property name="text">
+    <string>Synchronization...</string>
+   </property>
+  </action>
+  <action name="action_param">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/config-16.png</normaloff>:/icons/config-16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Parameters</string>
+   </property>
+  </action>
+  <action name="action_mAdd">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/add-16.png</normaloff>:/icons/add-16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="action_mEdit">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/edit-16.png</normaloff>:/icons/edit-16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="action_mRemove">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/delete-16.png</normaloff>:/icons/delete-16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove</string>
+   </property>
+  </action>
+  <action name="action_mRefresh">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/refresh-16.png</normaloff>:/icons/refresh-16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
    </property>
   </action>
  </widget>

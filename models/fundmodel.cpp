@@ -19,8 +19,13 @@ void FundModel::setDefaultRecord(int, QSqlRecord &record) {
 QString FundModel::getFundName(const QString &num)
 {
     QSqlQuery query(QString("SELECT name from fund WHERE number='%1'").arg(num));
-    if(query.exec() && query.first()) {
+
+    query.exec();
+
+    if(query.size() > 0) {
+        query.first();
         return query.value(0).toString();
     }
+
     return QString();
 }

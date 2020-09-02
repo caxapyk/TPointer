@@ -305,6 +305,33 @@
     </message>
 </context>
 <context>
+    <name>FeaturesDialog</name>
+    <message>
+        <source>Features</source>
+        <translation>Характеристики</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Наименование</translation>
+    </message>
+    <message>
+        <source>Could not create item</source>
+        <translation>Не удалось создать запись</translation>
+    </message>
+    <message>
+        <source>Delete items</source>
+        <translation>Удаление записи</translation>
+    </message>
+    <message>
+        <source>Are you shure that you want to delete %1 item?</source>
+        <translation>Вы уверены, что хотите удалить %1 запись(/ей)?</translation>
+    </message>
+    <message>
+        <source>Could not remove item</source>
+        <translation>Не удалось удалить запись/записи</translation>
+    </message>
+</context>
+<context>
     <name>FloorsParser</name>
     <message>
         <source>bsmnt</source>
@@ -587,6 +614,26 @@
         <source>Form F-16</source>
         <translation>Форма Ф-16 (пофонд.)</translation>
     </message>
+    <message>
+        <source>References</source>
+        <translation>Справочники</translation>
+    </message>
+    <message>
+        <source>Features</source>
+        <translation>Характеристики</translation>
+    </message>
+    <message>
+        <source>Synchronization...</source>
+        <translation>Выгрузка...</translation>
+    </message>
+    <message>
+        <source>toolBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
 </context>
 <context>
     <name>MoveNodeDialog</name>
@@ -836,7 +883,7 @@
     </message>
     <message>
         <source>Name</source>
-        <translation>Наименование</translation>
+        <translation type="vanished">Наименование</translation>
     </message>
     <message>
         <source>Could not create item</source>
@@ -860,7 +907,7 @@
     </message>
     <message>
         <source>Features</source>
-        <translation>Характеристики</translation>
+        <translation type="vanished">Характеристики</translation>
     </message>
     <message>
         <source>Delete items</source>
@@ -928,6 +975,41 @@
     <message>
         <source>Storage number</source>
         <translation>Архивохранилище №</translation>
+    </message>
+</context>
+<context>
+    <name>SyncDialog</name>
+    <message>
+        <source>Synchronization...</source>
+        <translation>Выгрузка...</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation>База данных</translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation>Результат</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation>Выгрузить</translation>
+    </message>
+    <message>
+        <source>Version 1.x</source>
+        <translation>Версия 1.x</translation>
+    </message>
+    <message>
+        <source>Synchronization is successfull</source>
+        <translation type="vanished">Выгрузка прошла успешно</translation>
+    </message>
+    <message>
+        <source>topography.main</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Synchronization is successfull!</source>
+        <translation>Выгрузка прошла успешно!</translation>
     </message>
 </context>
 </TS>

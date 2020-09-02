@@ -64,7 +64,7 @@ void DataView::initialize()
 
     m_tableController = new TableModelController;
 
-    m_buttonsControl = new ButtonsControl(ButtonsControl::Add, Qt::Horizontal);
+    m_buttonsControl = new ButtonsControl(ButtonsControl::Add | ButtonsControl::Edit | ButtonsControl::Remove | ButtonsControl::Refresh, Qt::Horizontal);
 
     connect(m_buttonsControl, &ButtonsControl::addRequested, this, [=] {
         addItem();
@@ -72,7 +72,7 @@ void DataView::initialize()
 
     m_buttonsControl->setMaximumSize(QSize(300, 50));
 
-    ui->hL_mtPanel->addWidget(m_buttonsControl, 0, Qt::AlignLeft);
+    //ui->hL_mtPanel->addWidget(m_buttonsControl, 0, Qt::AlignLeft);
 
     // main table filter
     m_itemFilter = new ItemFilter;
@@ -102,6 +102,10 @@ void DataView::loadData(const FilterStruct &filter)
     connect(ui->tV_dataTable, &QMenu::customContextMenuRequested, this, &DataView::showContextMenu, Qt::UniqueConnection);
 
     m_buttonsControl->assetView(ui->tV_dataTable);
+    m_buttonsControl->connectToMenu(ButtonsControl::Add, application->mainWindow()->getMenuAction("action_mAdd"));
+    m_buttonsControl->connectToMenu(ButtonsControl::Edit, application->mainWindow()->getMenuAction("action_mEdit"));
+    m_buttonsControl->connectToMenu(ButtonsControl::Remove, application->mainWindow()->getMenuAction("action_mRemove"));
+    m_buttonsControl->connectToMenu(ButtonsControl::Refresh, application->mainWindow()->getMenuAction("action_mRefresh"));
 
     // disable add record on fund selected or searched
 

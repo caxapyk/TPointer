@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "application.h"
+#include "dialogs/fundlistdialog.h"
+#include "dialogs/featuresdialog.h"
 #include "dialogs/insertnodedialog.h"
 #include "dialogs/paramdialog.h"
-#include "dialogs/fundlistdialog.h"
+#include "dialogs/syncdialog.h"
 #include "models/hierarchymodel.h"
 #include "models/searchmodel.h"
 #include "widgets/customcontextmenu.h"
@@ -22,16 +24,19 @@ MainWindow::MainWindow(QWidget *parent)
     initialize();
     restoreAppState();
     setupStatusBar();
+    setupToolBar();
 
     // MainWindow actions
     connect(ui->action_new, &QAction::triggered, this, &MainWindow::insertNode);
     connect(ui->action_csv, &QAction::triggered, m_dataView, &DataView::exportCsv);
     connect(ui->action_form15, &QAction::triggered, m_dataView, &DataView::printF15);
     connect(ui->action_form16, &QAction::triggered, m_dataView, &DataView::printF16);
-    connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
     connect(ui->action_about, &QAction::triggered, application, &Application::about);
     connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearch);
+    connect(ui->action_features, &QAction::triggered, this, &MainWindow::openFeatures);
     connect(ui->action_fundList, &QAction::triggered, this, &MainWindow::openFundList);
+    connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
+    connect(ui->action_sync, &QAction::triggered, this, &MainWindow::openSync);
 }
 
 MainWindow::~MainWindow()
@@ -75,6 +80,13 @@ void MainWindow::setupStatusBar()
     ui->statusbar->showMessage(tr("Ready"), 2000);
 }
 
+void MainWindow::setupToolBar()
+{
+    ui->toolBar->addAction(ui->action_new);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->action_search);
+}
+
 void MainWindow::updateTotal()
 {
     DataModel model;
@@ -112,6 +124,11 @@ void MainWindow::setDisplayRows(int count)
      ui->statusbar->showMessage(tr("Showing rows: %1").arg(count), 3600000);
 }
 
+QAction* MainWindow::getMenuAction(const QString &name)
+{
+    return findChild<QAction*>(name);
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     QSettings* settings = application->applicationSettings();
@@ -146,31 +163,25 @@ void MainWindow::insertNode()
 void MainWindow::openMainForm()
 {
     NodeDialog dialog;
-    int res = dialog.exec();
+    dialog.exec();
+}
 
-    if (res == QDialog::Accepted) {
-        // do something
-    }
+void MainWindow::openFeatures()
+{
+    FeaturesDialog dialog;
+    dialog.exec();
 }
 
 void MainWindow::openFundList()
 {
     FundListDialog dialog;
-    int res = dialog.exec();
-
-    if (res == QDialog::Accepted) {
-         // do something
-    }
+    dialog.exec();
 }
 
 void MainWindow::openParam()
 {
     ParamDialog dialog;
-    int res = dialog.exec();
-
-    if (res == QDialog::Accepted) {
-         // do something
-    }
+    dialog.exec();
 }
 
 void MainWindow::openSearch()
@@ -184,5 +195,11 @@ void MainWindow::openSearch()
     search_dialog->activateWindow();
 
     connect(search_dialog, &SearchDialog::searched, this, &MainWindow::search);
+}
+
+void MainWindow::openSync()
+{
+    SyncDialog dialog;
+    dialog.exec();
 }
 

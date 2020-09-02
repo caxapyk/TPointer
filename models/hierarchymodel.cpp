@@ -191,13 +191,12 @@ bool HierarchyModel::hasChildren(const QModelIndex &parent) const
     }
 
     QSqlQuery query(query_str);
+
     query.exec();
     query.first();
-
-    if (query.isValid() && query.value(0).toInt() > 0) {
+    if (query.size() > 0 && query.value(0).toInt() > 0) {
         return true;
     }
-
     return false;
 }
 
