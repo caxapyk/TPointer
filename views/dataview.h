@@ -55,6 +55,7 @@ private slots:
     void editItem();
     void filterMainTable(const QString &text);
     void moveItems();
+    void refresh();
     void removeItems();
     void showContextMenu(const QPoint &pos); // data table context menu
     void showMetaData(const QItemSelection &selected, const QItemSelection &deselected);

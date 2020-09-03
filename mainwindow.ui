@@ -273,6 +273,9 @@
    <property name="text">
     <string>Add</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
+   </property>
   </action>
   <action name="action_mEdit">
    <property name="enabled">
@@ -284,6 +287,9 @@
    </property>
    <property name="text">
     <string>Edit</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
    </property>
   </action>
   <action name="action_mRemove">
@@ -297,6 +303,9 @@
    <property name="text">
     <string>Remove</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
   </action>
   <action name="action_mRefresh">
    <property name="enabled">
@@ -308,6 +317,9 @@
    </property>
    <property name="text">
     <string>Refresh</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>

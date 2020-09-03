@@ -84,6 +84,11 @@ void MainWindow::setupToolBar()
 {
     ui->toolBar->addAction(ui->action_new);
     ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->action_mAdd);
+    ui->toolBar->addAction(ui->action_mEdit);
+    ui->toolBar->addAction(ui->action_mRemove);
+    ui->toolBar->addAction(ui->action_mRefresh);
+    ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->action_search);
 }
 

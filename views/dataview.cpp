@@ -6,7 +6,6 @@
 #include "dialogs/editnodedialog.h"
 #include "dialogs/movenodedialog.h"
 #include "models/fundmodel.h"
-#include "widgets/customcontextmenu.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -107,6 +106,11 @@ void DataView::loadData(const FilterStruct &filter)
     m_buttonsControl->connectToMenu(ButtonsControl::Remove, application->mainWindow()->getMenuAction("action_mRemove"));
     m_buttonsControl->connectToMenu(ButtonsControl::Refresh, application->mainWindow()->getMenuAction("action_mRefresh"));
 
+    connect(application->mainWindow()->getMenuAction("action_mAdd"), &QAction::triggered, this, &DataView::addItem, Qt::UniqueConnection);
+    connect(application->mainWindow()->getMenuAction("action_mEdit"), &QAction::triggered, this, &DataView::editItem, Qt::UniqueConnection);
+    connect(application->mainWindow()->getMenuAction("action_mRemove"), &QAction::triggered, this, &DataView::removeItems, Qt::UniqueConnection);
+    connect(application->mainWindow()->getMenuAction("action_mRefresh"), &QAction::triggered, this, &DataView::refresh, Qt::UniqueConnection);
+
     // disable add record on fund selected or searched
 
     m_buttonsControl->setEnabled((!filter.isSearch) ? filter.fund.isNull() : false, ButtonsControl::Add);
@@ -127,6 +131,11 @@ void DataView::clearView()
 
     m_buttonsControl->setEnabled(false, ButtonsControl::Add);
     m_buttonsControl->setEnabled(false, ButtonsControl::Refresh);
+
+    disconnect(application->mainWindow()->getMenuAction("action_mAdd"), &QAction::triggered, this, &DataView::addItem);
+    disconnect(application->mainWindow()->getMenuAction("action_mEdit"), &QAction::triggered, this, &DataView::editItem);
+    disconnect(application->mainWindow()->getMenuAction("action_mRemove"), &QAction::triggered, this, &DataView::removeItems);
+    disconnect(application->mainWindow()->getMenuAction("action_mRefresh"), &QAction::triggered, this, &DataView::refresh);
 }
 
 void DataView::addItem()
@@ -209,46 +218,47 @@ void DataView::filterMainTable(const QString &text)
 
 void DataView::showContextMenu(const QPoint&)
 {
-    CustomContextMenu menu(
-                CustomContextMenu::Add | CustomContextMenu::Edit | CustomContextMenu::Remove | CustomContextMenu::Refresh);
-    menu.setSelection(ui->tV_dataTable->selectionModel()->selectedRows());
-
-    connect(&menu, &CustomContextMenu::addRequested, this, &DataView::addItem);
-    connect(&menu, &CustomContextMenu::editRequested, this, &DataView::editItem);
-    connect(&menu, &CustomContextMenu::removeRequested, this, &DataView::removeItems);
-
-    // disable add record on fund selected or searched
-    if(m_model->filterStruct().isSearch || m_model->filterStruct().fund.isValid()) {
-        menu.action(CustomContextMenu::Add)->setDisabled(true);
-    }
-
-    connect(&menu, &CustomContextMenu::refreshRequested, this, [=] {
-        m_model->select();
-        ui->pTE_Desc->clear();
-    });
+    QMenu menu;
 
     /* default sort action */
     QAction *defaultSortAction = new QAction(tr("Sort by default"));
-    menu.insertAction(menu.action(CustomContextMenu::Add), defaultSortAction);
+    menu.addAction(defaultSortAction);
     defaultSortAction->setEnabled(ui->tV_dataTable->horizontalHeader()->sortIndicatorSection() >= 0);
     connect(defaultSortAction, &QAction::triggered, this, [=] {
         ui->tV_dataTable->sortByColumn(-1, Qt::AscendingOrder);
     });
-    menu.insertSeparator(menu.action(CustomContextMenu::Add));
+    menu.addSeparator();
+
+    menu.addAction(application->mainWindow()->getMenuAction("action_mAdd"));
+    menu.addAction(application->mainWindow()->getMenuAction("action_mEdit"));
+    menu.addAction(application->mainWindow()->getMenuAction("action_mRemove"));
+    menu.addSeparator();
 
     /* move action */
     QAction *moveAction = new QAction(tr("Move"));
-    menu.insertAction(menu.action(CustomContextMenu::Refresh), moveAction);
+    menu.addAction(moveAction);
     moveAction->setEnabled(!ui->tV_dataTable->selectionModel()->selectedRows().isEmpty());
     connect(moveAction, &QAction::triggered, this, &DataView::moveItems);
-    menu.insertSeparator(moveAction);
-    menu.insertSeparator(menu.action(CustomContextMenu::Refresh));
+    menu.addSeparator();
+
+    menu.addAction(application->mainWindow()->getMenuAction("action_mRefresh"));
+
+    // disable add record on fund selected or searched
+    if(m_model->filterStruct().isSearch || m_model->filterStruct().fund.isValid()) {
+        application->mainWindow()->getMenuAction("action_mAdd")->setDisabled(true);
+    }
 
     menu.exec(QCursor().pos());
 
     // ??
     delete defaultSortAction;
     delete moveAction;
+}
+
+void DataView::refresh()
+{
+    m_model->select();
+    ui->pTE_Desc->clear();
 }
 
 void DataView::printF(TemplateHtml &templ, QMap<QString, QVariant> vars)
