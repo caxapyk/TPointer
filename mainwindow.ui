@@ -133,6 +133,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/export-csv-16.png</normaloff>:/icons/export-csv-16.png</iconset>
+   </property>
    <property name="text">
     <string>Spreadsheet (.csv)</string>
    </property>
@@ -226,6 +230,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/print-16.png</normaloff>:/icons/print-16.png</iconset>
+   </property>
    <property name="text">
     <string>Form F-15</string>
    </property>
@@ -234,21 +242,37 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/print-16.png</normaloff>:/icons/print-16.png</iconset>
+   </property>
    <property name="text">
     <string>Form F-16</string>
    </property>
   </action>
   <action name="action_fundList">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/reference-16.png</normaloff>:/icons/reference-16.png</iconset>
+   </property>
    <property name="text">
     <string>Fund list</string>
    </property>
   </action>
   <action name="action_features">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/reference-16.png</normaloff>:/icons/reference-16.png</iconset>
+   </property>
    <property name="text">
     <string>Features</string>
    </property>
   </action>
   <action name="action_sync">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/sync-16.png</normaloff>:/icons/sync-16.png</iconset>
+   </property>
    <property name="text">
     <string>Synchronization...</string>
    </property>

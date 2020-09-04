@@ -21,6 +21,7 @@ QWidget *NodeDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
     switch (index.column()) {
     case DataModel::Corpus:
     case DataModel::Storage:
+    case DataModel::Floor:
     case DataModel::Fund:
     case DataModel::Features:
         editor = new QComboBox(parent);

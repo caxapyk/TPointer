@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     restoreAppState();
     setupStatusBar();
     setupToolBar();
+    setupItemFilter();
 
     // MainWindow actions
     connect(ui->action_new, &QAction::triggered, this, &MainWindow::insertNode);
@@ -44,6 +45,9 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_navView;
     delete m_dataView;
+    delete m_itemFilter;
+    delete tb_layout;
+    delete tb_panel;
     delete lb_server;
     delete lb_total;
     delete search_dialog;
@@ -65,7 +69,6 @@ void MainWindow::initialize()
     m_navView = new NavigationView(ui->splitter);
     m_dataView = new DataView(ui->splitter);
 }
-
 
 void MainWindow::setupStatusBar()
 {
@@ -90,6 +93,33 @@ void MainWindow::setupToolBar()
     ui->toolBar->addAction(ui->action_mRefresh);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->action_search);
+
+    ui->toolBar->setMaximumHeight(40);
+}
+
+void MainWindow::setupItemFilter()
+{
+    // main table filter widget
+    m_itemFilter = new ItemFilter;
+    m_itemFilter->setPlaceholderText(tr("Filter by notes..."));
+    m_itemFilter->setMaximumWidth(400);
+    m_itemFilter->setDisabled(true);
+
+    tb_panel = new QWidget();
+    tb_layout = new QHBoxLayout();
+    tb_layout->setContentsMargins(0, 0, 0, 0);
+    tb_layout->setAlignment(Qt::AlignRight);
+    tb_panel->setLayout(tb_layout);
+
+    tb_layout->addWidget(m_itemFilter);
+    ui->toolBar->addWidget(tb_panel);
+
+    connect(m_itemFilter, &ItemFilter::filtered, m_dataView, &DataView::filterMainTable);
+}
+
+void MainWindow::clearMTableFilter()
+{
+    m_itemFilter->clear();
 }
 
 void MainWindow::updateTotal()

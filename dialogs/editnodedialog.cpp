@@ -19,6 +19,7 @@ EditNodeDialog::EditNodeDialog(DataModel *model, int index) : NodeDialog()
 
     mapper->addMapping(ui->cB_corpus, DataModel::Corpus);
     mapper->addMapping(ui->cB_storage, DataModel::Storage);
+    mapper->addMapping(ui->cB_floor, DataModel::Floor);
     mapper->addMapping(ui->sB_compartment, DataModel::Compartment);
     mapper->addMapping(ui->sB_shelving, DataModel::Shelving);
     mapper->addMapping(ui->lE_cupboard, DataModel::Cupboard);
@@ -68,7 +69,9 @@ void EditNodeDialog::save()
 
     record.setValue("id",  dataModel()->index(mapper->currentIndex(), DataModel::Id).data());
 
-    record.setValue("floor",  QVariant(ui->cB_floor->currentText().remove(QRegExp("\\D+"))));
+    // check basement
+    QVariant floor = ui->cB_floor->currentText().contains(QRegExp("\\d+")) ? QVariant(ui->cB_floor->currentText()) : QVariant(0);
+    record.setValue("floor",  floor);
     record.setGenerated("floor", true);
 
     record.setValue("storage", m_storageModel->index(ui->cB_storage->currentIndex(), 0).data());

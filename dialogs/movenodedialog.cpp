@@ -98,7 +98,9 @@ void MoveNodeDialog::save()
     for(int i = 0; i < indexes().length(); ++i) {
         record.setValue("id",  indexes().at(i).siblingAtColumn(0).data());
 
-        record.setValue("floor",  QVariant(ui->cB_floor->currentText().remove(QRegExp("\\D+"))));
+        // check basement
+        QVariant floor = ui->cB_floor->currentText().contains(QRegExp("\\d+")) ? QVariant(ui->cB_floor->currentText()) : QVariant(0);
+        record.setValue("floor",  floor);
         record.setGenerated("floor", true);
 
         record.setValue("storage", m_storageModel->index(ui->cB_storage->currentIndex(), 0).data());

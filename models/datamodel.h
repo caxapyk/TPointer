@@ -26,8 +26,8 @@ public:
         Fund,
         Inventory,
         Records,
-        Note,
         Features,
+        Note,
         ColumnsCount
     };
 

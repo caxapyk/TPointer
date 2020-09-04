@@ -26,7 +26,6 @@ FundListDialog::FundListDialog(QWidget *parent) :
 
     ui->tV_funds->hideColumn(0);
     ui->tV_funds->setColumnWidth(1, 140);
-    ui->tV_funds->setColumnWidth(2, 300);
 
     // fund controls
     controls = new ButtonsControl(

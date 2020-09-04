@@ -34,7 +34,6 @@ DataView::~DataView()
     delete m_model;
     delete m_proxyModel;
     delete m_tableController;
-    delete m_itemFilter;
     delete m_buttonsControl;
 }
 
@@ -71,19 +70,7 @@ void DataView::initialize()
 
     m_buttonsControl->setMaximumSize(QSize(300, 50));
 
-    //ui->hL_mtPanel->addWidget(m_buttonsControl, 0, Qt::AlignLeft);
-
-    // main table filter
-    m_itemFilter = new ItemFilter;
-    m_itemFilter->setPlaceholderText(tr("Filter by notes..."));
-    m_itemFilter->setMinimumSize(QSize(300, 0));
-    m_itemFilter->setEnabled(false);
-
-    ui->hL_mtPanel->addWidget(m_itemFilter, 0, Qt::AlignRight);
-
     ui->tV_dataTable->horizontalHeader()->setHidden(true);
-
-    connect(m_itemFilter, &ItemFilter::filtered, this, &DataView::filterMainTable);
 }
 
 void DataView::loadData(const FilterStruct &filter)
@@ -116,26 +103,27 @@ void DataView::loadData(const FilterStruct &filter)
     m_buttonsControl->setEnabled((!filter.isSearch) ? filter.fund.isNull() : false, ButtonsControl::Add);
     m_buttonsControl->setEnabled(true, ButtonsControl::Refresh);
 
-    // enable filter widget
-    m_itemFilter->setEnabled(true);
-    m_itemFilter->clear(); // clear every time model has changed
-
+    application->mainWindow()->itemFilter()->setEnabled(true);
+    application->mainWindow()->clearMTableFilter(); // clear every time when model has been changed
     application->mainWindow()->setDisplayRows(m_model->rowCount());
     application->mainWindow()->setExportCsvEnabled(true);
 }
 
 void DataView::clearView()
 {
-    QSortFilterProxyModel model;
-    ui->tV_dataTable->setModel(&model);
+    m_model->clear();
 
     m_buttonsControl->setEnabled(false, ButtonsControl::Add);
+    m_buttonsControl->setEnabled(false, ButtonsControl::Edit);
+    m_buttonsControl->setEnabled(false, ButtonsControl::Remove);
     m_buttonsControl->setEnabled(false, ButtonsControl::Refresh);
 
     disconnect(application->mainWindow()->getMenuAction("action_mAdd"), &QAction::triggered, this, &DataView::addItem);
     disconnect(application->mainWindow()->getMenuAction("action_mEdit"), &QAction::triggered, this, &DataView::editItem);
     disconnect(application->mainWindow()->getMenuAction("action_mRemove"), &QAction::triggered, this, &DataView::removeItems);
     disconnect(application->mainWindow()->getMenuAction("action_mRefresh"), &QAction::triggered, this, &DataView::refresh);
+
+    application->mainWindow()->itemFilter()->setEnabled(false);
 }
 
 void DataView::addItem()

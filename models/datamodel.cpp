@@ -18,8 +18,9 @@ DataModel::DataModel() :  QAbstractTableModel()
     setHeaderData(8, Qt::Horizontal, tr("Fund"));
     setHeaderData(9, Qt::Horizontal, tr("Inventory"));
     setHeaderData(10, Qt::Horizontal, tr("Records"));
-    setHeaderData(11, Qt::Horizontal, tr("Note"));
-    setHeaderData(12, Qt::Horizontal, tr("Features"));
+    setHeaderData(11, Qt::Horizontal, tr("Features"));
+    setHeaderData(12, Qt::Horizontal, tr("Note"));
+
 }
 
 DataModel::~DataModel()
@@ -43,7 +44,7 @@ void DataModel::clear()
 bool DataModel::select()
 {
     clear();
-    m_query.prepare(QString("SELECT tpointer.`id`, corpus.`name` AS corpus_name, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, tpointer.`note`, feature.`name` AS feature_name FROM tpointer "
+    m_query.prepare(QString("SELECT tpointer.`id`, corpus.`name` AS corpus_name, storage.`name` AS storage_name, tpointer.`floor`, tpointer.`compartment`, tpointer.`shelving`, tpointer.`cupboard`, tpointer.`shelf`, fund.`number` AS fund_number, tpointer.`inventory`, tpointer.`records`, feature.`name` AS feature_name, tpointer.`note` FROM tpointer "
                   "LEFT JOIN storage ON tpointer.`storage`=storage.`id` "
                   "LEFT JOIN corpus ON storage.`corpus`=corpus.`id` "
                   "LEFT JOIN fund ON tpointer.`fund`=fund.`id` "

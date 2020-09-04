@@ -49,13 +49,6 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QHBoxLayout" name="hL_mtPanel">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-        </layout>
-       </item>
-       <item>
         <widget class="QTableView" name="tV_dataTable">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -97,7 +90,7 @@
           <bool>false</bool>
          </property>
          <attribute name="horizontalHeaderStretchLastSection">
-          <bool>false</bool>
+          <bool>true</bool>
          </attribute>
          <attribute name="verticalHeaderVisible">
           <bool>true</bool>

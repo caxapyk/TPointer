@@ -5,8 +5,10 @@
 #include "models/searchmodel.h"
 #include "views/dataview.h"
 #include "views/navigationview.h"
+#include "widgets/itemfilter.h"
 
 #include <QCloseEvent>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QMainWindow>
 #include <QModelIndex>
@@ -24,7 +26,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void clearMTableFilter();
     DataView* dataView() { return m_dataView; };
+    QAction* getMenuAction(const QString &name);
+    ItemFilter* itemFilter() { return m_itemFilter; };
     NavigationView* navView() { return m_navView; };
 
     void setExportCsvEnabled(bool e);
@@ -32,7 +37,6 @@ public:
     void setPrintF16Enabled(bool e);
     void setDisplayRows(int count);
     void updateTotal();
-    QAction* getMenuAction(const QString &name);
 
 private:
     Ui::MainWindow *ui;
@@ -40,16 +44,20 @@ private:
     NavigationView *m_navView;
     DataView *m_dataView;
 
+    QWidget *tb_panel;
+    QHBoxLayout *tb_layout;
+    ItemFilter *m_itemFilter; // main table filter
+
     QLabel *lb_server;
     QLabel *lb_total;
 
     SearchDialog *search_dialog = nullptr;
 
-
     void initialize();
     void restoreAppState();
     void setupStatusBar();
     void setupToolBar();
+    void setupItemFilter();
 
 private slots:
     void insertNode();

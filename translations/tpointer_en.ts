@@ -202,17 +202,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="21"/>
+        <location filename="../models/datamodel.cpp" line="22"/>
         <source>Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="22"/>
+        <location filename="../models/datamodel.cpp" line="21"/>
         <source>Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/datamodel.cpp" line="111"/>
+        <location filename="../models/datamodel.cpp" line="112"/>
         <source>Basement</source>
         <translation type="unfinished"></translation>
     </message>
@@ -225,62 +225,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="79"/>
-        <source>Filter by notes...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../views/dataview.cpp" line="175"/>
+        <location filename="../views/dataview.cpp" line="172"/>
         <source>Delete record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="176"/>
+        <location filename="../views/dataview.cpp" line="173"/>
         <source>Are you shure that you want to delete %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="184"/>
+        <location filename="../views/dataview.cpp" line="181"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="184"/>
+        <location filename="../views/dataview.cpp" line="181"/>
         <source>Record list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="231"/>
+        <location filename="../views/dataview.cpp" line="212"/>
         <source>Sort by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="240"/>
+        <location filename="../views/dataview.cpp" line="226"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="271"/>
+        <location filename="../views/dataview.cpp" line="269"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="271"/>
+        <location filename="../views/dataview.cpp" line="269"/>
         <source>Could not print. List is empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="319"/>
+        <location filename="../views/dataview.cpp" line="317"/>
         <source>Export CSV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="319"/>
+        <location filename="../views/dataview.cpp" line="317"/>
         <source>untitled.csv</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../views/dataview.cpp" line="319"/>
+        <location filename="../views/dataview.cpp" line="317"/>
         <source>Spreadsheets (*.csv)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -289,18 +284,18 @@
     <name>EditNodeDialog</name>
     <message>
         <location filename="../dialogs/editnodedialog.cpp" line="10"/>
-        <location filename="../dialogs/editnodedialog.cpp" line="56"/>
-        <location filename="../dialogs/editnodedialog.cpp" line="116"/>
+        <location filename="../dialogs/editnodedialog.cpp" line="57"/>
+        <location filename="../dialogs/editnodedialog.cpp" line="119"/>
         <source>Edit record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/editnodedialog.cpp" line="57"/>
+        <location filename="../dialogs/editnodedialog.cpp" line="58"/>
         <source>Are you shure that you want to revert changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/editnodedialog.cpp" line="117"/>
+        <location filename="../dialogs/editnodedialog.cpp" line="120"/>
         <source>Can not edit record!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -356,43 +351,38 @@
         <source>bsmnt</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../utils/floorsparser.cpp" line="13"/>
-        <source>\1 fl	ier</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>FundListDialog</name>
     <message>
         <location filename="../dialogs/fundlistdialog.ui" line="29"/>
-        <location filename="../dialogs/fundlistdialog.cpp" line="77"/>
-        <location filename="../dialogs/fundlistdialog.cpp" line="90"/>
+        <location filename="../dialogs/fundlistdialog.cpp" line="76"/>
+        <location filename="../dialogs/fundlistdialog.cpp" line="89"/>
         <source>Fund list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/fundlistdialog.cpp" line="43"/>
+        <location filename="../dialogs/fundlistdialog.cpp" line="42"/>
         <source>Fund filter...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/fundlistdialog.cpp" line="77"/>
+        <location filename="../dialogs/fundlistdialog.cpp" line="76"/>
         <source>Could not create item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/fundlistdialog.cpp" line="85"/>
+        <location filename="../dialogs/fundlistdialog.cpp" line="84"/>
         <source>Delete items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/fundlistdialog.cpp" line="86"/>
+        <location filename="../dialogs/fundlistdialog.cpp" line="85"/>
         <source>Are you shure that you want to delete %1 fund?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/fundlistdialog.cpp" line="90"/>
+        <location filename="../dialogs/fundlistdialog.cpp" line="89"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
@@ -485,18 +475,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/insertnodedialog.cpp" line="99"/>
-        <location filename="../dialogs/insertnodedialog.cpp" line="107"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="101"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="109"/>
         <source>Add record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/insertnodedialog.cpp" line="100"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="102"/>
         <source>Can not add record!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/insertnodedialog.cpp" line="108"/>
+        <location filename="../dialogs/insertnodedialog.cpp" line="110"/>
         <source>Fill all required fields!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -538,7 +528,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="77"/>
-        <location filename="../mainwindow.ui" line="286"/>
+        <location filename="../mainwindow.ui" line="313"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -568,117 +558,133 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="137"/>
+        <location filename="../mainwindow.ui" line="141"/>
         <source>Spreadsheet (.csv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="142"/>
+        <location filename="../mainwindow.ui" line="146"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="145"/>
+        <location filename="../mainwindow.ui" line="149"/>
         <source>Ctrl+Shift+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="150"/>
+        <location filename="../mainwindow.ui" line="154"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="155"/>
+        <location filename="../mainwindow.ui" line="159"/>
         <source>Form F15 (.xlsx)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="160"/>
+        <location filename="../mainwindow.ui" line="164"/>
         <source>Form F16 (.xlsx)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="169"/>
+        <location filename="../mainwindow.ui" line="173"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="180"/>
-        <location filename="../mainwindow.ui" line="262"/>
+        <location filename="../mainwindow.ui" line="184"/>
+        <location filename="../mainwindow.ui" line="286"/>
         <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="185"/>
+        <location filename="../mainwindow.ui" line="189"/>
         <source>Edit record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="188"/>
+        <location filename="../mainwindow.ui" line="192"/>
+        <location filename="../mainwindow.ui" line="316"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="193"/>
-        <location filename="../mainwindow.ui" line="298"/>
+        <location filename="../mainwindow.ui" line="197"/>
+        <location filename="../mainwindow.ui" line="328"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="196"/>
+        <location filename="../mainwindow.ui" line="200"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="201"/>
-        <location filename="../mainwindow.ui" line="310"/>
+        <location filename="../mainwindow.ui" line="205"/>
+        <location filename="../mainwindow.ui" line="343"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="204"/>
+        <location filename="../mainwindow.ui" line="208"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="209"/>
-        <location filename="../mainwindow.ui" line="243"/>
+        <location filename="../mainwindow.ui" line="213"/>
+        <location filename="../mainwindow.ui" line="259"/>
         <source>Fund list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="217"/>
+        <location filename="../mainwindow.ui" line="221"/>
         <source>Export to PDF (.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="222"/>
+        <location filename="../mainwindow.ui" line="226"/>
         <source>Forms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="230"/>
+        <location filename="../mainwindow.ui" line="238"/>
         <source>Form F-15</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="238"/>
+        <location filename="../mainwindow.ui" line="250"/>
         <source>Form F-16</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="248"/>
+        <location filename="../mainwindow.ui" line="268"/>
         <source>Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="253"/>
+        <location filename="../mainwindow.ui" line="277"/>
         <source>Synchronization...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="274"/>
+        <location filename="../mainwindow.ui" line="298"/>
         <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="301"/>
+        <source>Ctrl+Shift+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="331"/>
+        <source>Ctrl+Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="346"/>
+        <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -687,27 +693,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="73"/>
+        <location filename="../mainwindow.cpp" line="76"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="93"/>
+        <location filename="../mainwindow.cpp" line="104"/>
+        <source>Filter by notes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="128"/>
         <source>| Total rows: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="124"/>
+        <location filename="../mainwindow.cpp" line="159"/>
         <source>Showing rows: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="80"/>
+        <location filename="../mainwindow.cpp" line="83"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="100"/>
+        <location filename="../mainwindow.cpp" line="135"/>
         <source> [Search]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -756,12 +767,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.cpp" line="118"/>
+        <location filename="../dialogs/movenodedialog.cpp" line="120"/>
         <source>Move record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/movenodedialog.cpp" line="119"/>
+        <location filename="../dialogs/movenodedialog.cpp" line="121"/>
         <source>Can not move record!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -919,17 +930,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="321"/>
+        <location filename="../dialogs/nodedialog.ui" line="344"/>
         <source>Feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="342"/>
+        <location filename="../dialogs/nodedialog.ui" line="325"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/nodedialog.ui" line="348"/>
+        <location filename="../dialogs/nodedialog.ui" line="331"/>
+        <location filename="../dialogs/nodedialog.ui" line="337"/>
         <source>Note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -938,8 +950,8 @@
     <name>ParamDialog</name>
     <message>
         <location filename="../dialogs/paramdialog.ui" line="29"/>
-        <location filename="../dialogs/paramdialog.cpp" line="127"/>
-        <location filename="../dialogs/paramdialog.cpp" line="140"/>
+        <location filename="../dialogs/paramdialog.cpp" line="124"/>
+        <location filename="../dialogs/paramdialog.cpp" line="137"/>
         <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -959,27 +971,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/paramdialog.ui" line="143"/>
+        <location filename="../dialogs/paramdialog.ui" line="146"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/paramdialog.cpp" line="127"/>
+        <location filename="../dialogs/paramdialog.cpp" line="124"/>
         <source>Could not create item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/paramdialog.cpp" line="135"/>
+        <location filename="../dialogs/paramdialog.cpp" line="132"/>
         <source>Delete items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/paramdialog.cpp" line="136"/>
+        <location filename="../dialogs/paramdialog.cpp" line="133"/>
         <source>Are you shure that you want to delete %1 item?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/paramdialog.cpp" line="140"/>
+        <location filename="../dialogs/paramdialog.cpp" line="137"/>
         <source>Could not remove item</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1055,6 +1067,7 @@
     <name>SyncDialog</name>
     <message>
         <location filename="../dialogs/syncdialog.ui" line="14"/>
+        <location filename="../dialogs/syncdialog.cpp" line="30"/>
         <source>Synchronization...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1064,27 +1077,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/syncdialog.ui" line="38"/>
+        <location filename="../dialogs/syncdialog.ui" line="36"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/syncdialog.ui" line="45"/>
+        <location filename="../dialogs/syncdialog.ui" line="43"/>
         <source>topography.main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/syncdialog.ui" line="56"/>
-        <source>Result</source>
+        <location filename="../dialogs/syncdialog.ui" line="50"/>
+        <source>Corpus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/syncdialog.ui" line="87"/>
+        <location filename="../dialogs/syncdialog.ui" line="85"/>
         <source>Sync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dialogs/syncdialog.cpp" line="51"/>
+        <location filename="../dialogs/syncdialog.cpp" line="30"/>
+        <source>Choose version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/syncdialog.cpp" line="65"/>
         <source>Synchronization is successfull!</source>
         <translation type="unfinished"></translation>
     </message>

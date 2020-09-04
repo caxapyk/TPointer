@@ -168,7 +168,7 @@
     </message>
     <message>
         <source>Basement</source>
-        <translation>П</translation>
+        <translation>подвал</translation>
     </message>
     <message>
         <source>Id</source>
@@ -191,7 +191,7 @@
     </message>
     <message>
         <source>Filter by notes...</source>
-        <translation>Поиск по примечанию...</translation>
+        <translation type="vanished">Поиск по примечанию...</translation>
     </message>
     <message>
         <source>Delete record</source>
@@ -343,7 +343,7 @@
     </message>
     <message>
         <source>\1 fl	ier</source>
-        <translation>\1 эт/я</translation>
+        <translation type="vanished">\1 эт/я</translation>
     </message>
 </context>
 <context>
@@ -628,11 +628,27 @@
     </message>
     <message>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Add</source>
         <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Ctrl+Shift+N</source>
+        <translation>Ctrl+Shift+N</translation>
+    </message>
+    <message>
+        <source>Ctrl+Del</source>
+        <translation>Ctrl+Del</translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <translation>Ctrl+R</translation>
+    </message>
+    <message>
+        <source>Filter by notes...</source>
+        <translation>Поиск по примечанию...</translation>
     </message>
 </context>
 <context>
@@ -989,7 +1005,7 @@
     </message>
     <message>
         <source>Result</source>
-        <translation>Результат</translation>
+        <translation type="vanished">Результат</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -1010,6 +1026,14 @@
     <message>
         <source>Synchronization is successfull!</source>
         <translation>Выгрузка прошла успешно!</translation>
+    </message>
+    <message>
+        <source>Corpus</source>
+        <translation>Корпус</translation>
+    </message>
+    <message>
+        <source>Choose version</source>
+        <translation>Выберите версию приложения</translation>
     </message>
 </context>
 </TS>

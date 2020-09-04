@@ -56,8 +56,6 @@ void ParamDialog::setupControls()
     st_controls = new ButtonsControl(
                 ButtonsControl::Add | ButtonsControl::Remove | ButtonsControl::Up | ButtonsControl::Down);
 
-
-
     ui->gB_corpuses->layout()->addWidget(cp_controls);
     ui->gB_storages->layout()->addWidget(st_controls);
 }
@@ -114,7 +112,6 @@ void ParamDialog::loadStorages(QVariant id)
 
         ui->tV_storages->resizeColumnToContents(3);
         ui->tV_storages->setColumnWidth(4, 120);
-        ui->tV_storages->setColumnWidth(5, 120);
 
         st_controls->assetView(ui->tV_storages);
         st_controls->setEnabled(true, ButtonsControl::Add);

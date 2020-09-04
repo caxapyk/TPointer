@@ -6,7 +6,6 @@
 #include "models/filterstruct.h"
 #include "models/datamodel.h"
 #include "models/dataproxymodel.h"
-#include "widgets/itemfilter.h"
 #include "widgets/buttonscontrol.h"
 #include "utils/templatehtml.h"
 
@@ -38,7 +37,6 @@ private:
     DataModel *m_model;
     DataProxyModel *m_proxyModel;
 
-    ItemFilter *m_itemFilter; // main table filter
     ButtonsControl *m_buttonsControl;
     TableModelController *m_tableController;
 
@@ -46,6 +44,7 @@ private:
     void printF(TemplateHtml &templ, QMap<QString, QVariant> vars);
 
 public slots:
+    void filterMainTable(const QString &text);
     void printF15();
     void printF16();
     void exportCsv();
@@ -53,7 +52,7 @@ public slots:
 private slots:
     void addItem();
     void editItem();
-    void filterMainTable(const QString &text);
+
     void moveItems();
     void refresh();
     void removeItems();

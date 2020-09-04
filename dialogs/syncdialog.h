@@ -1,6 +1,8 @@
 #ifndef SYNCDIALOG_H
 #define SYNCDIALOG_H
 
+#include <models/corpusmodel.h>
+
 #include <QDialog>
 
 namespace Ui {
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::SyncDialog *ui;
+    CorpusModel *m_corpusModel;
 
 private slots:
     void sync();
