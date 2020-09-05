@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "application.h"
+#include "dialogs/connectiondialog.h"
 #include "dialogs/fundlistdialog.h"
 #include "dialogs/featuresdialog.h"
 #include "dialogs/insertnodedialog.h"
@@ -36,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->action_search, &QAction::triggered, this, &MainWindow::openSearch);
     connect(ui->action_features, &QAction::triggered, this, &MainWindow::openFeatures);
     connect(ui->action_fundList, &QAction::triggered, this, &MainWindow::openFundList);
+    connect(ui->action_connection, &QAction::triggered, this, &MainWindow::openConnection);
     connect(ui->action_param, &QAction::triggered, this, &MainWindow::openParam);
     connect(ui->action_sync, &QAction::triggered, this, &MainWindow::openSync);
 }
@@ -198,6 +200,12 @@ void MainWindow::insertNode()
 void MainWindow::openMainForm()
 {
     NodeDialog dialog;
+    dialog.exec();
+}
+
+void MainWindow::openConnection()
+{
+    ConnectionDialog dialog;
     dialog.exec();
 }
 

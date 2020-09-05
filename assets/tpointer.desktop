@@ -1,10 +1,10 @@
 [Desktop Entry]
-Version=2.0
+Version=1.0
 Type=Application
 Name=Архивный топографический указатель 2.0
 Comment=
-Exec=TPointer.sh
-Icon=icon.ico
-Path=
+Exec=TPointer
+Icon=tpointer
 Terminal=false
 StartupNotify=false
+Categories=Office;

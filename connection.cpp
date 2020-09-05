@@ -14,9 +14,11 @@ void Connection::connect(QString host, QString dbname, QString username, QString
     db.setUserName(username);
     db.setPassword(password);
 
+    db.open();
+
     if (!db.isDriverAvailable("QMYSQL")) {
         throw ConnectionExeption("QMYSQL driver not avaible");
-    } else if (!db.open()){
+    } else if (!db.isOpen()){
         throw ConnectionExeption("Could not connect to database");
     }
 }

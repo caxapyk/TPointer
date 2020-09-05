@@ -20,6 +20,7 @@
         <file>icons/reference-16.png</file>
         <file>icons/print-16.png</file>
         <file>icons/export-csv-16.png</file>
+        <file>icons/db-settings-16.png</file>
     </qresource>
     <qresource prefix="/translations">
         <file>translations/tpointer_ru.qm</file>

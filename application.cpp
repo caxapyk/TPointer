@@ -2,6 +2,8 @@
 #include "connection.h"
 #include "mainwindow.h"
 
+#include "dialogs/connectiondialog.h"
+
 #include <QDebug>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
@@ -58,16 +60,32 @@ void Application::connect()
 
     try {
         Connection conn;
-        conn.connect(parser.value(hostnameOption),
-                     parser.value(databaseOption),
-                     parser.value(usernameOption),
-                     parser.value(passwordOption));
+
+        m_settings->beginGroup("Database");
+        QString hostname = !parser.value(hostnameOption).isEmpty() ? parser.value(hostnameOption) : m_settings->value("hostname").toString();
+        QString database = !parser.value(databaseOption).isEmpty() ? parser.value(databaseOption) : m_settings->value("db").toString();
+        QString username = !parser.value(usernameOption).isEmpty() ? parser.value(usernameOption) : m_settings->value("user").toString();
+        QString password = !parser.value(passwordOption).isEmpty() ? parser.value(passwordOption) : m_settings->value("password").toString();
+        m_settings->endGroup();
+
+        conn.connect(hostname, database, username, password);
 
         initMainWindow();
     } catch (ConnectionExeption e) {
         qCritical() << QString(e.p);
-        QMessageBox::critical(nullptr, tr("Database connection"), tr("Could not connect to database"));
-        QCoreApplication::exit(EXIT_FAILURE);
+        int res = QMessageBox::critical(nullptr, tr("Database connection"), tr("Could not connect to database.\nDo you want config now?"), QMessageBox::Ok | QMessageBox::Cancel);
+
+        if (res == QMessageBox::Ok) {
+            ConnectionDialog dialog;
+            int cres = dialog.exec();
+            if (cres == ConnectionDialog::Accepted) {
+                connect();
+            } else {
+                QCoreApplication::exit(EXIT_FAILURE);
+            }
+        } else {
+            QCoreApplication::exit(EXIT_SUCCESS);
+        }
     }
 }
 

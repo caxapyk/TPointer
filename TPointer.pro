@@ -4,6 +4,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11 file_copies
 
+VERSION=2.0
+
+QMAKE_TARGET_COMPANY = Alexander Sakharuk
+QMAKE_TARGET_PRODUCT = Archival topographic pointer
+QMAKE_TARGET_DESCRIPTION = Archival topographic pointer
+QMAKE_TARGET_COPYRIGHT = (c) Alexander Sakharuk
+
+DEFINES += APP_VERSION=$$VERSION
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -19,6 +28,7 @@ SOURCES += \
     application.cpp \
     connection.cpp \
     dialogs/addnodedialog.cpp \
+    dialogs/connectiondialog.cpp \
     dialogs/editnodedialog.cpp \
     dialogs/featuresdialog.cpp \
     dialogs/fundlistdialog.cpp \
@@ -61,6 +71,7 @@ HEADERS += \
     application.h \
     connection.h \
     dialogs/addnodedialog.h \
+    dialogs/connectiondialog.h \
     dialogs/editnodedialog.h \
     dialogs/featuresdialog.h \
     dialogs/fundlistdialog.h \
@@ -100,6 +111,7 @@ HEADERS += \
     widgets/itemfilter.h
 
 FORMS += \
+    dialogs/connectiondialog.ui \
     dialogs/featuresdialog.ui \
     dialogs/fundlistdialog.ui \
     dialogs/movenodedialog.ui \
@@ -115,38 +127,46 @@ TRANSLATIONS += \
     translations/tpointer_ru.ts \
     translations/tpointer_en.ts
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 RESOURCES += \
     resources.qrc
 
-COPIES += \
-    templates \
-    assets \
-    libs
+unix {
+    shortcutfiles.files += assets/tpointer.desktop
+    shortcutfiles.path = $$OUT_PWD
 
-VERSION=2.0
-DEFINES += APP_VERSION=$$VERSION
+    icons.files += assets/tpointer.svg
+    icons.path = $$OUT_PWD
 
-templates.files = $$files(tmp/*)
-templates.path = $$OUT_PWD/tmp
+    templates.files += $$files(assets/tmp/*.*)
+    templates.path = $$OUT_PWD/templates
 
-assets.files = $$files(assets/*)
-assets.path = $$OUT_PWD
+    libs.files += /home/caxapyk/Qt/5.15.0/gcc_64/lib/libicudata.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libicui18n.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libicuuc.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Core.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Sql.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5DBus.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Gui.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Widgets.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5PrintSupport.so.* \
+                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5XcbQpa.so.*
+    libs.path = $$OUT_PWD
 
-libs.files = $$files(libs/*)
-libs.path = $$OUT_PWD
+    platforms.files += /home/caxapyk/Qt/5.15.0/gcc_64/plugins/platforms/libqxcb.so
+    platforms.path = $$OUT_PWD/platforms
 
-QMAKE_TARGET_COMPANY = Alexander Sakharuk
-QMAKE_TARGET_PRODUCT = Archival topographic pointer
-QMAKE_TARGET_DESCRIPTION = Archival topographic pointer
-QMAKE_TARGET_COPYRIGHT = (c) Alexander Sakharuk
+    sqldrivers.files += /home/caxapyk/Qt/5.15.0/gcc_64/plugins/sqldrivers/libqsqlmysql.so
+    sqldrivers.path = $$OUT_PWD/sqldrivers
 
-DISTFILES += \
-    assets/LICENSE \
-    assets/TPointer.bat \
-    assets/TPointer.sh \
-    sync_v1.sh
+    COPIES += target \
+                shortcutfiles \
+                icons \
+                templates \
+                libs \
+                platforms \
+                sqldrivers
+}
+
+win32 {
+
+}

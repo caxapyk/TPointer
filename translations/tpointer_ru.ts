@@ -56,11 +56,17 @@
     </message>
     <message>
         <source>Database connection</source>
-        <translation>Database connection</translation>
+        <translation>Настройки соединения с БД</translation>
     </message>
     <message>
         <source>Could not connect to database</source>
-        <translation>Не удалось соединиться с базой данных</translation>
+        <translation type="vanished">Не удалось соединиться с базой данных</translation>
+    </message>
+    <message>
+        <source>Could not connect to database.
+Do you want config now?</source>
+        <translation>Не удалось соединиться с базой данных.
+Настроить соединение сейчас?</translation>
     </message>
 </context>
 <context>
@@ -88,6 +94,41 @@
     <message>
         <source>Refresh</source>
         <translation>Обновить</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionDialog</name>
+    <message>
+        <source>Database connection</source>
+        <translation>Настройки соединения с БД</translation>
+    </message>
+    <message>
+        <source>Hostname</source>
+        <translation>Адрес сервера</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation>База данных</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>Test connection</source>
+        <translation>Проверка соединения</translation>
+    </message>
+    <message>
+        <source>Connection is successfull!</source>
+        <translation>Соединение успешно!</translation>
+    </message>
+    <message>
+        <source>Could not connect to database!</source>
+        <translation>Не удалось соединиться с базой данных!</translation>
     </message>
 </context>
 <context>
@@ -649,6 +690,10 @@
     <message>
         <source>Filter by notes...</source>
         <translation>Поиск по примечанию...</translation>
+    </message>
+    <message>
+        <source>Database connection</source>
+        <translation>Настройки соединения с БД</translation>
     </message>
 </context>
 <context>

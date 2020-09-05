@@ -273,7 +273,7 @@ void DataView::printF(TemplateHtml &templ, QMap<QString, QVariant> vars)
 void DataView::printF15()
 {
     QMap<QString, QVariant> vars;
-    TemplateHtml th("tmp/f15");
+    TemplateHtml th("templates/f15");
 
     vars.insert("[[shelving]]", m_proxyModel->index(0, 5).data());
     vars.insert("[[corpus]]", m_proxyModel->index(0, 1).data());
@@ -288,7 +288,7 @@ void DataView::printF15()
 void DataView::printF16()
 {
     QMap<QString, QVariant> vars;
-    TemplateHtml th("tmp/f16");
+    TemplateHtml th("templates/f16");
 
     vars.insert("[[fundname]]", FundModel::getFundName(m_model->index(0, 8).data().toString()));
     vars.insert("[[fund]]", m_model->index(0, 8).data());

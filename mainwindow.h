@@ -61,6 +61,7 @@ private:
 
 private slots:
     void insertNode();
+    void openConnection();
     void openFeatures();
     void openFundList();
     void openMainForm();
