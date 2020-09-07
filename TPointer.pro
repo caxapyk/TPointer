@@ -131,34 +131,39 @@ RESOURCES += \
     resources.qrc
 
 unix {
-    shortcutfiles.files += assets/tpointer.desktop
-    shortcutfiles.path = $$OUT_PWD
+    DEPLOY_DIR = $$OUT_PWD/tpointer_v"$$VERSION"_"$$QMAKE_HOST.arch"
+
+    target.path += $$DEPLOY_DIR
+
+    shortcutfiles.files += assets/TPointer.sh \
+                        assets/tpointer.desktop
+    shortcutfiles.path = $$DEPLOY_DIR
 
     icons.files += assets/tpointer.svg
-    icons.path = $$OUT_PWD
+    icons.path = $$DEPLOY_DIR
 
     templates.files += $$files(assets/tmp/*.*)
-    templates.path = $$OUT_PWD/templates
+    templates.path = $$DEPLOY_DIR/templates
 
-    libs.files += /home/caxapyk/Qt/5.15.0/gcc_64/lib/libicudata.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libicui18n.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libicuuc.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Core.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Sql.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5DBus.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Gui.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5Widgets.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5PrintSupport.so.* \
-                /home/caxapyk/Qt/5.15.0/gcc_64/lib/libQt5XcbQpa.so.*
-    libs.path = $$OUT_PWD
+    libs.files += $$[QT_INSTALL_PREFIX]/lib/libicudata.so.5* \
+                $$[QT_INSTALL_PREFIX]/lib/libicui18n.so.5* \
+                $$[QT_INSTALL_PREFIX]/lib/libicuuc.so.5* \
+                $$[QT_INSTALL_PREFIX]/lib/libQt5Core.so.5 \
+                $$[QT_INSTALL_PREFIX]/lib/libQt5Sql.so.5 \
+                $$[QT_INSTALL_PREFIX]/lib/libQt5DBus.so.5 \
+                $$[QT_INSTALL_PREFIX]/lib/libQt5Gui.so.5 \
+                $$[QT_INSTALL_PREFIX]/lib/libQt5Widgets.so.5 \
+                $$[QT_INSTALL_PREFIX]/lib/libQt5PrintSupport.so.5 \
+                $$[QT_INSTALL_PREFIX]/lib/libQt5XcbQpa.so.5
+    libs.path = $$DEPLOY_DIR
 
-    platforms.files += /home/caxapyk/Qt/5.15.0/gcc_64/plugins/platforms/libqxcb.so
-    platforms.path = $$OUT_PWD/platforms
+    platforms.files += $$[QT_INSTALL_PREFIX]/plugins/platforms/libqxcb.so
+    platforms.path = $$DEPLOY_DIR/platforms
 
-    sqldrivers.files += /home/caxapyk/Qt/5.15.0/gcc_64/plugins/sqldrivers/libqsqlmysql.so
-    sqldrivers.path = $$OUT_PWD/sqldrivers
+    sqldrivers.files += $$[QT_INSTALL_PREFIX]/plugins/sqldrivers/libqsqlmysql.so
+    sqldrivers.path = $$DEPLOY_DIR/sqldrivers
 
-    COPIES += target \
+    INSTALLS += target \
                 shortcutfiles \
                 icons \
                 templates \
