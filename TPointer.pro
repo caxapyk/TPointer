@@ -131,7 +131,7 @@ RESOURCES += \
     resources.qrc
 
 unix {
-    DEPLOY_DIR = $$OUT_PWD/tpointer_v"$$VERSION"_"$$QMAKE_HOST.arch"
+    DEPLOY_DIR = $$OUT_PWD/tpointer_v"$$VERSION"_"$$QMAKE_HOST.os"_"$$QMAKE_HOST.arch"
 
     target.path += $$DEPLOY_DIR
 
@@ -173,5 +173,21 @@ unix {
 }
 
 win32 {
+    DEPLOY_DIR = $$OUT_PWD/tpointer_v"$$VERSION"_"$$QMAKE_HOST.os"_"$$QMAKE_HOST.arch"
 
+    target.path += $$DEPLOY_DIR
+
+    icons.files += assets/icon.ico
+    icons.path = $$DEPLOY_DIR
+
+    templates.files += $$files(assets/tmp/*.*)
+    templates.path = $$DEPLOY_DIR/templates
+
+    QMAKE_EXTRA_TARGETS += deploy
+    deploy.commands = $$(QTDIR)/bin/windeployqt --no-quick-import --no-system-d3d-compiler --no-virtualkeyboard --no-webkit2 --no-angle --no-opengl-sw $$DEPLOY_DIR
+    deploy.depends += install
+
+    INSTALLS += target \
+                icons \
+                templates
 }
