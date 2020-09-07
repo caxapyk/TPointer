@@ -142,6 +142,9 @@ unix {
     icons.files += assets/tpointer.svg
     icons.path = $$DEPLOY_DIR
 
+    licence.files += LICENSE
+    licence.path = $$DEPLOY_DIR
+
     templates.files += $$files(assets/tmp/*.*)
     templates.path = $$DEPLOY_DIR/templates
 
@@ -167,6 +170,7 @@ unix {
                 shortcutfiles \
                 icons \
                 templates \
+                licence \
                 libs \
                 platforms \
                 sqldrivers
@@ -183,11 +187,19 @@ win32 {
     templates.files += $$files(assets/tmp/*.*)
     templates.path = $$DEPLOY_DIR/templates
 
+    licence.files += LICENSE
+    licence.path = $$DEPLOY_DIR
+
+    libs.files += $$files(assets/libs/*.dll)
+    libs.path = $$DEPLOY_DIR
+
     QMAKE_EXTRA_TARGETS += deploy
     deploy.commands = $$(QTDIR)/bin/windeployqt --no-quick-import --no-system-d3d-compiler --no-virtualkeyboard --no-webkit2 --no-angle --no-opengl-sw $$DEPLOY_DIR
     deploy.depends += install
 
     INSTALLS += target \
                 icons \
-                templates
+                templates \
+                licence \
+                libs
 }
