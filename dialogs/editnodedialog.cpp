@@ -48,7 +48,7 @@ EditNodeDialog::EditNodeDialog(DataModel *model, int index) : NodeDialog()
 
     // check blockFund param
     application->applicationSettings()->beginGroup("Params");
-    ui->cB_fund->setDisabled(application->applicationSettings()->value("blockFund").toBool());
+    ui->cB_fund->setDisabled(application->applicationSettings()->contains("blockFund") ? application->applicationSettings()->value("blockFund").toBool() : true);
     ui->pB_openFundList->setDisabled(application->applicationSettings()->value("blockFund").toBool());
     application->applicationSettings()->endGroup();
 }
