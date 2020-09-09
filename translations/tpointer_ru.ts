@@ -978,6 +978,14 @@ Do you want config now?</source>
         <source>Are you shure that you want to delete %1 item?</source>
         <translation>Вы уверены, что хотите удалить %1 запись(/ей)?</translation>
     </message>
+    <message>
+        <source>Block fund changes</source>
+        <translation>Заблокировать изменения фонда</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Да</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>

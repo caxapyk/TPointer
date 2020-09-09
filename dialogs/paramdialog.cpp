@@ -1,5 +1,7 @@
 #include "paramdialog.h"
 #include "ui_paramdialog.h"
+
+#include "application.h"
 #include "intdelegate.h"
 #include "intlistdelegate.h"
 #include "models/corpusmodel.h"
@@ -8,6 +10,7 @@
 #include <QDebug>
 #include <QModelIndexList>
 #include <QMessageBox>
+#include <QSettings>
 
 ParamDialog::ParamDialog(QWidget *parent) :
     QDialog(parent),
@@ -22,8 +25,7 @@ ParamDialog::ParamDialog(QWidget *parent) :
     setupControls();
 
     loadCorpuses();
-
-    /* triggers for placement tab */
+    loadOther();
 
     // corpuses
     connect(cp_controls, &ButtonsControl::addRequested, this,  &ParamDialog::createItem);
@@ -35,7 +37,11 @@ ParamDialog::ParamDialog(QWidget *parent) :
     connect(st_controls, &ButtonsControl::addRequested, this,  &ParamDialog::createItem);
     connect(st_controls, &ButtonsControl::removeRequested, this,  &ParamDialog::removeItem);
     connect(st_controls, &ButtonsControl::upRequested, this,  &ParamDialog::moveUp);
-    connect(st_controls, &ButtonsControl::downRequested, this,  &ParamDialog::moveDown);    
+    connect(st_controls, &ButtonsControl::downRequested, this,  &ParamDialog::moveDown);
+
+    // other triggers
+    connect(ui->cB_blockFund, &QCheckBox::clicked, this,  &ParamDialog::saveBlockFund);
+
 }
 
 ParamDialog::~ParamDialog()
@@ -116,6 +122,22 @@ void ParamDialog::loadStorages(QVariant id)
         st_controls->assetView(ui->tV_storages);
         st_controls->setEnabled(true, ButtonsControl::Add);
     }
+}
+
+void ParamDialog::loadOther()
+{
+    application->applicationSettings()->beginGroup("Params");
+    if(application->applicationSettings()->contains("blockFund")) {
+        ui->cB_blockFund->setChecked(application->applicationSettings()->value("blockFund").toBool());
+    }
+    application->applicationSettings()->endGroup();
+}
+
+void ParamDialog::saveBlockFund()
+{
+    application->applicationSettings()->beginGroup("Params");
+    application->applicationSettings()->setValue("blockFund",  ui->cB_blockFund->isChecked() ? 1 : 0);
+    application->applicationSettings()->endGroup();
 }
 
 void ParamDialog::createItem(QAbstractItemView *view)

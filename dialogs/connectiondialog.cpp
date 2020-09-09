@@ -12,14 +12,12 @@ ConnectionDialog::ConnectionDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->buttonBox->button(QDialogButtonBox::Save)->setDisabled(true);
 
-    QSettings *settings = application->applicationSettings();
-
-    settings->beginGroup("Database");
-    ui->lE_hostname->setText(settings->value("hostname").toString());
-    ui->lE_dbname->setText(settings->value("db").toString());
-    ui->lE_dbuser->setText(settings->value("user").toString());
-    ui->lE_dbpass->setText(settings->value("password").toString());
-    settings->endGroup();
+    application->applicationSettings()->beginGroup("Database");
+    ui->lE_hostname->setText(application->applicationSettings()->value("hostname").toString());
+    ui->lE_dbname->setText(application->applicationSettings()->value("db").toString());
+    ui->lE_dbuser->setText(application->applicationSettings()->value("user").toString());
+    ui->lE_dbpass->setText(application->applicationSettings()->value("password").toString());
+    application->applicationSettings()->endGroup();
 
     connect(ui->pB_test, &QPushButton::clicked, this, &ConnectionDialog::testConnection);
 }
@@ -57,14 +55,12 @@ void ConnectionDialog::testConnection()
 
 void ConnectionDialog::save()
 {
-    QSettings *settings = application->applicationSettings();
-
-    settings->beginGroup("Database");
-    settings->setValue("hostname", ui->lE_hostname->text());
-    settings->setValue("db", ui->lE_dbname->text());
-    settings->setValue("user", ui->lE_dbuser->text());
-    settings->setValue("password", ui->lE_dbpass->text());
-    settings->endGroup();
+    application->applicationSettings()->beginGroup("Database");
+    application->applicationSettings()->setValue("hostname", ui->lE_hostname->text());
+    application->applicationSettings()->setValue("db", ui->lE_dbname->text());
+    application->applicationSettings()->setValue("user", ui->lE_dbuser->text());
+    application->applicationSettings()->setValue("password", ui->lE_dbpass->text());
+    application->applicationSettings()->endGroup();
 
     accept();
 }

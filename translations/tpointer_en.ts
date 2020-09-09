@@ -45,12 +45,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="77"/>
+        <location filename="../application.cpp" line="76"/>
         <source>Database connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../application.cpp" line="77"/>
+        <location filename="../application.cpp" line="76"/>
         <source>Could not connect to database.
 Do you want config now?</source>
         <translation type="unfinished"></translation>
@@ -1022,6 +1022,16 @@ Do you want config now?</source>
     <message>
         <location filename="../dialogs/paramdialog.ui" line="146"/>
         <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/paramdialog.ui" line="152"/>
+        <source>Block fund changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogs/paramdialog.ui" line="159"/>
+        <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

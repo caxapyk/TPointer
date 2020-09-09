@@ -1,9 +1,12 @@
 #include "editnodedialog.h"
 #include "ui_nodedialog.h"
+
+#include "application.h"
 #include "nodedelegate.h"
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QSettings>
 
 EditNodeDialog::EditNodeDialog(DataModel *model, int index) : NodeDialog()
 {
@@ -41,8 +44,13 @@ EditNodeDialog::EditNodeDialog(DataModel *model, int index) : NodeDialog()
     }
     ui->sB_compartment->setDisabled(true);
     ui->sB_shelving->setDisabled(true);
-    ui->cB_fund->setDisabled(true);
     ui->pB_openFundList->setDisabled(true);
+
+    // check blockFund param
+    application->applicationSettings()->beginGroup("Params");
+    ui->cB_fund->setDisabled(application->applicationSettings()->value("blockFund").toBool());
+    ui->pB_openFundList->setDisabled(application->applicationSettings()->value("blockFund").toBool());
+    application->applicationSettings()->endGroup();
 }
 
 EditNodeDialog::~EditNodeDialog()

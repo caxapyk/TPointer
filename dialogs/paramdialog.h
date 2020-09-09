@@ -21,6 +21,7 @@ private:
     void setupControls();
     void setupModels();
     void loadCorpuses();
+    void loadOther();
 
     void loadStorages(QVariant id);
 
@@ -39,6 +40,7 @@ private slots:
     void removeItem(QAbstractItemView *view);
     void moveUp(QAbstractItemView *view);
     void moveDown(QAbstractItemView *view);
+    void saveBlockFund();
 };
 
 #endif // SEARCHDIALOG_H

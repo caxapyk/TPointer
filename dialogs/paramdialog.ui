@@ -145,7 +145,25 @@
       <attribute name="title">
        <string>Other</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6"/>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_blockFund">
+         <property name="text">
+          <string>Block fund changes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QCheckBox" name="cB_blockFund">
+         <property name="text">
+          <string>Yes</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>

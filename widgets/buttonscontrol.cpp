@@ -131,7 +131,7 @@ void ButtonsControl::selectionChanged(const QItemSelection &selected, const QIte
         m_view->setCurrentIndex(QModelIndex());
     }
 
-    setEnabled(!selected.isEmpty(), ButtonsControl::Edit);
+    setEnabled(!selected.isEmpty() && m_view->selectionModel()->selectedRows().length() == 1, ButtonsControl::Edit);
     setEnabled(!selected.isEmpty(), ButtonsControl::Remove);
     setEnabled(!selected.isEmpty(), ButtonsControl::Up);
     setEnabled(!selected.isEmpty(), ButtonsControl::Down);
