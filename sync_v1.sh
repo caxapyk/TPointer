@@ -9,7 +9,10 @@ sql='
     INSERT INTO topography.main
         SELECT
         tpointer.tpointer.`id`,
-        tpointer.tpointer.`floor`,
+        (CASE
+            WHEN tpointer.tpointer.`floor` = 0 THEN -1
+            ELSE tpointer.tpointer.`floor`
+        END) AS floor,
         tpointer.storage.`name`,
         tpointer.tpointer.`compartment`,
         tpointer.tpointer.`shelving`,
