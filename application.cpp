@@ -107,6 +107,8 @@ void Application::initializeLanguage()
     if(qtTranslator->load("qt_" + QLocale::system().name(),
              QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
         installTranslator(qtTranslator);
+    } else if (qtTranslator->load("qt_ru.qm", ":/translations/translations/")) {
+         installTranslator(qtTranslator);
     }
 
     if (appTranslator->load("tpointer_ru.qm", ":/translations/translations/")) {
