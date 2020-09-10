@@ -9,4 +9,5 @@ dirname=$PWD/$dirname
 fi
 LD_LIBRARY_PATH=$dirname
 export LD_LIBRARY_PATH
+cd $dirname
 $dirname/$appname $@
