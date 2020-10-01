@@ -67,7 +67,7 @@ void NavigationView::initialize()
 
     ui->tV_hierarchy->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(ui->tV_hierarchy, &QTreeView::doubleClicked, this, &NavigationView::hierarchyActivated);
+    connect(ui->tV_hierarchy, &QTreeView::expanded, this, &NavigationView::hierarchyActivated);
     connect(ui->tV_hierarchy, &QMenu::customContextMenuRequested, this, &NavigationView::showHContextMenu);
 
      /* Fund models */
@@ -175,10 +175,11 @@ void NavigationView::fundActivated(const QModelIndex &index)
         if(ui->tW_funds->currentIndex() == 0) {
             filter.storage = m_fundc_model->getStorage();
             filter.compartment = m_fundc_model->getCompartment();
-            application->mainWindow()->setPrintF16Enabled(true);
         } else {
-            application->mainWindow()->setPrintF16Enabled(false);
+            filter.storage = m_fund_model->getStorage();
+            filter.compartment = m_fund_model->getCompartment();
         }
+
         filter.fund = index.data(Qt::UserRole + 1);
         filter.fund_strict = true;
 
@@ -187,6 +188,7 @@ void NavigationView::fundActivated(const QModelIndex &index)
                        + tr(" [Fund %1]")
                        .arg(index.data().toString()));
 
+        application->mainWindow()->setPrintF16Enabled(true);
         application->mainWindow()->setPrintF15Enabled(false);
     }
 
