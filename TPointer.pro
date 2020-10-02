@@ -163,6 +163,9 @@ unix {
     platforms.files += $$[QT_INSTALL_PREFIX]/plugins/platforms/libqxcb.so
     platforms.path = $$DEPLOY_DIR/platforms
 
+    printsupport.files += $$[QT_INSTALL_PREFIX]/plugins/printsupport/libcupsprintersupport.so
+    printsupport.path = $$DEPLOY_DIR/printsupport
+
     sqldrivers.files += $$[QT_INSTALL_PREFIX]/plugins/sqldrivers/libqsqlmysql.so
     sqldrivers.path = $$DEPLOY_DIR/sqldrivers
 
@@ -173,6 +176,7 @@ unix {
                 licence \
                 libs \
                 platforms \
+                printsupport \
                 sqldrivers
 }
 

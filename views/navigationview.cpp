@@ -68,6 +68,7 @@ void NavigationView::initialize()
     ui->tV_hierarchy->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(ui->tV_hierarchy, &QTreeView::expanded, this, &NavigationView::hierarchyActivated);
+    connect(ui->tV_hierarchy, &QTreeView::doubleClicked, this, &NavigationView::hierarchyActivated);
     connect(ui->tV_hierarchy, &QMenu::customContextMenuRequested, this, &NavigationView::showHContextMenu);
 
      /* Fund models */
